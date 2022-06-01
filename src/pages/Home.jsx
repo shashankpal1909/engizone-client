@@ -1,6 +1,7 @@
 import { Grid } from "@mui/material";
 import React from "react";
 import About from "../components/About";
+import Header from "../components/Header";
 import HowItWorks from "../components/HowItWorks";
 
 const Home = () => {
@@ -13,6 +14,9 @@ const Home = () => {
         justifyContent={"center"}
         alignItems={"center"}
       >
+        <Grid item>
+          <Header />
+        </Grid>
         <Grid item>
           <HowItWorks />
         </Grid>
