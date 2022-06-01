@@ -6,15 +6,11 @@ import {
   IconButton,
   Typography,
   Menu,
-  Container,
   Avatar,
   Button,
   Tooltip,
   MenuItem,
 } from "@mui/material";
-import MenuIcon from "@mui/icons-material/Menu";
-import AdbIcon from "@mui/icons-material/Adb";
-import AccountCircle from "@mui/icons-material/AccountCircle";
 
 const NavBar = () => {
   const pages = ["Home", "Questions", "Resources", "Contact Us"];
@@ -29,14 +25,11 @@ const NavBar = () => {
   const handleCloseUserMenu = () => setAnchorElUser(null);
 
   return (
-    <AppBar position="fixed" color="inherit">
+    <AppBar position="sticky" color="primary">
       <Toolbar sx={{ justifyContent: "space-between" }}>
         <Box>
-          <Typography
-            variant="h6"
-            sx={{ fontWeight: "bold", fontStyle: "italic" }}
-          >
-            engiZone
+          <Typography variant="h6" sx={{ fontWeight: "bold" }}>
+            EngiZone
           </Typography>
         </Box>
         <Box display="flex">
