@@ -1,20 +1,29 @@
 import React from "react";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
 
 import "./App.css";
+import Home from "./pages/Home";
+
+const themeOptions = createTheme({
+  palette: {
+    type: "light",
+    primary: {
+      main: "#3f51b5",
+    },
+    secondary: {
+      main: "#f50057",
+    },
+  },
+  typography: {
+    fontFamily: "Didact Gothic",
+  },
+});
 
 const App = () => {
   return (
-    <div
-      style={{
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        height: "100vh",
-        fontSize: "5vw",
-      }}
-    >
-      <h1>Engi-Zone Client</h1>
-    </div>
+    <ThemeProvider theme={themeOptions}>
+      <Home />
+    </ThemeProvider>
   );
 };
 
