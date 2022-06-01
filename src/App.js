@@ -1,5 +1,6 @@
 import React from "react";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
+import { NavBar, Footer } from "./components";
 
 import "./App.css";
 import Home from "./pages/Home";
@@ -22,7 +23,9 @@ const themeOptions = createTheme({
 const App = () => {
   return (
     <ThemeProvider theme={themeOptions}>
+      <NavBar />
       <Home />
+      <Footer />
     </ThemeProvider>
   );
 };
