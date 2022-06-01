@@ -1,19 +1,24 @@
 import React from "react";
 
 import "./App.css";
+import ContactUs from "./components/ContactUs";
+import Header from "./components/Header";
 
 const App = () => {
   return (
     <div
-      style={{
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        height: "100vh",
-        fontSize: "5vw",
-      }}
+      // style={{
+      //   display: "flex",
+      //   flexDirection: "column",
+      //   justifyContent: "center",
+      //   alignItems: "center",
+      //   height: "100vh",        
+      //   fontSize: "5vw",
+      //   overflow: "scroll"
+      // }}
     >
-      <h1>Engi-Zone Client</h1>
+      <Header /> 
+      <ContactUs /> 
     </div>
   );
 };
