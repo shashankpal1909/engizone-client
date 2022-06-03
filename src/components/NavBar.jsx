@@ -10,11 +10,19 @@ import {
   Button,
   Tooltip,
   MenuItem,
+  Link,
+  Fab,
 } from "@mui/material";
+import MenuIcon from "@mui/icons-material/Menu";
+import { Link as RouterLink } from "react-router-dom";
+
+import LoginIcon from "@mui/icons-material/Login";
 
 const NavBar = () => {
   const pages = ["Home", "Questions", "Resources", "Contact Us"];
   const settings = ["Profile", "Account", "Dashboard", "Logout"];
+
+  const loggedIn = false;
 
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
@@ -25,14 +33,53 @@ const NavBar = () => {
   const handleCloseUserMenu = () => setAnchorElUser(null);
 
   return (
-    <AppBar position="sticky" color="primary">
-      <Toolbar sx={{ justifyContent: "space-between" }}>
-        <Box>
-          <Typography variant="h6" sx={{ fontWeight: "bold" }}>
-            EngiZone
-          </Typography>
+    <AppBar position="sticky" color="primary" width={100}>
+      <Toolbar sx={{ display: "flex", justifyContent: "space-between" }}>
+        <Box sx={{ display: { xs: "flex", md: "none" } }}>
+          <IconButton
+            size="large"
+            aria-label="account of current user"
+            aria-controls="menu-appbar"
+            aria-haspopup="true"
+            onClick={handleOpenNavMenu}
+            color="inherit"
+          >
+            <MenuIcon />
+          </IconButton>
+          <Menu
+            id="menu-appbar"
+            anchorEl={anchorElNav}
+            anchorOrigin={{
+              vertical: "bottom",
+              horizontal: "left",
+            }}
+            keepMounted
+            transformOrigin={{
+              vertical: "top",
+              horizontal: "left",
+            }}
+            open={Boolean(anchorElNav)}
+            onClose={handleCloseNavMenu}
+            sx={{
+              display: { xs: "block", md: "none" },
+            }}
+          >
+            {pages.map((page) => (
+              <MenuItem key={page} onClick={handleCloseNavMenu}>
+                <Typography textAlign="center">{page}</Typography>
+              </MenuItem>
+            ))}
+          </Menu>
         </Box>
-        <Box display="flex">
+        <Box>
+          <Link component={RouterLink} to="/">
+            <Typography variant="h5" color={"white"}>
+              EngiZone
+            </Typography>
+          </Link>
+        </Box>
+
+        <Box sx={{ display: { xs: "none", md: "flex" } }}>
           {pages.map((page) => (
             <Button
               key={page}
@@ -47,35 +94,46 @@ const NavBar = () => {
             </Button>
           ))}
         </Box>
-        <Box sx={{ flexGrow: 0 }}>
-          <Tooltip title="User">
-            <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-              <Avatar alt="" src="" />
+        {loggedIn ? (
+          <Box sx={{ flexGrow: 0 }}>
+            <Tooltip title="User">
+              <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+                <Avatar alt="" src="" />
+              </IconButton>
+            </Tooltip>
+            <Menu
+              sx={{ mt: "45px" }}
+              id="menu-appbar"
+              anchorEl={anchorElUser}
+              anchorOrigin={{
+                vertical: "top",
+                horizontal: "right",
+              }}
+              keepMounted
+              transformOrigin={{
+                vertical: "top",
+                horizontal: "right",
+              }}
+              open={Boolean(anchorElUser)}
+              onClose={handleCloseUserMenu}
+            >
+              {settings.map((setting) => (
+                <MenuItem key={setting} onClick={handleCloseUserMenu}>
+                  <Typography textAlign="center">{setting}</Typography>
+                </MenuItem>
+              ))}
+            </Menu>
+          </Box>
+        ) : (
+          <Box sx={{ flexGrow: 0 }}>
+            {/* <Button variant="text" sx={{ color: "white" }} startIcon={<LoginIcon />}>
+              Sign In
+            </Button> */}
+            <IconButton sx={{ color: "white" }} component={RouterLink} to="/sign-up">
+              <LoginIcon />
             </IconButton>
-          </Tooltip>
-          <Menu
-            sx={{ mt: "45px" }}
-            id="menu-appbar"
-            anchorEl={anchorElUser}
-            anchorOrigin={{
-              vertical: "top",
-              horizontal: "right",
-            }}
-            keepMounted
-            transformOrigin={{
-              vertical: "top",
-              horizontal: "right",
-            }}
-            open={Boolean(anchorElUser)}
-            onClose={handleCloseUserMenu}
-          >
-            {settings.map((setting) => (
-              <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                <Typography textAlign="center">{setting}</Typography>
-              </MenuItem>
-            ))}
-          </Menu>
-        </Box>
+          </Box>
+        )}
       </Toolbar>
     </AppBar>
   );

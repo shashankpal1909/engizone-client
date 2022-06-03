@@ -1,5 +1,4 @@
 import {
-  CssBaseline,
   Grid,
   Typography,
   List,
@@ -7,11 +6,19 @@ import {
   ListItemAvatar,
   Avatar,
   ListItemText,
+  Box,
+  Container,
+  Card,
+  CardActionArea,
+  CardMedia,
+  Fab,
 } from "@mui/material";
 import React from "react";
 
 import ImageIcon from "@mui/icons-material/Image";
 import WorkIcon from "@mui/icons-material/Work";
+import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
+import AboutImage from "../assets/AboutImage.jpg";
 
 function FeaturesList(params) {
   return (
@@ -38,52 +45,65 @@ function FeaturesList(params) {
 
 const About = () => {
   return (
-    <>
-      <CssBaseline />
+    <Grid
+      container
+      justifyContent={"center"}
+      direction={{ xs: "column", md: "row" }}
+      sx={{ pt: "1rem", pb: "1rem" }}
+    >
       <Grid
-        alignContent={"center"}
-        container
-        direction={"row"}
-        justifyContent={"center"}
-        alignItems={"center"}
-        spacing={4}
-        sx={{ p: "1rem" }}
+        item
+        sx={{
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "center",
+          alignItems: "center",
+          textAlign: "center",
+        }}
+        xs={4}
       >
-        <Grid
-          item
-          md={6}
-          sx={{
-            display: "flex",
-            justifyContent: { xs: "center", md: "flex-end" },
-            alignItems: "center",
-          }}
+        <Typography
+          variant="h4"
+          color="secondary"
+          // sx={{ maxWidth: "500px" }}
+          fontWeight="500"
+          paragraph
         >
-          <img
-            src="https://www.slntechnologies.com/wp-content/uploads/2017/08/ef3-placeholder-image.jpg"
-            alt="about"
-            height={250}
-            style={{ borderRadius: "1rem" }}
-          />
-        </Grid>
-        <Grid
-          item
-          md={6}
-          sx={{
-            display: "flex",
-            flexDirection: "column",
-            justifyContent: "center",
-            alignItems: { xs: "center", md: "flex-start" },
-            textAlign: { xs: "center", md: "inherit" },
-          }}
+          About Us.
+        </Typography>
+        <Typography
+          variant="body1"
+          sx={{ pl: { xs: "1rem" }, pr: { xs: "1rem" } }}
+          color={"text.secondary"}
+          align="justify"
+          paragraph
         >
-          <Typography variant="h4" align="left" color={"primary"}>
-            About Us.
-          </Typography>
-          <Typography>Creating quality urban lifestyles, building stronger communities</Typography>
-          <FeaturesList />
-        </Grid>
+          Lorem ipsum dolor sit amet consectetur, adipisicing elit. Reiciendis repellat excepturi
+          ipsam tempore, quis delectus animi deserunt totam molestiae distinctio est, mollitia sunt,
+          alias ut! Suscipit esse excepturi laudantium sequi?
+        </Typography>
+        <Fab color="primary" variant="extended">
+          <ArrowForwardIosIcon sx={{ mr: 1 }} /> See More
+        </Fab>
+        {/* <FeaturesList /> */}
       </Grid>
-    </>
+      <Grid
+        item
+        sx={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+        xs={6}
+      >
+        <Box
+          component={"img"}
+          src={AboutImage}
+          alt="about"
+          sx={{ width: { xs: "90vw", md: "500px" }, borderRadius: "1rem" }}
+        />
+      </Grid>
+    </Grid>
   );
 };
 
