@@ -1,13 +1,5 @@
 import React from "react";
-import {
-  Box,
-  Card,
-  CardContent,
-  CardActions,
-  Typography,
-  Button,
-  Link,
-} from "@mui/material";
+import { Box, Card, CardContent, CardActions, Typography, Button, Link } from "@mui/material";
 
 const Footer = () => {
   const pages = ["Home", "Questions", "Resources", "Contact Us"];
@@ -17,7 +9,7 @@ const Footer = () => {
     <Box
       position="static"
       bottom={0}
-      width="100vw"
+      // width="100vw"
       bgcolor="#1a2027"
       // sx={{ colorScheme: "dark" }}
       display="flex"
@@ -36,23 +28,12 @@ const Footer = () => {
         }}
       >
         <CardContent>
-          <Typography
-            variant="outlined"
-            fontSize="25px"
-            fontWeight="bold"
-            fontStyle="italic"
-          >
+          <Typography variant="outlined" fontSize="25px" fontWeight="bold" fontStyle="italic">
             engiZone
           </Typography>
-          <Typography
-            variant="body1"
-            multiline
-            textAlign="justify"
-            color="#b4b4b4"
-          >
-            Anim enim aliqua dolore elit. Est est est anim nostrud. Labore
-            mollit velit adipisicing aute tempor minim qui ea proident nostrud
-            sunt velit.
+          <Typography variant="body1" multiline textAlign="justify" color="#b4b4b4">
+            Anim enim aliqua dolore elit. Est est est anim nostrud. Labore mollit velit adipisicing
+            aute tempor minim qui ea proident nostrud sunt velit.
           </Typography>
         </CardContent>
         <CardActions>
@@ -82,13 +63,7 @@ const Footer = () => {
           }}
         >
           {pages.map((page) => (
-            <Link
-              variant="body1"
-              key="page"
-              href="/"
-              underline="none"
-              color="#b4b4b4"
-            >
+            <Link variant="body1" key="page" href="/" underline="none" color="#b4b4b4">
               {page}
             </Link>
           ))}
@@ -117,13 +92,7 @@ const Footer = () => {
           }}
         >
           {settings.map((setting) => (
-            <Link
-              variant="body1"
-              key={setting}
-              href="/"
-              underline="none"
-              color="#b4b4b4"
-            >
+            <Link variant="body1" key={setting} href="/" underline="none" color="#b4b4b4">
               {setting}
             </Link>
           ))}
