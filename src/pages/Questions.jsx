@@ -9,20 +9,27 @@ const Questions = () => {
     <Grid
       item
       container
-      direction="row"
       spacing={2}
-      justifyContent="center"
-      // alignItems="center"
+      direction={"column"}
+      alignItems={"center"}
+      sx={{
+        pt: { xs: "2rem", md: "4rem" },
+        pb: { xs: "2rem", md: "4rem" },
+      }}
     >
-      <Grid item xs={10} sm={7}>
-        {/* <SearchBar />; */}
-      </Grid>
-      <Grid item xs={10} sm={7} container direction="column" spacing={2}>
-        <Question />
-        <Question />
+      {/* <Grid item xs={10} sm={7}>
+        <SearchBar />;
+      </Grid> */}
+      <Grid item container justifyContent="center">
         <Question />
       </Grid>
-      <Grid item xs={10} sm={7}>
+      <Grid item container justifyContent="center">
+        <Question />
+      </Grid>
+      <Grid item container justifyContent="center">
+        <Question />
+      </Grid>
+      <Grid xs={10} sm={7} md={6}>
         <Typography>Page: {page}</Typography>
         <Pagination
           count={10}
@@ -30,9 +37,14 @@ const Questions = () => {
           onChange={handleChange}
           showFirstButton
           showLastButton
+          size="small"
+          variant="outlined"
+          shape="rounded"
+          color="primary"
+          // elevation={2}
+          // size={{ xs: "small", md: "large" }}
         />
       </Grid>
-      <Grid item></Grid>
     </Grid>
   );
 };

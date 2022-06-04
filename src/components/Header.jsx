@@ -1,7 +1,7 @@
 import { Box, Button, Typography, IconButton, Grid, Fab } from "@mui/material";
-import HeaderImage from "../assets/HeaderImage.jpg";
+import HeaderImage from "../Assets/HeaderImage.jpg";
 import React from "react";
-import { PhotoCamera } from "@mui/icons-material";
+// import { PhotoCamera } from "@mui/icons-material";
 import QuestionAnswerIcon from "@mui/icons-material/QuestionAnswer";
 const Header = () => {
   return (
@@ -41,9 +41,10 @@ const Header = () => {
           color={"text.secondary"}
           paragraph
         >
-          Lorem ipsum dolor sit amet consectetur, adipisicing elit. Reiciendis repellat excepturi
-          ipsam tempore, quis delectus animi deserunt totam molestiae distinctio est, mollitia sunt,
-          alias ut! Suscipit esse excepturi laudantium sequi?
+          Lorem ipsum dolor sit amet consectetur, adipisicing elit. Reiciendis
+          repellat excepturi ipsam tempore, quis delectus animi deserunt totam
+          molestiae distinctio est, mollitia sunt, alias ut! Suscipit esse
+          excepturi laudantium sequi?
         </Typography>
         <div>
           {/* <Button variant="contained">Ask Question</Button>

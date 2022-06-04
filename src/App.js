@@ -1,13 +1,9 @@
 import React from "react";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { NavBar, Footer } from "./components";
+import { Home, Questions, SignIn, SignUp } from "./pages";
 import "./App.css";
-import Home from "./pages/Home";
-import SignIn from "./pages/SignIn";
-import SignUp from "./pages/SignUp";
 
 const themeOptions = createTheme({
   palette: {
@@ -27,14 +23,15 @@ const themeOptions = createTheme({
 const App = () => {
   return (
     <ThemeProvider theme={themeOptions}>
-      <BrowserRouter>
+      <Router>
         <NavBar />
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/sign-in" element={<SignIn />} />
           <Route path="/sign-up" element={<SignUp />} />
+          <Route path="/questions" element={<Questions />} />
         </Routes>
-      </BrowserRouter>
+      </Router>
     </ThemeProvider>
   );
 };

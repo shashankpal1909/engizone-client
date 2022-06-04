@@ -16,7 +16,10 @@ const Home = () => {
           direction={"column"}
           justifyContent={"center"}
           alignItems={"center"}
-          sx={{ pt: { xs: "2rem", md: "4rem" }, pb: { xs: "2rem", md: "4rem" } }}
+          sx={{
+            pt: { xs: "2rem", md: "4rem" },
+            pb: { xs: "2rem", md: "4rem" },
+          }}
         >
           <Grid item>
             <Header />

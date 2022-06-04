@@ -18,7 +18,7 @@ import React from "react";
 import ImageIcon from "@mui/icons-material/Image";
 import WorkIcon from "@mui/icons-material/Work";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
-import AboutImage from "../assets/AboutImage.jpg";
+import AboutImage from "../Assets/AboutImage.jpg";
 
 function FeaturesList(params) {
   return (
@@ -78,9 +78,10 @@ const About = () => {
           align="justify"
           paragraph
         >
-          Lorem ipsum dolor sit amet consectetur, adipisicing elit. Reiciendis repellat excepturi
-          ipsam tempore, quis delectus animi deserunt totam molestiae distinctio est, mollitia sunt,
-          alias ut! Suscipit esse excepturi laudantium sequi?
+          Lorem ipsum dolor sit amet consectetur, adipisicing elit. Reiciendis
+          repellat excepturi ipsam tempore, quis delectus animi deserunt totam
+          molestiae distinctio est, mollitia sunt, alias ut! Suscipit esse
+          excepturi laudantium sequi?
         </Typography>
         <Fab color="primary" variant="extended">
           <ArrowForwardIosIcon sx={{ mr: 1 }} /> See More
