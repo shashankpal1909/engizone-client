@@ -8,9 +8,11 @@ import "./App.css";
 import Home from "./pages/Home";
 import SignIn from "./pages/SignIn";
 import SignUp from "./pages/SignUp";
+// import Questions from "./pages/Questions";
 
 const themeOptions = createTheme({
   palette: {
+    mode: "light",
     type: "light",
     primary: {
       main: "#3f51b5",
@@ -34,6 +36,7 @@ const App = () => {
           <Route path="/sign-in" element={<SignIn />} />
           <Route path="/sign-up" element={<SignUp />} />
         </Routes>
+        <Footer />
       </BrowserRouter>
     </ThemeProvider>
   );

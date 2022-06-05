@@ -100,7 +100,7 @@ const About = () => {
           component={"img"}
           src={AboutImage}
           alt="about"
-          sx={{ width: { xs: "90vw", md: "500px" }, borderRadius: "1rem" }}
+          sx={{ width: { xs: "90vw", md: "500px" }, mt: "1rem", borderRadius: "1rem" }}
         />
       </Grid>
     </Grid>

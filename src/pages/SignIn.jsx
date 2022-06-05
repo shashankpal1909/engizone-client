@@ -23,31 +23,29 @@ import VisibilityOff from "@mui/icons-material/VisibilityOff";
 
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 
-import { Link as RouterLink } from "react-router-dom";
+import { Link as RouterLink, useNavigate } from "react-router-dom";
+import UserContext from "../context/user/UserContext";
 
 const SignIn = () => {
+  const { user, signIn } = React.useContext(UserContext);
+
+  const [email, setEmail] = React.useState("");
   const [password, setPassword] = React.useState("");
   const [showPassword, setShowPassword] = React.useState("");
 
-  const handleSubmit = (event) => {
+  const navigate = useNavigate();
+
+  React.useEffect(() => {
+    console.log("=>(SignIn.jsx:39) useEffect user", user);
+    if (user) navigate("/");
+  }, [user]);
+
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get("email"),
-      password: data.get("password"),
-    });
+    await signIn({ email, password });
+    console.log("=>(SignIn.jsx:41) { email, password }", { email, password });
+    console.log("=>(SignIn.jsx:42) user", user);
   };
-
-  const handleChange = (prop) => (event) => {
-    // setValues({ ...values, [prop]: event.target.value });
-  };
-
-  // const handleClickShowPassword = () => {
-  //   setValues({
-  //     ...values,
-  //     showPassword: !values.showPassword,
-  //   });
-  // };
 
   const handleMouseDownPassword = (event) => {
     event.preventDefault();
@@ -70,7 +68,7 @@ const SignIn = () => {
         <Typography component="h1" variant="h5">
           Sign in
         </Typography>
-        <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
+        <Box component="form" onSubmit={handleSubmit} sx={{ mt: 1 }}>
           <TextField
             margin="normal"
             required
@@ -79,20 +77,14 @@ const SignIn = () => {
             label="Email Address"
             name="email"
             autoComplete="email"
+            value={email}
+            onChange={(event) => setEmail(event.target.value)}
             autoFocus
           />
-          {/* <TextField
-            margin="normal"
-            required
-            fullWidth
-            name="password"
-            label="Password"
-            type="password"
-            id="password"
-            autoComplete="current-password"
-          /> */}
           <FormControl margin="normal" fullWidth variant="outlined">
-            <InputLabel htmlFor="outlined-adornment-password">Password</InputLabel>
+            <InputLabel htmlFor="outlined-adornment-password">
+              Password
+            </InputLabel>
             <OutlinedInput
               id="outlined-adornment-password"
               type={showPassword ? "text" : "password"}
@@ -117,7 +109,12 @@ const SignIn = () => {
             control={<Checkbox value="remember" color="primary" />}
             label="Remember me"
           />
-          <Button type="submit" fullWidth variant="contained" sx={{ mt: 3, mb: 2 }}>
+          <Button
+            type="submit"
+            fullWidth
+            variant="contained"
+            sx={{ mt: 3, mb: 2 }}
+          >
             Sign In
           </Button>
           <Grid container>

@@ -41,9 +41,9 @@ const Header = () => {
           color={"text.secondary"}
           paragraph
         >
-          Lorem ipsum dolor sit amet consectetur, adipisicing elit. Reiciendis repellat excepturi
-          ipsam tempore, quis delectus animi deserunt totam molestiae distinctio est, mollitia sunt,
-          alias ut! Suscipit esse excepturi laudantium sequi?
+          EngiZone is a platform where you can post your question and get best answer instantly. We
+          want to connect peple who wants to share their knowledge in effective way to the people
+          who need it.
         </Typography>
         <div>
           {/* <Button variant="contained">Ask Question</Button>
