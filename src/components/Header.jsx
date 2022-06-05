@@ -1,7 +1,7 @@
 import { Box, Button, Typography, IconButton, Grid, Fab } from "@mui/material";
 import HeaderImage from "../assets/HeaderImage.jpg";
 import React from "react";
-import { PhotoCamera } from "@mui/icons-material";
+// import { PhotoCamera } from "@mui/icons-material";
 import QuestionAnswerIcon from "@mui/icons-material/QuestionAnswer";
 const Header = () => {
   return (
