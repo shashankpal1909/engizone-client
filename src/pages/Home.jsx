@@ -29,14 +29,8 @@ const Home = () => {
             <About />
           </Grid>
         </Grid>
-        <Grid item>
-          <HowItWorks />
-        </Grid>
-        <Grid item>
-          <About />
-        </Grid>
-      </Grid>
-    </Container>
+      </Container>
+    </>
   );
 };
 

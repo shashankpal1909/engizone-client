@@ -5,7 +5,7 @@ import "./App.css";
 import { Box, Container } from "@mui/material";
 // import Questions from "./pages/Questions";
 import { NavBar, Footer } from "./components";
-import { Home, Questions, QuestionDetail, SignIn, SignUp } from "./pages";
+import { Home, Questions, QuestionDetail, SignIn, SignUp, Contact } from "./pages";
 import "./App.css";
 
 import AppBar from "@mui/material/AppBar";
@@ -73,7 +73,6 @@ const App = () => {
   return (
     <ThemeProvider theme={themeOptions}>
       <Router>
-<<<<<<< HEAD
         <Box
           sx={{
             display: "flex",
@@ -88,6 +87,7 @@ const App = () => {
             <Route path="/sign-in" element={<SignIn />} />
             <Route path="/sign-up" element={<SignUp />} />
             <Route path="/questions" element={<Questions />} />
+            <Route path={`/questions/${1}`} element={<QuestionDetail />} />
             <Route path="/contact" element={<Contact />} />
             <Route path="/profile" element={<Profile />} />
           </Routes>
@@ -98,17 +98,6 @@ const App = () => {
             </Fab>
           </ScrollTop>
         </Box>
-=======
-        <NavBar />
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/sign-in" element={<SignIn />} />
-          <Route path="/sign-up" element={<SignUp />} />
-          <Route path="/questions" element={<Questions />} />
-          <Route path={`/questions/${1}`} element={<QuestionDetail />} />
-        </Routes>
-        <Footer />
->>>>>>> origin/shashi
       </Router>
     </ThemeProvider>
   );
