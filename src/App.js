@@ -1,10 +1,9 @@
 import React from "react";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import { NavBar, Footer } from "./components";
+import { NavBar, Footer, Askquestion } from "./components";
 import { Home, Questions, SignIn, SignUp } from "./pages";
 import "./App.css";
-// import Questions from "./pages/Questions";
 
 const themeOptions = createTheme({
   palette: {
@@ -32,6 +31,7 @@ const App = () => {
           <Route path="/sign-in" element={<SignIn />} />
           <Route path="/sign-up" element={<SignUp />} />
           <Route path="/questions" element={<Questions />} />
+          <Route path="/ask-question" element={<Askquestion />} />
         </Routes>
         <Footer />
       </Router>
