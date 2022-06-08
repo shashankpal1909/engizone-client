@@ -1,5 +1,5 @@
 import { React, useState } from "react";
-import { Typography, Pagination, Grid } from "@mui/material";
+import { Typography, Pagination, Grid, Container } from "@mui/material";
 import { QuestionPreview, SearchBar } from "../components";
 
 const Questions = () => {
@@ -31,13 +31,13 @@ const Questions = () => {
   const dataFiltered = filterData(searchQuery, data);
 
   return (
-    <Grid container justifyContent="center">
+    <Container maxWidth="md">
       <Grid
         item
         container
-        xs={11.5}
-        sm={8}
-        xl={5}
+        // xs={11.5}
+        // sm={8}
+        // xl={5}
         spacing={2}
         direction={"column"}
         // alignItems="flex-end"
@@ -47,10 +47,7 @@ const Questions = () => {
         }}
       >
         <Grid item>
-          <SearchBar
-            searchQuery={searchQuery}
-            setSearchQuery={setSearchQuery}
-          />
+          <SearchBar searchQuery={searchQuery} setSearchQuery={setSearchQuery} />
           <Grid item container>
             {dataFiltered.map((d) => (
               <Grid item>{d}</Grid>
@@ -75,7 +72,7 @@ const Questions = () => {
           />
         </Grid>
       </Grid>
-    </Grid>
+    </Container>
   );
 };
 
