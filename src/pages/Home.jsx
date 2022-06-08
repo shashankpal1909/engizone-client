@@ -1,9 +1,6 @@
 import { Container, CssBaseline, Grid } from "@mui/material";
 import React from "react";
-import { Footer } from "../components";
-import About from "../components/About";
-import Header from "../components/Header";
-import HowItWorks from "../components/HowItWorks";
+import { About, Header, HowItWorks } from "../components";
 
 const Home = () => {
   return (
@@ -32,8 +29,14 @@ const Home = () => {
             <About />
           </Grid>
         </Grid>
-      </Container>
-    </>
+        <Grid item>
+          <HowItWorks />
+        </Grid>
+        <Grid item>
+          <About />
+        </Grid>
+      </Grid>
+    </Container>
   );
 };
 

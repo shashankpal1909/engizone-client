@@ -1,11 +1,12 @@
 import React from "react";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import { NavBar, Footer, ContactUs } from "./components";
-import { Contact, Home, Questions, SignIn, SignUp } from "./pages";
 import "./App.css";
 import { Box, Container } from "@mui/material";
 // import Questions from "./pages/Questions";
+import { NavBar, Footer } from "./components";
+import { Home, Questions, QuestionDetail, SignIn, SignUp } from "./pages";
+import "./App.css";
 
 import AppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
@@ -72,6 +73,7 @@ const App = () => {
   return (
     <ThemeProvider theme={themeOptions}>
       <Router>
+<<<<<<< HEAD
         <Box
           sx={{
             display: "flex",
@@ -96,6 +98,17 @@ const App = () => {
             </Fab>
           </ScrollTop>
         </Box>
+=======
+        <NavBar />
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/sign-in" element={<SignIn />} />
+          <Route path="/sign-up" element={<SignUp />} />
+          <Route path="/questions" element={<Questions />} />
+          <Route path={`/questions/${1}`} element={<QuestionDetail />} />
+        </Routes>
+        <Footer />
+>>>>>>> origin/shashi
       </Router>
     </ThemeProvider>
   );
