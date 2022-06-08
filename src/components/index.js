@@ -5,3 +5,4 @@ export { default as About } from "./About";
 export { default as Question } from "./Question";
 export { default as Footer } from "./Footer";
 export { default as ContactUs } from "./ContactUs";
+export { default as Askquestion } from "./Askquestion";
