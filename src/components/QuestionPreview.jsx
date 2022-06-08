@@ -7,12 +7,13 @@ import {
   CardHeader,
   CardContent,
   CardActions,
-  CardMedia,
   CardActionArea,
   IconButton,
+  ButtonGroup,
   Button,
   Chip,
   Box,
+  Paper,
 } from "@mui/material";
 import { red } from "@mui/material/colors";
 import FavoriteIcon from "@mui/icons-material/Favorite";
@@ -20,9 +21,8 @@ import BookmarkIcon from "@mui/icons-material/Bookmark";
 import BookmarkAddedIcon from "@mui/icons-material/BookmarkAdded";
 import ShareIcon from "@mui/icons-material/Share";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
-import HeaderImage from "../assets/HeaderImage.jpg";
 
-const Question = () => {
+const QuestionPreview = () => {
   const [bookmark, setBookmark] = useState(true);
   const [favorite, setFavorite] = useState(true);
   const tags = ["Tag", "Tag", "Tag"];
@@ -72,7 +72,6 @@ const Question = () => {
           subheader="Sep 14, 2016"
         />
         <CardActionArea>
-          <CardMedia component="img" image={HeaderImage} />
           <CardContent>
             <Typography variant="h6">Question Title</Typography>
             <Typography variant="body1" color="text.primary">
@@ -116,4 +115,4 @@ const Question = () => {
   );
 };
 
-export default Question;
+export default QuestionPreview;
