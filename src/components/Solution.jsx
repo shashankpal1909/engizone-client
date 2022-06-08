@@ -12,6 +12,7 @@ import {
   Button,
   Collapse,
   TextField,
+  Divider,
 } from "@mui/material";
 
 import { Comment } from "../components";
@@ -56,9 +57,8 @@ const Solution = () => {
         <CardMedia component="img" image={HeaderImage} />
         <CardContent>
           <Typography variant="body1" color="text.primary">
-            Ex sit culpa dolor ut. Est reprehenderit duis minim elit. Velit
-            culpa qui reprehenderit occaecat ipsum eu eiusmod quis dolore tempor
-            elit qui quis laborum.
+            Ex sit culpa dolor ut. Est reprehenderit duis minim elit. Velit culpa qui reprehenderit
+            occaecat ipsum eu eiusmod quis dolore tempor elit qui quis laborum.
           </Typography>
         </CardContent>
         <CardActions disableSpacing>
@@ -86,14 +86,8 @@ const Solution = () => {
           </Grid>
         </CardActions>
         <Collapse in={comments} timeout="auto" unmountOnExit>
-          <hr width="95%" />
-          <Typography
-            variant="h6"
-            fontWeight="bold"
-            disableGutters
-            pl={2}
-            pr={2}
-          >
+          <Divider />
+          <Typography variant="h6" fontWeight="bold" disableGutters pl={2} pr={2}>
             Comments
           </Typography>
           <Grid container direction="column" padding={1} spacing={1}>

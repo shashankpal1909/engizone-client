@@ -54,11 +54,7 @@ const Question = () => {
                 // onClick={(bookmark) => setBookmark(!bookmark)}
                 onClick={handleBookmark}
               >
-                {!bookmark ? (
-                  <BookmarkAddedIcon sx={{ color: "green" }} />
-                ) : (
-                  <BookmarkIcon />
-                )}
+                {!bookmark ? <BookmarkAddedIcon sx={{ color: "green" }} /> : <BookmarkIcon />}
               </IconButton>
               <IconButton aria-label="share">
                 <ShareIcon sx={{ color: "blue" }} />
@@ -71,17 +67,16 @@ const Question = () => {
           title="Username"
           subheader="Sep 14, 2016"
         />
-        <CardActionArea>
-          <CardMedia component="img" image={HeaderImage} />
-          <CardContent>
-            <Typography variant="h6">Question Title</Typography>
-            <Typography variant="body1" color="text.primary">
-              Ex sit culpa dolor ut. Est reprehenderit duis minim elit. Velit
-              culpa qui reprehenderit occaecat ipsum eu eiusmod quis dolore
-              tempor elit qui quis laborum.
-            </Typography>
-          </CardContent>
-        </CardActionArea>
+        {/* <CardActionArea> */}
+        <CardMedia component="img" image={HeaderImage} />
+        <CardContent>
+          <Typography variant="h6">Question Title</Typography>
+          <Typography variant="body1" color="text.primary">
+            Ex sit culpa dolor ut. Est reprehenderit duis minim elit. Velit culpa qui reprehenderit
+            occaecat ipsum eu eiusmod quis dolore tempor elit qui quis laborum.
+          </Typography>
+        </CardContent>
+        {/* </CardActionArea> */}
         <CardContent>
           <Box
             display="flex"
@@ -97,11 +92,7 @@ const Question = () => {
               {/* </ButtonGroup> */}
             </CardActions>
             <CardContent>
-              <Chip
-                label={`Answers: ${2}`}
-                variant="outlined"
-                sx={{ color: "green" }}
-              />
+              <Chip label={`Answers: ${2}`} variant="outlined" sx={{ color: "green" }} />
               <Chip label={`Votes: ${3}`} variant="outlined" />
               <Chip label={`Views: ${4}`} variant="outlined" />
               {/* <Typography component="span">Answers: {2}</Typography>

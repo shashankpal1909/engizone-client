@@ -1,29 +1,23 @@
 import React from "react";
-import { Grid, Typography } from "@mui/material";
+import { Container, Grid, Typography } from "@mui/material";
 import { Question, Solution } from "../components";
 
 const QuestionDetail = () => {
   return (
-    <Grid container justifyContent="center">
+    <Container maxWidth="md">
       <Grid
         container
-        xs={11.5}
-        sm={9}
-        xl={5}
+        // xs={11.5}
+        // sm={9}
+        // xl={5}
         spacing={3}
         direction={"column"}
         sx={{
-          pt: "2rem",
-          pb: "4rem",
+          pt: { xs: "2rem", md: "4rem" },
+          pb: { xs: "2rem", md: "4rem" },
         }}
       >
-        <Grid
-          item
-          container
-          direction="column"
-          justifyContent="center"
-          spacing={1}
-        >
+        <Grid item container direction="column" justifyContent="center" spacing={1}>
           <Grid item>
             <Typography variant="h4" xs={6}>
               Question
@@ -31,13 +25,7 @@ const QuestionDetail = () => {
           </Grid>
           <Question />
         </Grid>
-        <Grid
-          item
-          container
-          direction="column"
-          justifyContent="center"
-          spacing={1}
-        >
+        <Grid item container direction="column" justifyContent="center" spacing={1}>
           <Grid item>
             <Typography variant="h4" xs={6}>
               Solutions ({3} Answers)
@@ -48,7 +36,7 @@ const QuestionDetail = () => {
           <Solution />
         </Grid>
       </Grid>
-    </Grid>
+    </Container>
   );
 };
 
