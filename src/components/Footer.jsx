@@ -10,113 +10,91 @@ import {
   Link,
   Grid,
   Fab,
+  Container,
+  CssBaseline,
 } from "@mui/material";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import SendIcon from "@mui/icons-material/Send";
+import { Link as RouterLink } from "react-router-dom";
+
+function Copyright() {
+  return (
+    <Typography variant="body2" align="center" color="text.secondary">
+      {"Copyright © "}
+      <Link component={RouterLink} color="inherit" to="/">
+        EngiZone
+      </Link>{" "}
+      {new Date().getFullYear()}
+      {"."}
+    </Typography>
+  );
+}
+
 const Footer = () => {
   const pages = ["Home", "Questions", "Resources", "Contact Us"];
   const settings = ["Profile", "Account", "Dashboard", "Logout"];
 
   return (
-    <Grid
-      bgcolor={"grey.200"}
-      container
-      direction={{ xs: "column", md: "row" }}
-      spacing={{ xs: 2, md: 4 }}
-      justifyContent={"center"}
-      // alignItems={"center"}
-      sx={{ p: { xs: "1rem", md: "2rem" } }}
+    <Box
+      component="footer"
+      sx={{
+        py: 3,
+        px: 2,
+        mt: "auto",
+        backgroundColor: (theme) =>
+          theme.palette.mode === "light" ? theme.palette.grey[200] : theme.palette.grey[800],
+      }}
     >
-      <Grid item xs={4}>
-        <Grid container spacing={2}>
-          <Grid item>
+      <CssBaseline />
+      <Grid
+        container
+        direction={"row"}
+        spacing={{ xs: 2 }}
+        justifyContent={"center"}
+        // alignItems={"center"}
+        // sx={{ p: { xs: "1rem" }, mt: "auto" }}
+      >
+        <Grid item>
+          <Grid container spacing={2}>
+            <Grid item>
+              <Typography
+                variant="h5"
+                color="secondary"
+                // sx={{ maxWidth: "500px" }}
+                fontWeight="500"
+                align="center"
+                gutterBottom
+              >
+                EngiZone
+              </Typography>
+              <Container maxWidth="sm">
+                <Typography variant="body1">Find best answer for your questions</Typography>
+                <Copyright />
+              </Container>
+              {/* <Typography variant="body1" color="text.secondary" align="center" paragraph>
+                EngiZone is a platform where you can post your question and get best answer
+                instantly. We want to connect peple who wants to share their knowledge in effective
+                way to the people who need it.
+              </Typography>
+              <Button variant="outlined" color="info">
+                See Details
+              </Button> */}
+            </Grid>
+            {/* <Grid item>
             <Typography
-              variant="h4"
-              color="secondary"
-              // sx={{ maxWidth: "500px" }}
-              fontWeight="500"
-              paragraph
+            variant="h5"
+            color="secondary"
+            // sx={{ maxWidth: "500px" }}
+            fontWeight="500"
             >
-              EngiZone
-            </Typography>
-            <Typography variant="body1" color="text.secondary" align="justify" paragraph>
-              EngiZone is a platform where you can post your question and get best answer instantly.
-              We want to connect peple who wants to share their knowledge in effective way to the
-              people who need it.
-            </Typography>
-            <Button variant="outlined" color="info">
-              See Details
-            </Button>
-          </Grid>
-          {/* <Grid item>
-            <Typography
-              variant="h5"
-              color="secondary"
-              // sx={{ maxWidth: "500px" }}
-              fontWeight="500"
-            >
-              Quick Links
+            Quick Links
             </Typography>
             <Typography>Home | Questions | Resources</Typography>
           </Grid> */}
+          </Grid>
         </Grid>
       </Grid>
-      <Grid item xs={8}>
-        <Typography
-          variant="h5"
-          color="secondary"
-          // sx={{ maxWidth: "500px" }}
-          fontWeight="500"
-          paragraph
-        >
-          Contact Us
-        </Typography>
-        <Box
-          component="form"
-          onSubmit={(event) => {
-            event.preventDefault();
-          }}
-        >
-          <Grid container spacing={2}>
-            <Grid item xs={12} sm={6}>
-              <TextField
-                autoComplete="given-name"
-                name="name"
-                required
-                fullWidth
-                id="name"
-                label="Full Name"
-              />
-            </Grid>
-            <Grid item xs={12} sm={6}>
-              <TextField
-                required
-                fullWidth
-                id="email"
-                label="Email Address"
-                name="email"
-                autoComplete="email"
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <TextField
-                required
-                fullWidth
-                id="outlined-multiline-static"
-                label="Your Message"
-                multiline
-                rows={4}
-              />
-            </Grid>
-            <Grid item sx={{ width: "inherit", display: "flex", justifyContent: "flex-end" }}>
-              <Fab type="submit" component={Button} color="primary" variant="extended">
-                <SendIcon sx={{ mr: 1 }} /> Send
-              </Fab>
-            </Grid>
-          </Grid>
-        </Box>
-      </Grid>
-    </Grid>
+    </Box>
   );
 };
 

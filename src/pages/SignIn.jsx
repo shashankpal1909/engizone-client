@@ -52,11 +52,22 @@ const SignIn = () => {
   };
 
   return (
-    <Container component="main" maxWidth="xs">
+    <Container
+      component="main"
+      maxWidth="sm"
+      // sx={{
+      //   display: "flex",
+      //   flexDirection: "column",
+      //   minHeight: "100vh",
+      //   justifyContent: "center",
+      //   alignItems: "center",
+      // }}
+    >
       <CssBaseline />
       <Box
         sx={{
           marginTop: 8,
+          marginBottom: 8,
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
@@ -65,8 +76,13 @@ const SignIn = () => {
         <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
           <LockOutlinedIcon />
         </Avatar>
-        <Typography component="h1" variant="h5">
-          Sign in
+        <Typography
+          variant="h5"
+          align="center"
+          // sx={{ maxWidth: "500px" }}
+          fontWeight="500"
+        >
+          Sign In
         </Typography>
         <Box component="form" onSubmit={handleSubmit} sx={{ mt: 1 }}>
           <TextField
@@ -82,9 +98,7 @@ const SignIn = () => {
             autoFocus
           />
           <FormControl margin="normal" fullWidth variant="outlined">
-            <InputLabel htmlFor="outlined-adornment-password">
-              Password
-            </InputLabel>
+            <InputLabel htmlFor="outlined-adornment-password">Password</InputLabel>
             <OutlinedInput
               id="outlined-adornment-password"
               type={showPassword ? "text" : "password"}
@@ -109,12 +123,7 @@ const SignIn = () => {
             control={<Checkbox value="remember" color="primary" />}
             label="Remember me"
           />
-          <Button
-            type="submit"
-            fullWidth
-            variant="contained"
-            sx={{ mt: 3, mb: 2 }}
-          >
+          <Button type="submit" fullWidth variant="contained" sx={{ mt: 3, mb: 2 }}>
             Sign In
           </Button>
           <Grid container>

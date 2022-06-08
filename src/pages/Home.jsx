@@ -19,6 +19,7 @@ const Home = () => {
           sx={{
             pt: { xs: "2rem", md: "4rem" },
             pb: { xs: "2rem", md: "4rem" },
+            // pb: "4rem",
           }}
         >
           <Grid item>

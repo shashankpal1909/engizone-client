@@ -14,7 +14,7 @@ import {
   Fab,
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
-import { Link as RouterLink } from "react-router-dom";
+import { Link as RouterLink, useNavigate } from "react-router-dom";
 
 import LoginIcon from "@mui/icons-material/Login";
 import UserContext from "../context/user/UserContext";
@@ -29,13 +29,36 @@ const NavBar = () => {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
 
+  const navigate = useNavigate();
+
   const handleOpenNavMenu = (event) => setAnchorElNav(event.currentTarget);
   const handleOpenUserMenu = (event) => setAnchorElUser(event.currentTarget);
   const handleCloseNavMenu = () => setAnchorElNav(null);
   const handleCloseUserMenu = () => setAnchorElUser(null);
 
+  const handleNavigationAction = (page) => {
+    switch (page) {
+      case "Home":
+        navigate("/");
+        break;
+      case "Questions":
+        navigate("/questions");
+        break;
+      case "Resources":
+        break;
+      case "Contact Us":
+        navigate("/contact");
+        break;
+      default:
+        break;
+    }
+  };
+
   const handleSettingAction = (setting) => {
     switch (setting) {
+      case "Profile":
+        navigate("/profile");
+        break;
       case "Logout":
         signOut();
         break;
@@ -77,7 +100,13 @@ const NavBar = () => {
             }}
           >
             {pages.map((page) => (
-              <MenuItem key={page} onClick={handleCloseNavMenu}>
+              <MenuItem
+                key={page}
+                onClick={() => {
+                  handleNavigationAction(page);
+                  handleCloseNavMenu();
+                }}
+              >
                 <Typography textAlign="center">{page}</Typography>
               </MenuItem>
             ))}
@@ -95,6 +124,9 @@ const NavBar = () => {
           {pages.map((page) => (
             <Button
               key={page}
+              onClick={() => {
+                handleNavigationAction(page);
+              }}
               sx={{
                 color: "inherit",
                 display: "block",
