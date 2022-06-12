@@ -12,18 +12,29 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 
-import { Link as RouterLink } from "react-router-dom";
+import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
+import { Link as RouterLink, useNavigate } from "react-router-dom";
+import UserContext from "../context/user/context";
 
 const SignUp = () => {
+  const { user, signUp } = React.useContext(UserContext);
+
+  const [firstName, setFirstName] = React.useState("");
+  const [lastName, setLastName] = React.useState("");
+  const [email, setEmail] = React.useState("");
+  const [password, setPassword] = React.useState("");
+  const [confirmPassword, setConfirmPassword] = React.useState("");
+
+  const navigate = useNavigate();
+
+  React.useEffect(() => {
+    if (user) navigate("/");
+  }, [user]);
+
   const handleSubmit = (event) => {
     event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get("email"),
-      password: data.get("password"),
-    });
+    signUp({ firstName, lastName, email, password, confirmPassword });
   };
 
   return (
@@ -31,8 +42,8 @@ const SignUp = () => {
       <CssBaseline />
       <Box
         sx={{
-          marginTop: 8,
-          marginBottom: 8,
+          pt: { xs: "2rem", md: "4rem" },
+          pb: { xs: "2rem", md: "4rem" },
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
@@ -55,6 +66,8 @@ const SignUp = () => {
                 id="firstName"
                 label="First Name"
                 autoFocus
+                value={firstName}
+                onChange={(event) => setFirstName(event.target.value)}
               />
             </Grid>
             <Grid item xs={12} sm={6}>
@@ -65,6 +78,8 @@ const SignUp = () => {
                 label="Last Name"
                 name="lastName"
                 autoComplete="family-name"
+                value={lastName}
+                onChange={(event) => setLastName(event.target.value)}
               />
             </Grid>
             <Grid item xs={12}>
@@ -75,6 +90,8 @@ const SignUp = () => {
                 label="Email Address"
                 name="email"
                 autoComplete="email"
+                value={email}
+                onChange={(event) => setEmail(event.target.value)}
               />
             </Grid>
             <Grid item xs={12}>
@@ -86,6 +103,8 @@ const SignUp = () => {
                 type="password"
                 id="password"
                 autoComplete="new-password"
+                value={password}
+                onChange={(event) => setPassword(event.target.value)}
               />
             </Grid>
             <Grid item xs={12}>
@@ -97,6 +116,8 @@ const SignUp = () => {
                 type="password"
                 id="confirm-password"
                 autoComplete="new-password"
+                value={confirmPassword}
+                onChange={(event) => setConfirmPassword(event.target.value)}
               />
             </Grid>
             <Grid item xs={12}>
@@ -106,7 +127,12 @@ const SignUp = () => {
               />
             </Grid>
           </Grid>
-          <Button type="submit" fullWidth variant="contained" sx={{ mt: 3, mb: 2 }}>
+          <Button
+            type="submit"
+            fullWidth
+            variant="contained"
+            sx={{ mt: 3, mb: 2 }}
+          >
             Sign Up
           </Button>
           <Grid container justifyContent="flex-end">

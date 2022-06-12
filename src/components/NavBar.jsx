@@ -17,7 +17,7 @@ import MenuIcon from "@mui/icons-material/Menu";
 import { Link as RouterLink, useNavigate } from "react-router-dom";
 
 import LoginIcon from "@mui/icons-material/Login";
-import UserContext from "../context/user/UserContext";
+import UserContext from "../context/user/context";
 
 const NavBar = () => {
   const { user, signOut } = React.useContext(UserContext);
@@ -61,6 +61,7 @@ const NavBar = () => {
         break;
       case "Logout":
         signOut();
+        navigate("/");
         break;
       default:
         break;
@@ -142,7 +143,10 @@ const NavBar = () => {
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="User">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar sx={{ bgcolor: "crimson" }} children={`${user.firstName[0]}`} />
+                <Avatar
+                  sx={{ bgcolor: "crimson" }}
+                  children={`${user.firstName[0]}`}
+                />
               </IconButton>
             </Tooltip>
             <Menu
@@ -179,7 +183,11 @@ const NavBar = () => {
             {/* <Button variant="text" sx={{ color: "white" }} startIcon={<LoginIcon />}>
               Sign In
             </Button> */}
-            <IconButton sx={{ color: "white" }} component={RouterLink} to="/sign-up">
+            <IconButton
+              sx={{ color: "white" }}
+              component={RouterLink}
+              to="/sign-up"
+            >
               <LoginIcon />
             </IconButton>
           </Box>

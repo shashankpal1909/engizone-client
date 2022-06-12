@@ -19,11 +19,9 @@ const Contact = () => {
     <Container
       maxWidth={"sm"}
       sx={{
-        marginTop: 8,
-        marginBottom: 8,
         display: "flex",
-        pt: { sx: "1rem", md: "2rem" },
-        pb: { sx: "1rem", md: "2rem" },
+        pt: { xs: "2rem", md: "4rem" },
+        pb: { xs: "2rem", md: "4rem" },
         justifyContent: "center",
         alignItems: "center",
       }}
@@ -79,8 +77,20 @@ const Contact = () => {
                 rows={8}
               />
             </Grid>
-            <Grid item sx={{ width: "inherit", display: "flex", justifyContent: "flex-end" }}>
-              <Fab type="submit" component={Button} color="primary" variant="extended">
+            <Grid
+              item
+              sx={{
+                width: "inherit",
+                display: "flex",
+                justifyContent: "flex-end",
+              }}
+            >
+              <Fab
+                type="submit"
+                component={Button}
+                color="primary"
+                variant="extended"
+              >
                 <SendIcon sx={{ mr: 1 }} /> Send
               </Fab>
             </Grid>

@@ -2,16 +2,15 @@ import * as api from "../../api";
 
 const UserReducer = (state, action) => {
   switch (action.type) {
-    case "LOGIN":
-      console.log("=>(UserReducer.js:25) LOGIN");
+    case "SIGN_IN":
+    case "SIGN_UP":
+    case "SET_DETAILS":
       return { ...state, user: action.payload };
-    // console.log("=>(UserReducer.js:26) newState", newState);
-    // return newState;
-    case "LOGOUT":
+    case "SIGN_OUT":
       localStorage.removeItem("userJWT");
       return { ...state, user: undefined };
-    case "GET_DETAILS":
-      return { ...state, user: action.payload };
+    case "SET_LOADING":
+      return { ...state, loading: action.payload }
     default:
       return state;
   }

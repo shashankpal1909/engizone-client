@@ -1,13 +1,7 @@
 import React from "react";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import "./App.css";
 import { Box, Container } from "@mui/material";
-// import Questions from "./pages/Questions";
-import { NavBar, Footer } from "./components";
-import { Home, Questions, QuestionDetail, SignIn, SignUp, Contact } from "./pages";
-import "./App.css";
-
 import AppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
@@ -16,7 +10,16 @@ import useScrollTrigger from "@mui/material/useScrollTrigger";
 import Fab from "@mui/material/Fab";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import Zoom from "@mui/material/Zoom";
+import LinearProgress from '@mui/material/LinearProgress';
+
+// import Questions from "./pages/Questions";
+
+import { NavBar, Footer } from "./components";
+import { Home, Questions, QuestionDetail, SignIn, SignUp, Contact, EditProfile } from "./pages";
 import Profile from "./pages/Profile";
+import "./App.css";
+
+import Context from "./context/user/context"
 
 const themeOptions = createTheme({
   palette: {
@@ -34,11 +37,9 @@ const themeOptions = createTheme({
   },
 });
 
-function ScrollTop(props) {
+const ScrollTop = (props) => {
   const { children, window } = props;
-  // Note that you normally won't need to set the window ref as useScrollTrigger
-  // will default to window.
-  // This is only being set here because the demo is in an iframe.
+
   const trigger = useScrollTrigger({
     target: window ? window() : undefined,
     disableHysteresis: true,
@@ -69,7 +70,18 @@ function ScrollTop(props) {
   );
 }
 
+
+const LinearIndeterminate = () => {
+  return (
+    <Box sx={{ width: '100%' }}>
+      <LinearProgress color="secondary" />
+    </Box>
+  );
+}
+
 const App = () => {
+  const { loading } = React.useContext(Context);
+
   return (
     <ThemeProvider theme={themeOptions}>
       <Router>
@@ -81,6 +93,7 @@ const App = () => {
           }}
         >
           <NavBar />
+          {loading && <LinearIndeterminate />}
           <Toolbar id="back-to-top-anchor" sx={{ minHeight: "0px !important" }} />
           <Routes>
             <Route path="/" element={<Home />} />
@@ -90,6 +103,7 @@ const App = () => {
             <Route path={`/questions/${1}`} element={<QuestionDetail />} />
             <Route path="/contact" element={<Contact />} />
             <Route path="/profile" element={<Profile />} />
+            <Route path="/profile/edit" element={<EditProfile />} />
           </Routes>
           <Footer />
           <ScrollTop>

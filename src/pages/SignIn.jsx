@@ -24,7 +24,7 @@ import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 
 import { Link as RouterLink, useNavigate } from "react-router-dom";
-import UserContext from "../context/user/UserContext";
+import UserContext from "../context/user/context";
 
 const SignIn = () => {
   const { user, signIn } = React.useContext(UserContext);
@@ -66,8 +66,8 @@ const SignIn = () => {
       <CssBaseline />
       <Box
         sx={{
-          marginTop: 8,
-          marginBottom: 8,
+          pt: { xs: "2rem", md: "4rem" },
+          pb: { xs: "2rem", md: "4rem" },
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
@@ -98,7 +98,9 @@ const SignIn = () => {
             autoFocus
           />
           <FormControl margin="normal" fullWidth variant="outlined">
-            <InputLabel htmlFor="outlined-adornment-password">Password</InputLabel>
+            <InputLabel htmlFor="outlined-adornment-password">
+              Password
+            </InputLabel>
             <OutlinedInput
               id="outlined-adornment-password"
               type={showPassword ? "text" : "password"}
@@ -123,7 +125,12 @@ const SignIn = () => {
             control={<Checkbox value="remember" color="primary" />}
             label="Remember me"
           />
-          <Button type="submit" fullWidth variant="contained" sx={{ mt: 3, mb: 2 }}>
+          <Button
+            type="submit"
+            fullWidth
+            variant="contained"
+            sx={{ mt: 3, mb: 2 }}
+          >
             Sign In
           </Button>
           <Grid container>
