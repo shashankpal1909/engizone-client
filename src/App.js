@@ -13,8 +13,7 @@ import Zoom from "@mui/material/Zoom";
 import LinearProgress from '@mui/material/LinearProgress';
 
 // import Questions from "./pages/Questions";
-
-import { NavBar, Footer } from "./components";
+import { NavBar, Footer, Askquestion } from "./components";
 import { Home, Questions, QuestionDetail, SignIn, SignUp, Contact, EditProfile } from "./pages";
 import Profile from "./pages/Profile";
 import "./App.css";
@@ -104,6 +103,7 @@ const App = () => {
             <Route path="/contact" element={<Contact />} />
             <Route path="/profile" element={<Profile />} />
             <Route path="/profile/edit" element={<EditProfile />} />
+            <Route path="/ask-question" element={<Askquestion />} />
           </Routes>
           <Footer />
           <ScrollTop>
