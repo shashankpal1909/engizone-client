@@ -2,6 +2,7 @@ import { Box, Button, Typography, IconButton, Grid, Fab } from "@mui/material";
 import HeaderImage from "../assets/HeaderImage.jpg";
 import React from "react";
 // import { PhotoCamera } from "@mui/icons-material";
+import { Link as RouterLink } from "react-router-dom";
 import QuestionAnswerIcon from "@mui/icons-material/QuestionAnswer";
 const Header = () => {
   return (
@@ -41,16 +42,21 @@ const Header = () => {
           color={"text.secondary"}
           paragraph
         >
-          EngiZone is a platform where you can post your question and get best answer instantly. We
-          want to connect peple who wants to share their knowledge in effective way to the people
-          who need it.
+          EngiZone is a platform where you can post your question and get best
+          answer instantly. We want to connect peple who wants to share their
+          knowledge in effective way to the people who need it.
         </Typography>
         <div>
           {/* <Button variant="contained">Ask Question</Button>
           <IconButton color="primary">
             <PhotoCamera />
           </IconButton> */}
-          <Fab color="primary" variant="extended">
+          <Fab
+            color="primary"
+            LinkComponent={RouterLink}
+            to="/ask-question"
+            variant="extended"
+          >
             <QuestionAnswerIcon sx={{ mr: 1 }} /> Ask Question
           </Fab>
         </div>

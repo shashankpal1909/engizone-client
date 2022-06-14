@@ -30,7 +30,7 @@ const Question = () => {
   const handleBookmark = (bookmark) => {
     console.log(bookmark);
 
-    setBookmark(!bookmark);
+    setBookmark((prev) => !prev);
   };
   // useEffect(() => {
   //   handleBookmark(bookmark);
@@ -45,7 +45,7 @@ const Question = () => {
             <CardActions>
               <IconButton
                 aria-label="add to favorites"
-                onClick={(favorite) => setFavorite(!favorite)}
+                onClick={(favorite) => setFavorite((prev) => !prev)}
               >
                 <FavoriteIcon sx={!favorite ? { color: red[500] } : {}} />
               </IconButton>
@@ -57,7 +57,7 @@ const Question = () => {
                 {!bookmark ? <BookmarkAddedIcon sx={{ color: "green" }} /> : <BookmarkIcon />}
               </IconButton>
               <IconButton aria-label="share">
-                <ShareIcon sx={{ color: "blue" }} />
+                <ShareIcon />
               </IconButton>
               <IconButton aria-label="settings">
                 <MoreVertIcon />

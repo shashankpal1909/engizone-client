@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { Box, TextField, IconButton, InputAdornment } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 
@@ -18,7 +18,7 @@ const SearchBar = ({ setSearchQuery }) => {
         onInput={(e) => {
           setSearchQuery(e.target.value);
         }}
-        sx={{ borderRadius: "20" }}
+        sx={{ borderRadius: "100rem" }}
         // padding={0}
         // label="Search bar"
         variant="outlined"
@@ -27,13 +27,13 @@ const SearchBar = ({ setSearchQuery }) => {
         // pa={0}
         InputProps={{
           endAdornment: (
-            <InputAdornment>
+            <InputAdornment position="end">
               <IconButton
               // type="submit"
               // variant="outline-secondary"
               // aria-label="search"
               >
-                <SearchIcon sx={{ color: "blue" }} />
+                <SearchIcon />
               </IconButton>
             </InputAdornment>
           ),

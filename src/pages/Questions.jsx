@@ -42,12 +42,15 @@ const Questions = () => {
         direction={"column"}
         // alignItems="flex-end"
         sx={{
-          pt: { xs: "2rem", md: "4rem" },
-          pb: { xs: "2rem", md: "4rem" },
+          pt: { xs: "2rem", lg: "4rem" },
+          pb: { xs: "2rem", lg: "4rem" },
         }}
       >
         <Grid item>
-          <SearchBar searchQuery={searchQuery} setSearchQuery={setSearchQuery} />
+          <SearchBar
+            searchQuery={searchQuery}
+            setSearchQuery={setSearchQuery}
+          />
           <Grid item container>
             {dataFiltered.map((d) => (
               <Grid item>{d}</Grid>
@@ -60,14 +63,19 @@ const Questions = () => {
         <Grid item>
           <Typography>Page: {page}</Typography>
           <Pagination
-            count={10}
+            sx={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+            count={99}
             page={page}
             onChange={handleChange}
             showFirstButton
             showLastButton
             size="small"
             variant="outlined"
-            shape="rounded"
+            shape="circular"
             color="primary"
           />
         </Grid>

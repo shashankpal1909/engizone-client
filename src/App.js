@@ -10,15 +10,25 @@ import useScrollTrigger from "@mui/material/useScrollTrigger";
 import Fab from "@mui/material/Fab";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import Zoom from "@mui/material/Zoom";
-import LinearProgress from '@mui/material/LinearProgress';
+import LinearProgress from "@mui/material/LinearProgress";
 
 // import Questions from "./pages/Questions";
-import { NavBar, Footer, Askquestion } from "./components";
-import { Home, Questions, QuestionDetail, SignIn, SignUp, Contact, EditProfile } from "./pages";
-import Profile from "./pages/Profile";
+import { NavBar, Footer } from "./components";
+import {
+  Home,
+  Questions,
+  AskQuestion,
+  QuestionDetail,
+  SignIn,
+  SignUp,
+  Contact,
+  Profile,
+  EditProfile,
+} from "./pages";
+
 import "./App.css";
 
-import Context from "./context/user/context"
+import Context from "./context/user/context";
 
 const themeOptions = createTheme({
   palette: {
@@ -32,6 +42,9 @@ const themeOptions = createTheme({
     },
   },
   typography: {
+    // fontFamily: "Montserrat",
+    // fontFamily: "Raleway",
+    // fontFamily: "IBM Plex Sans",
     fontFamily: "Didact Gothic",
   },
 });
@@ -46,7 +59,9 @@ const ScrollTop = (props) => {
   });
 
   const handleClick = (event) => {
-    const anchor = (event.target.ownerDocument || document).querySelector("#back-to-top-anchor");
+    const anchor = (event.target.ownerDocument || document).querySelector(
+      "#back-to-top-anchor"
+    );
 
     if (anchor) {
       anchor.scrollIntoView({
@@ -67,16 +82,15 @@ const ScrollTop = (props) => {
       </Box>
     </Zoom>
   );
-}
-
+};
 
 const LinearIndeterminate = () => {
   return (
-    <Box sx={{ width: '100%' }}>
+    <Box sx={{ width: "100%" }}>
       <LinearProgress color="secondary" />
     </Box>
   );
-}
+};
 
 const App = () => {
   const { loading } = React.useContext(Context);
@@ -93,7 +107,10 @@ const App = () => {
         >
           <NavBar />
           {loading && <LinearIndeterminate />}
-          <Toolbar id="back-to-top-anchor" sx={{ minHeight: "0px !important" }} />
+          <Toolbar
+            id="back-to-top-anchor"
+            sx={{ minHeight: "0px !important" }}
+          />
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/sign-in" element={<SignIn />} />
@@ -103,7 +120,7 @@ const App = () => {
             <Route path="/contact" element={<Contact />} />
             <Route path="/profile" element={<Profile />} />
             <Route path="/profile/edit" element={<EditProfile />} />
-            <Route path="/ask-question" element={<Askquestion />} />
+            <Route path="/ask-question" element={<AskQuestion />} />
           </Routes>
           <Footer />
           <ScrollTop>
