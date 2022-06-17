@@ -7,6 +7,7 @@ import {
   Grid,
   IconButton,
   Typography,
+  Divider,
 } from "@mui/material";
 import { red } from "@mui/material/colors";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
@@ -30,13 +31,13 @@ const Comment = (props) => {
                 },
               }}
             >
-              <Grid container justifyContent="space-between">
+              <Grid container p={0.5} pt={0} justifyContent="space-between">
                 <Grid
                   item
                   display="flex"
                   sx={{
-                    alignItems: "flex-end",
-                    justifyContent: "space-between",
+                    alignItems: "center",
+                    justifyContent: "center",
                   }}
                 >
                   <Typography fontWeight="bold" componant="span" mr={1}>
@@ -44,14 +45,17 @@ const Comment = (props) => {
                   </Typography>
                   <Typography
                     variant="caption"
-                    fontWeight="bold"
-                    componant="span"
+                    // fontWeight="bold"
+                    component="span"
                   >
-                    {"5 min "} ago
+                    {"5 mins "} ago
                   </Typography>
                 </Grid>
                 <Grid item>
-                  <IconButton sx={{ padding: 0 }}>
+                  <IconButton
+                    size="small"
+                    // sx={{ padding: 0 }}
+                  >
                     <MoreVertIcon />
                   </IconButton>
                 </Grid>

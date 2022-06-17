@@ -13,8 +13,11 @@ import {
   Collapse,
   TextField,
   Divider,
+  Fab,
+  InputAdornment,
 } from "@mui/material";
-
+import SendIcon from "@mui/icons-material/Send";
+import ClearIcon from "@mui/icons-material/Clear";
 import { Comment } from "../components";
 import { styled } from "@mui/material/styles";
 import { red } from "@mui/material/colors";
@@ -57,8 +60,9 @@ const Solution = () => {
         <CardMedia component="img" image={HeaderImage} />
         <CardContent>
           <Typography variant="body1" color="text.primary">
-            Ex sit culpa dolor ut. Est reprehenderit duis minim elit. Velit culpa qui reprehenderit
-            occaecat ipsum eu eiusmod quis dolore tempor elit qui quis laborum.
+            Ex sit culpa dolor ut. Est reprehenderit duis minim elit. Velit
+            culpa qui reprehenderit occaecat ipsum eu eiusmod quis dolore tempor
+            elit qui quis laborum.
           </Typography>
         </CardContent>
         <CardActions disableSpacing>
@@ -87,7 +91,13 @@ const Solution = () => {
         </CardActions>
         <Collapse in={comments} timeout="auto" unmountOnExit>
           <Divider />
-          <Typography variant="h6" fontWeight="bold" disableGutters pl={2} pr={2}>
+          <Typography
+            variant="h6"
+            fontWeight="bold"
+            disableGutters
+            pl={2}
+            pr={2}
+          >
             Comments
           </Typography>
           <Grid container direction="column" padding={1} spacing={1}>
@@ -96,17 +106,43 @@ const Solution = () => {
                 <Avatar sx={{ bgcolor: red[500] }} />
                 <TextField
                   multiline
-                  size="small"
-                  variant="filled"
+                  size="medium"
+                  variant="outlined"
+                  label="Comment"
                   placeholder="Your Thoughts"
                   sx={{ width: "100%", mr: 1 }}
+                  InputProps={{
+                    endAdornment: (
+                      <InputAdornment position="end">
+                        <IconButton
+                          size="small"
+                          // sx={{ mr: 0.5 }}
+                          aria-label="toggle password visibility"
+                          edge="end"
+                        >
+                          <ClearIcon />
+                        </IconButton>
+                      </InputAdornment>
+                    ),
+                  }}
                 />
-                <Button variant="contained" color="primary">
+                <IconButton
+                  color="primary"
+                  size="large"
+                  // aria-label="add to shopping cart"
+                >
+                  <SendIcon />
+                </IconButton>
+                {/* <Button
+                  variant="contained"
+                  endIcon={<SendIcon />}
+                  color="primary"
+                >
                   Post
-                </Button>
-                <Button variant="outlined" color="primary">
+                </Button> */}
+                {/* <Button variant="outlined" color="primary">
                   Cancel
-                </Button>
+                </Button> */}
               </CardActions>
             </Grid>
             <Comment parent />

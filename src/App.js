@@ -24,6 +24,7 @@ import {
   Contact,
   Profile,
   EditProfile,
+  Resources,
 } from "./pages";
 
 import "./App.css";
@@ -121,6 +122,7 @@ const App = () => {
             <Route path="/profile" element={<Profile />} />
             <Route path="/profile/edit" element={<EditProfile />} />
             <Route path="/ask-question" element={<AskQuestion />} />
+            <Route path="/resources" element={<Resources />} />
           </Routes>
           <Footer />
           <ScrollTop>

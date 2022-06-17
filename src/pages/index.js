@@ -7,4 +7,4 @@ export { default as QuestionDetail } from "./QuestionDetail";
 export { default as Profile } from "./Profile";
 export { default as EditProfile } from "./EditProfile";
 export { default as AskQuestion } from "./AskQuestion";
-// export {default as Resources} from './Resources'
+export { default as Resources } from "./Resources";
