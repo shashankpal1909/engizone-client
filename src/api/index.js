@@ -13,3 +13,16 @@ export const signIn = (data) => API.post("/users/sign-in", data);
 export const signUp = (data) => API.post("/users/sign-up", data);
 
 export const getUser = () => API.get("/users/me");
+export const getUserById = (id) => API.get(`/users/${id}`);
+
+export const addQuestion = (data) => API.post("/questions", data);
+
+export const getQuestions = () => API.get("/questions/");
+export const getQuestionById = (id) => API.get(`/questions/${id}`);
+
+export const addSolution = (data) => API.post("/solutions", data);
+export const voteSolution = (id, data) =>
+  API.post(`/solutions/${id}/vote`, data);
+
+export const addComment = (data) => API.post("/comments", data);
+export const getCommentById = (id) => API.get(`/comments/${id}`);

@@ -1,5 +1,3 @@
-import * as api from "../../api";
-
 const UserReducer = (state, action) => {
   switch (action.type) {
     case "SIGN_IN":
@@ -10,7 +8,7 @@ const UserReducer = (state, action) => {
       localStorage.removeItem("userJWT");
       return { ...state, user: undefined };
     case "SET_LOADING":
-      return { ...state, loading: action.payload }
+      return { ...state, loading: action.payload };
     default:
       return state;
   }

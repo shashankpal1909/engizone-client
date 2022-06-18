@@ -12,8 +12,8 @@ const State = ({ children }) => {
   const [state, dispatch] = React.useReducer(Reducer, initialState);
 
   React.useEffect(() => {
-    dispatch({ type: "SET_LOADING", payload: true });
     if (userJWT) {
+      dispatch({ type: "SET_LOADING", payload: true });
       api
         .getUser()
         .then((res) => {
@@ -79,6 +79,7 @@ const State = ({ children }) => {
         signIn,
         signUp,
         signOut,
+        dispatch,
         ...state,
       }}
     >
