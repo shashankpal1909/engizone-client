@@ -10,3 +10,4 @@ export { default as Footer } from "./Footer";
 export { default as ContactUs } from "./ContactUs";
 export { default as SearchBar } from "./SearchBar";
 export { default as AddSolution } from "./AddSolution";
+export { default as Loading } from "./Loading";

@@ -17,7 +17,8 @@ export const getUserById = (id) => API.get(`/users/${id}`);
 
 export const addQuestion = (data) => API.post("/questions", data);
 
-export const getQuestions = () => API.get("/questions/");
+export const getQuestions = (page) =>
+  API.get(`/questions?skip=${(page - 1) * 10}&limit=10`);
 export const getQuestionById = (id) => API.get(`/questions/${id}`);
 
 export const addSolution = (data) => API.post("/solutions", data);

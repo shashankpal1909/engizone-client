@@ -1,3 +1,4 @@
+import React from "react";
 import {
   Box,
   Card,
@@ -8,15 +9,18 @@ import {
   Button,
 } from "@mui/material";
 
-import React from "react";
-
 const ContactUs = () => {
   return (
     <Box spacing={2} p={6}>
-      <Card style={{ maxWidth: 500, margin: "0 auto", padding: "20px 5px"}}>
+      <Card style={{ maxWidth: 500, margin: "0 auto", padding: "20px 5px" }}>
         <form>
           <CardContent>
-            <Typography variant="h3" fontWeight={400} gutterBottom textAlign="center">
+            <Typography
+              variant="h3"
+              fontWeight={400}
+              gutterBottom
+              textAlign="center"
+            >
               Contact Us
             </Typography>
             <Stack spacing={3}>

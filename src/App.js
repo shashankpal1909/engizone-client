@@ -1,11 +1,8 @@
 import React from "react";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import { Box, Container } from "@mui/material";
-import AppBar from "@mui/material/AppBar";
+import { Box } from "@mui/material";
 import Toolbar from "@mui/material/Toolbar";
-import Typography from "@mui/material/Typography";
-import CssBaseline from "@mui/material/CssBaseline";
 import useScrollTrigger from "@mui/material/useScrollTrigger";
 import Fab from "@mui/material/Fab";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
@@ -46,7 +43,8 @@ const themeOptions = createTheme({
     // fontFamily: "Montserrat",
     // fontFamily: "Raleway",
     // fontFamily: "IBM Plex Sans",
-    fontFamily: "Didact Gothic",
+    // fontFamily: "Didact Gothic",
+    fontFamily: "Poppins",
   },
 });
 

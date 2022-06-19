@@ -1,4 +1,12 @@
 import React from "react";
+import moment from "moment";
+import parse from "html-react-parser";
+import { red } from "@mui/material/colors";
+import FavoriteIcon from "@mui/icons-material/Favorite";
+import BookmarkIcon from "@mui/icons-material/Bookmark";
+import BookmarkAddedIcon from "@mui/icons-material/BookmarkAdded";
+import ShareIcon from "@mui/icons-material/Share";
+import MoreVertIcon from "@mui/icons-material/MoreVert";
 import {
   Avatar,
   Typography,
@@ -7,29 +15,14 @@ import {
   CardHeader,
   CardContent,
   CardActions,
-  CardMedia,
   IconButton,
   Chip,
   Divider,
 } from "@mui/material";
-import { red } from "@mui/material/colors";
-import FavoriteIcon from "@mui/icons-material/Favorite";
-import BookmarkIcon from "@mui/icons-material/Bookmark";
-import BookmarkAddedIcon from "@mui/icons-material/BookmarkAdded";
-import ShareIcon from "@mui/icons-material/Share";
-import MoreVertIcon from "@mui/icons-material/MoreVert";
-import HeaderImage from "../assets/HeaderImage.jpg";
-
-import moment from "moment";
-
-import { getUserById } from "../api";
-import parse from "html-react-parser";
 
 const Question = ({ data, author }) => {
   const [bookmark, setBookmark] = React.useState(true);
   const [favorite, setFavorite] = React.useState(true);
-
-  // const [author, setAuthor] = React.useState({});
 
   React.useEffect(() => {
     console.log(data);
@@ -68,7 +61,6 @@ const Question = ({ data, author }) => {
           }
           title={`${author?.firstName} ${author?.lastName}`}
           subheader={moment(data.createdAt).fromNow()}
-          // subheaderTypographyProps={{ variant: "caption" }}
         />
         <Divider />
         {/* <CardMedia component="img" image={HeaderImage} /> */}
@@ -77,8 +69,6 @@ const Question = ({ data, author }) => {
             {data?.title}
           </Typography>
           {parse(data?.text)}
-          {/* <Typography variant="body1" color="text.primary">
-          </Typography> */}
         </CardContent>
         <Divider />
         <CardActions sx={{ p: "1rem" }}>

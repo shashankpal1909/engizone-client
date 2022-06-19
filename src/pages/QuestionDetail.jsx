@@ -1,11 +1,10 @@
 import React from "react";
 import { Button, Container, Grid, Skeleton, Typography } from "@mui/material";
-import { AddSolution, Question, Solution } from "../components";
+import { AddSolution, Loading, Question, Solution } from "../components";
 import { useParams } from "react-router-dom";
 
 import { addSolution, getQuestionById, getUserById } from "../api";
 import UserContext from "../context/user/context";
-import { Loading } from "../components/Loading";
 
 const QuestionDetail = () => {
   const { id } = useParams();

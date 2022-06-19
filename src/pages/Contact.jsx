@@ -10,7 +10,6 @@ import {
   CssBaseline,
   Avatar,
 } from "@mui/material";
-import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import SendIcon from "@mui/icons-material/Send";
 import ContactSupportIcon from "@mui/icons-material/ContactSupport";
 

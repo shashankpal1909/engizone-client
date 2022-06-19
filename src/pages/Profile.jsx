@@ -18,13 +18,6 @@ import {
   Typography,
 } from "@mui/material";
 
-import { red } from "@mui/material/colors";
-import FavoriteIcon from "@mui/icons-material/Favorite";
-import BookmarkIcon from "@mui/icons-material/Bookmark";
-import BookmarkAddedIcon from "@mui/icons-material/BookmarkAdded";
-import ShareIcon from "@mui/icons-material/Share";
-import MoreVertIcon from "@mui/icons-material/MoreVert";
-
 import { Link as RouterLink } from "react-router-dom";
 
 import EditIcon from "@mui/icons-material/Edit";
@@ -97,7 +90,9 @@ const Profile = () => {
               </IconButton>
             </CardActions>
           }
-          title={user ? user?.firstName + " " + user?.lastName : "Name PlaceHolder"}
+          title={
+            user ? user?.firstName + " " + user?.lastName : "Name PlaceHolder"
+          }
           subheader="Joined Yesterday"
           titleTypographyProps={{ variant: "h6", color: "secondary" }}
         />

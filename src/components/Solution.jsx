@@ -7,28 +7,31 @@ import {
   CardHeader,
   CardContent,
   CardActions,
-  CardMedia,
   IconButton,
-  Button,
   Collapse,
   TextField,
   Divider,
-  Fab,
   InputAdornment,
+  Fab,
+  Box,
 } from "@mui/material";
 import SendIcon from "@mui/icons-material/Send";
 import ClearIcon from "@mui/icons-material/Clear";
-import { Comment } from "../components";
 import { styled } from "@mui/material/styles";
 import { red } from "@mui/material/colors";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import ThumbUpIcon from "@mui/icons-material/ThumbUp";
+import ThumbUpOutlinedIcon from "@mui/icons-material/ThumbUpOutlined";
 import ThumbDownIcon from "@mui/icons-material/ThumbDown";
-import HeaderImage from "../assets/HeaderImage.jpg";
-import { addComment, getCommentById, getUserById, voteSolution } from "../api";
+import ThumbDownAltOutlinedIcon from "@mui/icons-material/ThumbDownAltOutlined";
 import moment from "moment";
 import parse from "html-react-parser";
+
+import { Comment } from "../components";
+import { addComment, getCommentById, getUserById, voteSolution } from "../api";
+import UserContext from "../context/user/context";
+
 const CommentSection = styled((props) => {
   const { expand, ...other } = props;
   return <IconButton {...other} />;
@@ -42,7 +45,7 @@ const CommentSection = styled((props) => {
 
 const RoundedTextField = styled(TextField)({
   "& .MuiOutlinedInput-root": {
-    // padding: "0 0.5rem",
+    padding: "0.1rem 0.5rem 0.1rem 0.1rem",
     "& fieldset": {
       borderRadius: "10rem",
     },
@@ -50,14 +53,13 @@ const RoundedTextField = styled(TextField)({
 });
 
 const Solution = ({ solution }) => {
-  const [currentSolution, setCurrentSolution] = React.useState(solution);
-
-  const [showComments, setShowComments] = React.useState(false);
-  const [comments, setComments] = React.useState([]);
-
-  const [commentText, setCommentText] = React.useState("");
-
   const [author, setAuthor] = React.useState({});
+  const [comments, setComments] = React.useState([]);
+  const [commentText, setCommentText] = React.useState("");
+  const [currentSolution, setCurrentSolution] = React.useState(solution);
+  const [showComments, setShowComments] = React.useState(false);
+
+  const { user } = React.useContext(UserContext);
 
   React.useEffect(() => {
     // setSolution(data);
@@ -69,13 +71,13 @@ const Solution = ({ solution }) => {
         );
         setAuthor(response.data);
 
-        currentSolution.comments.forEach((id) => {
-          getCommentById(id).then((response) => {
+        currentSolution.comments.forEach(async (id) => {
+          await getCommentById(id).then((response) => {
             console.log(
               "🚀 ~ file: Solution.jsx ~ line 72 ~ getCommentById ~ response",
               response
             );
-            setComments((prev) => prev.concat(response.data));
+            setComments((prev) => [response.data].concat(prev));
           });
         });
       })
@@ -87,14 +89,15 @@ const Solution = ({ solution }) => {
       });
   }, []);
 
-  const handleSubmit = async () => {
+  const handleSubmit = async (event) => {
+    event.preventDefault();
     addComment({ solutionId: currentSolution._id, text: commentText })
       .then((response) => {
         console.log(
           "🚀 ~ file: Solution.jsx ~ line 89 ~ addComment ~ response",
           response
         );
-        setComments((prev) => prev.concat(response.data.comment));
+        setComments((prev) => [response.data.comment].concat(prev));
         setCommentText("");
       })
       .catch((error) => {
@@ -147,11 +150,19 @@ const Solution = ({ solution }) => {
           <Grid container justifyContent="space-between">
             <Grid item>
               <IconButton aria-label="upVote" onClick={() => handleVote(1)}>
-                <ThumbUpIcon />
+                {currentSolution?.upVotes.find((id) => id === user?._id) ? (
+                  <ThumbUpIcon color="primary" />
+                ) : (
+                  <ThumbUpOutlinedIcon />
+                )}
               </IconButton>
               {currentSolution?.upVotes.length}
               <IconButton aria-label="downVote" onClick={() => handleVote(-1)}>
-                <ThumbDownIcon />
+                {currentSolution?.downVotes.find((id) => id === user?._id) ? (
+                  <ThumbDownIcon color="primary" />
+                ) : (
+                  <ThumbDownAltOutlinedIcon />
+                )}
               </IconButton>
               {currentSolution?.downVotes.length}
             </Grid>
@@ -183,7 +194,7 @@ const Solution = ({ solution }) => {
                   variant="outlined"
                   // label="Comment"
                   placeholder="Your Thoughts"
-                  sx={{ mr: 0.5 }}
+                  // sx={{ mr: 0.5 }}
                   fullWidth
                   value={commentText}
                   onChange={(event) => setCommentText(event.target.value)}
@@ -193,23 +204,24 @@ const Solution = ({ solution }) => {
                         <IconButton
                           onClick={() => setCommentText("")}
                           size="small"
-                          // sx={{ mr: 0.5 }}
+                          sx={{ mr: "1px" }}
                           aria-label="toggle password visibility"
                           edge="end"
                         >
                           <ClearIcon />
                         </IconButton>
+                        <IconButton
+                          onClick={handleSubmit}
+                          color="primary"
+                          size="medium"
+                          type="submit"
+                        >
+                          <SendIcon />
+                        </IconButton>
                       </InputAdornment>
                     ),
                   }}
                 />
-                <IconButton
-                  onClick={handleSubmit}
-                  color="primary"
-                  size="medium"
-                >
-                  <SendIcon />
-                </IconButton>
               </CardActions>
             </Grid>
             {comments.map((comment, index) => (

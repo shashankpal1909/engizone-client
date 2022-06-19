@@ -1,10 +1,9 @@
 import React from "react";
 import { Typography, Pagination, Grid, Container } from "@mui/material";
 
-import { QuestionPreview, SearchBar } from "../components";
-import { getQuestions, getUserById } from "../api";
+import { QuestionPreview, SearchBar, Loading } from "../components";
+import { getQuestions } from "../api";
 import UserContext from "../context/user/context";
-import { Loading } from "../components/Loading";
 
 const Questions = () => {
   const [page, setPage] = React.useState(1);
@@ -13,16 +12,18 @@ const Questions = () => {
   const { dispatch, loading } = React.useContext(UserContext);
 
   const [questions, setQuestions] = React.useState([]);
+  const [questionsCount, setQuestionsCount] = React.useState(0);
 
   React.useEffect(() => {
     dispatch({ type: "SET_LOADING", payload: true });
-    getQuestions()
+    getQuestions(page)
       .then((response) => {
         console.log(
           "🚀 ~ file: Questions.jsx ~ line 16 ~ .then ~ response",
           response
         );
-        setQuestions(response.data);
+        setQuestions(response.data.questions);
+        setQuestionsCount(response.data.count);
         // getUserById(response.data.author)
         //   .then((response) => {
         //     console.log(
@@ -45,7 +46,7 @@ const Questions = () => {
           error
         );
       });
-  }, [dispatch]);
+  }, [dispatch, page]);
 
   const filterData = (query, data) => {
     if (!query) {
@@ -91,23 +92,26 @@ const Questions = () => {
             setSearchQuery={setSearchQuery}
           />
           <Grid item container>
-            {dataFiltered.map((d) => (
-              <Grid item>{d}</Grid>
+            {dataFiltered.map((d, index) => (
+              <Grid item key={index}>
+                {d}
+              </Grid>
             ))}
           </Grid>
         </Grid>
+        {questions.length === 0 && <Typography>No Questions Found</Typography>}
         {questions.map((question, index) => (
           <QuestionPreview key={index} data={question} />
         ))}
         <Grid item>
-          <Typography>Page: {page}</Typography>
+          {/* <Typography>Page: {page}</Typography> */}
           <Pagination
             sx={{
               display: "flex",
               justifyContent: "center",
               alignItems: "center",
             }}
-            count={99}
+            count={Math.ceil(questionsCount / 10)}
             page={page}
             onChange={handleChange}
             showFirstButton
