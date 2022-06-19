@@ -1,9 +1,10 @@
-import { Box, Button, Typography, IconButton, Grid, Fab } from "@mui/material";
-import HeaderImage from "../assets/HeaderImage.jpg";
 import React from "react";
-// import { PhotoCamera } from "@mui/icons-material";
 import { Link as RouterLink } from "react-router-dom";
 import QuestionAnswerIcon from "@mui/icons-material/QuestionAnswer";
+import { Box, Typography, Grid, Fab } from "@mui/material";
+
+import HeaderImage from "../assets/HeaderImage.jpg";
+
 const Header = () => {
   return (
     <Grid
@@ -26,13 +27,7 @@ const Header = () => {
         }}
         xs={4}
       >
-        <Typography
-          variant="h4"
-          color="secondary"
-          // sx={{ maxWidth: "500px" }}
-          fontWeight="500"
-          paragraph
-        >
+        <Typography variant="h4" color="secondary" fontWeight="500" paragraph>
           Find best answer for your questions
         </Typography>
         <Typography
@@ -47,10 +42,6 @@ const Header = () => {
           knowledge in effective way to the people who need it.
         </Typography>
         <div>
-          {/* <Button variant="contained">Ask Question</Button>
-          <IconButton color="primary">
-            <PhotoCamera />
-          </IconButton> */}
           <Fab
             color="primary"
             LinkComponent={RouterLink}

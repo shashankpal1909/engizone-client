@@ -1,7 +1,7 @@
-import { Grid, Typography, Box, Fab } from "@mui/material";
 import React from "react";
-
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
+import { Grid, Typography, Box, Fab } from "@mui/material";
+
 import AboutImage from "../assets/AboutImage.jpg";
 
 const About = () => {

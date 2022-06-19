@@ -1,4 +1,7 @@
 import React from "react";
+import { Link as RouterLink, useNavigate } from "react-router-dom";
+import MenuIcon from "@mui/icons-material/Menu";
+import LoginIcon from "@mui/icons-material/Login";
 import {
   AppBar,
   Box,
@@ -11,12 +14,8 @@ import {
   Tooltip,
   MenuItem,
   Link,
-  Fab,
 } from "@mui/material";
-import MenuIcon from "@mui/icons-material/Menu";
-import { Link as RouterLink, useNavigate } from "react-router-dom";
 
-import LoginIcon from "@mui/icons-material/Login";
 import UserContext from "../context/user/context";
 
 const NavBar = () => {
@@ -181,9 +180,6 @@ const NavBar = () => {
           </Box>
         ) : (
           <Box sx={{ flexGrow: 0 }}>
-            {/* <Button variant="text" sx={{ color: "white" }} startIcon={<LoginIcon />}>
-              Sign In
-            </Button> */}
             <IconButton
               sx={{ color: "white" }}
               component={RouterLink}

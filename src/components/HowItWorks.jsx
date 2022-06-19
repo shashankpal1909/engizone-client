@@ -1,12 +1,17 @@
 import React from "react";
-
-import { Typography, Grid, Card, CardContent, CssBaseline, Container } from "@mui/material";
-
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import PaymentsIcon from "@mui/icons-material/Payments";
 import LockIcon from "@mui/icons-material/Lock";
+import {
+  Typography,
+  Grid,
+  Card,
+  CardContent,
+  CssBaseline,
+  Container,
+} from "@mui/material";
 
-function DetailsCard({ title, description, icon }) {
+const DetailsCard = ({ title, description, icon }) => {
   return (
     <Card
       variant="outlined"
@@ -39,7 +44,7 @@ function DetailsCard({ title, description, icon }) {
       </CardContent>
     </Card>
   );
-}
+};
 
 const HowItWorks = () => {
   return (
@@ -69,7 +74,12 @@ const HowItWorks = () => {
                 description={
                   "Our properties are located at prime areas where by there won’t be problem with transportation "
                 }
-                icon={<LocationOnIcon color={"primary"} sx={{ width: "100px", height: "100px" }} />}
+                icon={
+                  <LocationOnIcon
+                    color={"primary"}
+                    sx={{ width: "100px", height: "100px" }}
+                  />
+                }
               />
             </Grid>
             <Grid item>
@@ -78,7 +88,12 @@ const HowItWorks = () => {
                 description={
                   "Our estates comes with good network, portable water, 24hrs light and round the clock security."
                 }
-                icon={<PaymentsIcon color={"secondary"} sx={{ width: "100px", height: "100px" }} />}
+                icon={
+                  <PaymentsIcon
+                    color={"secondary"}
+                    sx={{ width: "100px", height: "100px" }}
+                  />
+                }
               />
             </Grid>
             <Grid item>
@@ -87,7 +102,12 @@ const HowItWorks = () => {
                 description={
                   "We have been in business for over 32 years,for client outside the country you can trust  us to deliver well. "
                 }
-                icon={<LockIcon color={"error"} sx={{ width: "100px", height: "100px" }} />}
+                icon={
+                  <LockIcon
+                    color={"error"}
+                    sx={{ width: "100px", height: "100px" }}
+                  />
+                }
               />
             </Grid>
           </Grid>

@@ -1,5 +1,6 @@
-import { Button, Grid, Typography, Container } from "@mui/material";
 import React from "react";
+import { Button, Grid, Typography, Container } from "@mui/material";
+
 import TextEditor from "../components/TextEditor";
 
 const AddSolution = ({ data, handleChange, handleSubmit }) => {

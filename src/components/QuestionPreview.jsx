@@ -1,4 +1,13 @@
 import React from "react";
+import { Link } from "react-router-dom";
+import moment from "moment";
+import parse from "html-react-parser";
+import { red } from "@mui/material/colors";
+import FavoriteIcon from "@mui/icons-material/Favorite";
+import BookmarkIcon from "@mui/icons-material/Bookmark";
+import BookmarkAddedIcon from "@mui/icons-material/BookmarkAdded";
+import ShareIcon from "@mui/icons-material/Share";
+import MoreVertIcon from "@mui/icons-material/MoreVert";
 import {
   Avatar,
   Typography,
@@ -9,32 +18,15 @@ import {
   CardActions,
   CardActionArea,
   IconButton,
-  ButtonGroup,
-  Button,
   Chip,
-  Box,
-  Paper,
   Divider,
 } from "@mui/material";
-import { red } from "@mui/material/colors";
-import FavoriteIcon from "@mui/icons-material/Favorite";
-import BookmarkIcon from "@mui/icons-material/Bookmark";
-import BookmarkAddedIcon from "@mui/icons-material/BookmarkAdded";
-import ShareIcon from "@mui/icons-material/Share";
-import MoreVertIcon from "@mui/icons-material/MoreVert";
-import { Link } from "react-router-dom";
-import moment from "moment";
-
-import parse from "html-react-parser";
 
 import { getUserById } from "../api";
 
 const QuestionPreview = ({ data }) => {
   const [bookmark, setBookmark] = React.useState(true);
   const [favorite, setFavorite] = React.useState(true);
-
-  const [loading, setLoading] = React.useState(true);
-
   const [author, setAuthor] = React.useState({});
 
   React.useEffect(() => {
@@ -61,7 +53,6 @@ const QuestionPreview = ({ data }) => {
         <CardHeader
           avatar={<Avatar sx={{ bgcolor: red[500] }} aria-label=""></Avatar>}
           action={
-            // <CardActions>
             <>
               <IconButton
                 aria-label="add to favorites"
@@ -86,21 +77,17 @@ const QuestionPreview = ({ data }) => {
                 <MoreVertIcon />
               </IconButton>
             </>
-            // </CardActions>
           }
           title={`${author?.firstName} ${author?.lastName}`}
           subheader={moment(data.createdAt).fromNow()}
-          // subheaderTypographyProps={{ variant: "caption" }}
         />
         <Divider />
         <CardActionArea LinkComponent={Link} to={`/questions/${data?._id}`}>
           <CardContent>
-            <Typography variant="body1" gutterBottom>
+            <Typography variant="body1" fontWeight={"bold"} gutterBottom>
               {data?.title}
             </Typography>
             {parse(data?.text)}
-            {/* <Typography variant="body2" color="text.primary">
-            </Typography> */}
           </CardContent>
         </CardActionArea>
         <Divider />
@@ -127,7 +114,7 @@ const QuestionPreview = ({ data }) => {
             </Grid>
             <Grid item>
               <Chip
-                label={`Answers: ${2}`}
+                label={`Answers: ${data?.solutions.length}`}
                 variant="outlined"
                 color="success"
                 sx={{ ml: { sm: 0, md: 1 } }}

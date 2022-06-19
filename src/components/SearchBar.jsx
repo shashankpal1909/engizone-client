@@ -1,4 +1,5 @@
 import React from "react";
+import SearchIcon from "@mui/icons-material/Search";
 import {
   Box,
   TextField,
@@ -6,7 +7,6 @@ import {
   InputAdornment,
   styled,
 } from "@mui/material";
-import SearchIcon from "@mui/icons-material/Search";
 
 const RoundedTextField = styled(TextField)({
   "& .MuiOutlinedInput-root": {
