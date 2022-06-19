@@ -24,6 +24,7 @@ import {
   Contact,
   Profile,
   EditProfile,
+  Resources,
 } from "./pages";
 
 import "./App.css";
@@ -116,11 +117,12 @@ const App = () => {
             <Route path="/sign-in" element={<SignIn />} />
             <Route path="/sign-up" element={<SignUp />} />
             <Route path="/questions" element={<Questions />} />
-            <Route path={`/questions/${1}`} element={<QuestionDetail />} />
+            <Route path={`/questions/:id`} element={<QuestionDetail />} />
             <Route path="/contact" element={<Contact />} />
             <Route path="/profile" element={<Profile />} />
             <Route path="/profile/edit" element={<EditProfile />} />
             <Route path="/ask-question" element={<AskQuestion />} />
+            <Route path="/resources" element={<Resources />} />
           </Routes>
           <Footer />
           <ScrollTop>

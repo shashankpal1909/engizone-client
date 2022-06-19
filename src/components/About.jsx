@@ -1,47 +1,8 @@
-import {
-  Grid,
-  Typography,
-  List,
-  ListItem,
-  ListItemAvatar,
-  Avatar,
-  ListItemText,
-  Box,
-  Container,
-  Card,
-  CardActionArea,
-  CardMedia,
-  Fab,
-} from "@mui/material";
+import { Grid, Typography, Box, Fab } from "@mui/material";
 import React from "react";
 
-import ImageIcon from "@mui/icons-material/Image";
-import WorkIcon from "@mui/icons-material/Work";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import AboutImage from "../assets/AboutImage.jpg";
-
-function FeaturesList(params) {
-  return (
-    <List sx={{ width: "100%", maxWidth: 360, bgcolor: "background.paper" }}>
-      <ListItem>
-        <ListItemAvatar>
-          <Avatar>
-            <ImageIcon />
-          </Avatar>
-        </ListItemAvatar>
-        <ListItemText primary="Feature #1" secondary="SubTitle" />
-      </ListItem>
-      <ListItem>
-        <ListItemAvatar>
-          <Avatar>
-            <WorkIcon />
-          </Avatar>
-        </ListItemAvatar>
-        <ListItemText primary="Feature #2" secondary="SubTitle" />
-      </ListItem>
-    </List>
-  );
-}
 
 const About = () => {
   return (
@@ -78,14 +39,14 @@ const About = () => {
           align="justify"
           paragraph
         >
-          Lorem ipsum dolor sit amet consectetur, adipisicing elit. Reiciendis repellat excepturi
-          ipsam tempore, quis delectus animi deserunt totam molestiae distinctio est, mollitia sunt,
-          alias ut! Suscipit esse excepturi laudantium sequi?
+          Lorem ipsum dolor sit amet consectetur, adipisicing elit. Reiciendis
+          repellat excepturi ipsam tempore, quis delectus animi deserunt totam
+          molestiae distinctio est, mollitia sunt, alias ut! Suscipit esse
+          excepturi laudantium sequi?
         </Typography>
         <Fab color="primary" variant="extended">
           <ArrowForwardIosIcon sx={{ mr: 1 }} /> See More
         </Fab>
-        {/* <FeaturesList /> */}
       </Grid>
       <Grid
         item
@@ -100,7 +61,11 @@ const About = () => {
           component={"img"}
           src={AboutImage}
           alt="about"
-          sx={{ width: { xs: "90vw", md: "500px" }, mt: "1rem", borderRadius: "1rem" }}
+          sx={{
+            width: { xs: "90vw", md: "500px" },
+            mt: "1rem",
+            borderRadius: "1rem",
+          }}
         />
       </Grid>
     </Grid>

@@ -45,6 +45,7 @@ const NavBar = () => {
         navigate("/questions");
         break;
       case "Resources":
+        navigate("/resources");
         break;
       case "Contact Us":
         navigate("/contact");

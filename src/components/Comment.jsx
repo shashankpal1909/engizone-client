@@ -7,11 +7,34 @@ import {
   Grid,
   IconButton,
   Typography,
+  Divider,
 } from "@mui/material";
 import { red } from "@mui/material/colors";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
+import { getUserById } from "../api";
+import moment from "moment";
+import parse from "html-react-parser";
 
-const Comment = (props) => {
+const Comment = ({ parent, comment }) => {
+  const [author, setAuthor] = React.useState({});
+
+  React.useEffect(() => {
+    getUserById(comment.author)
+      .then((response) => {
+        console.log(
+          "🚀 ~ file: Comment.jsx ~ line 24 ~ .then ~ response",
+          response
+        );
+        setAuthor(response.data);
+      })
+      .catch((error) => {
+        console.log(
+          "🚀 ~ file: Comment.jsx ~ line 28 ~ React.useEffect ~ error",
+          error
+        );
+      });
+  }, []);
+
   return (
     <Grid item container justifyContent="flex-end">
       <Grid item width="56px">
@@ -30,48 +53,41 @@ const Comment = (props) => {
                 },
               }}
             >
-              <Grid container justifyContent="space-between">
+              <Grid container p={0.5} pt={0} justifyContent="space-between">
                 <Grid
                   item
                   display="flex"
                   sx={{
-                    alignItems: "flex-end",
-                    justifyContent: "space-between",
+                    alignItems: "center",
+                    justifyContent: "center",
                   }}
                 >
-                  <Typography fontWeight="bold" componant="span" mr={1}>
-                    Username
+                  <Typography fontWeight="bold" component="span" mr={1}>
+                    {`${author?.firstName} ${author?.lastName}`}
                   </Typography>
                   <Typography
                     variant="caption"
-                    fontWeight="bold"
-                    componant="span"
+                    // fontWeight="bold"
+                    component="span"
                   >
-                    {"5 min "} ago
+                    {moment(comment?.createdAt).fromNow()}
                   </Typography>
                 </Grid>
                 <Grid item>
-                  <IconButton sx={{ padding: 0 }}>
+                  <IconButton
+                    size="small"
+                    // sx={{ padding: 0 }}
+                  >
                     <MoreVertIcon />
                   </IconButton>
                 </Grid>
-                <Grid item>
-                  <Typography variant="body2" align="justify">
-                    Sint proident enim pariatur pariatur in minim ea magna do.
-                    Voluptate deserunt anim magna ullamco sunt. Ullamco aute
-                    sunt veniam quis commodo aliqua adipisicing est anim nostrud
-                    consequat cupidatat aliquip incididunt. Labore mollit nisi
-                    enim adipisicing occaecat commodo voluptate ea non Lorem
-                    dolore.
-                  </Typography>
-                </Grid>
+                <Grid item>{parse(comment?.text)}</Grid>
               </Grid>
             </CardContent>
           </Card>
         </Grid>
         <Grid item container>
-          {props.parent && <Comment />}
-          {props.parent && <Comment />}
+          {parent && <Comment comment={comment} />}
         </Grid>
       </Grid>
     </Grid>

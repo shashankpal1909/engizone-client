@@ -1,6 +1,21 @@
 import React from "react";
-import { Box, TextField, IconButton, InputAdornment } from "@mui/material";
+import {
+  Box,
+  TextField,
+  IconButton,
+  InputAdornment,
+  styled,
+} from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
+
+const RoundedTextField = styled(TextField)({
+  "& .MuiOutlinedInput-root": {
+    padding: "0rem 0.5rem",
+    "& fieldset": {
+      borderRadius: 100,
+    },
+  },
+});
 
 const SearchBar = ({ setSearchQuery }) => {
   return (
@@ -10,7 +25,7 @@ const SearchBar = ({ setSearchQuery }) => {
         event.preventDefault();
       }}
     >
-      <TextField
+      <RoundedTextField
         // id="search-bar"
         // className="text"
         // shape="rounded"
@@ -18,7 +33,6 @@ const SearchBar = ({ setSearchQuery }) => {
         onInput={(e) => {
           setSearchQuery(e.target.value);
         }}
-        sx={{ borderRadius: "100rem" }}
         // padding={0}
         // label="Search bar"
         variant="outlined"

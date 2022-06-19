@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import {
   Avatar,
   Typography,
@@ -8,11 +8,9 @@ import {
   CardContent,
   CardActions,
   CardMedia,
-  CardActionArea,
   IconButton,
-  Button,
   Chip,
-  Box,
+  Divider,
 } from "@mui/material";
 import { red } from "@mui/material/colors";
 import FavoriteIcon from "@mui/icons-material/Favorite";
@@ -22,19 +20,20 @@ import ShareIcon from "@mui/icons-material/Share";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import HeaderImage from "../assets/HeaderImage.jpg";
 
-const Question = () => {
-  const [bookmark, setBookmark] = useState(true);
-  const [favorite, setFavorite] = useState(true);
-  const tags = ["Tag", "Tag", "Tag"];
+import moment from "moment";
 
-  const handleBookmark = (bookmark) => {
-    console.log(bookmark);
+import { getUserById } from "../api";
+import parse from "html-react-parser";
 
-    setBookmark((prev) => !prev);
-  };
-  // useEffect(() => {
-  //   handleBookmark(bookmark);
-  // }, []);
+const Question = ({ data, author }) => {
+  const [bookmark, setBookmark] = React.useState(true);
+  const [favorite, setFavorite] = React.useState(true);
+
+  // const [author, setAuthor] = React.useState({});
+
+  React.useEffect(() => {
+    console.log(data);
+  }, [data]);
 
   return (
     <Grid item>
@@ -42,19 +41,22 @@ const Question = () => {
         <CardHeader
           avatar={<Avatar sx={{ bgcolor: red[500] }} aria-label=""></Avatar>}
           action={
-            <CardActions>
+            <>
               <IconButton
                 aria-label="add to favorites"
-                onClick={(favorite) => setFavorite((prev) => !prev)}
+                onClick={() => setFavorite((prev) => !prev)}
               >
                 <FavoriteIcon sx={!favorite ? { color: red[500] } : {}} />
               </IconButton>
               <IconButton
                 aria-label="bookmark"
-                // onClick={(bookmark) => setBookmark(!bookmark)}
-                onClick={handleBookmark}
+                onClick={() => setBookmark((prev) => !prev)}
               >
-                {!bookmark ? <BookmarkAddedIcon sx={{ color: "green" }} /> : <BookmarkIcon />}
+                {!bookmark ? (
+                  <BookmarkAddedIcon sx={{ color: "green" }} />
+                ) : (
+                  <BookmarkIcon />
+                )}
               </IconButton>
               <IconButton aria-label="share">
                 <ShareIcon />
@@ -62,47 +64,67 @@ const Question = () => {
               <IconButton aria-label="settings">
                 <MoreVertIcon />
               </IconButton>
-            </CardActions>
+            </>
           }
-          title="Username"
-          subheader="Sep 14, 2016"
+          title={`${author?.firstName} ${author?.lastName}`}
+          subheader={moment(data.createdAt).fromNow()}
+          // subheaderTypographyProps={{ variant: "caption" }}
         />
-        {/* <CardActionArea> */}
-        <CardMedia component="img" image={HeaderImage} />
+        <Divider />
+        {/* <CardMedia component="img" image={HeaderImage} /> */}
         <CardContent>
-          <Typography variant="h6">Question Title</Typography>
-          <Typography variant="body1" color="text.primary">
-            Ex sit culpa dolor ut. Est reprehenderit duis minim elit. Velit culpa qui reprehenderit
-            occaecat ipsum eu eiusmod quis dolore tempor elit qui quis laborum.
+          <Typography variant="body1" fontWeight={"bold"} gutterBottom>
+            {data?.title}
           </Typography>
+          {parse(data?.text)}
+          {/* <Typography variant="body1" color="text.primary">
+          </Typography> */}
         </CardContent>
-        {/* </CardActionArea> */}
-        <CardContent>
-          <Box
-            display="flex"
-            flexDirection={{ xs: "column", sm: "row" }}
-            justifyContent={{ xs: "flex-start", sm: "space-between" }}
+        <Divider />
+        <CardActions sx={{ p: "1rem" }}>
+          <Grid
+            spacing={1}
+            container
+            display={"flex"}
+            alignItems={"center"}
+            alignContent={"center"}
+            justifyContent={{ xs: "center", sm: "space-between" }}
           >
-            <CardActions>
-              {/* <ButtonGroup size="small" variant="contained"> */}
-              {tags.map((tag) => (
-                // <Chip label={tag} onClick={() => {}} variant="outlined" />
-                <Button variant="contained">{tag}</Button>
+            <Grid item>
+              {data?.tags.map((tag, index) => (
+                <Chip
+                  color="primary"
+                  key={index}
+                  label={tag}
+                  onClick={() => {}}
+                  sx={{ mr: 1 }}
+                  variant="outlined"
+                />
               ))}
-              {/* </ButtonGroup> */}
-            </CardActions>
-            <CardContent>
-              <Chip label={`Answers: ${2}`} variant="outlined" sx={{ color: "green" }} />
-              <Chip label={`Votes: ${3}`} variant="outlined" />
-              <Chip label={`Views: ${4}`} variant="outlined" />
-              {/* <Typography component="span">Answers: {2}</Typography>
-            <Typography component="span">Votes: {3}</Typography>
-            <Typography component="span">Views: {5}</Typography> */}
-            </CardContent>
-          </Box>
-        </CardContent>
+            </Grid>
+            <Grid item>
+              <Chip
+                label={`Answers: ${2}`}
+                variant="outlined"
+                color="success"
+                sx={{ ml: { sm: 0, md: 1 } }}
+              />
+              <Chip
+                label={`Votes: ${3}`}
+                color="info"
+                variant="outlined"
+                sx={{ ml: 1 }}
+              />
+              <Chip
+                label={`Views: ${4}`}
+                color="info"
+                variant="outlined"
+                sx={{ ml: 1 }}
+              />
+            </Grid>
+          </Grid>
+        </CardActions>
       </Card>
-      {/* </Paper> */}
     </Grid>
   );
 };

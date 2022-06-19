@@ -12,7 +12,39 @@ import React from "react";
 import TextEditor from "../components/TextEditor";
 import HelpIcon from "@mui/icons-material/Help";
 
+import { addQuestion } from "../api";
+import { useNavigate } from "react-router-dom";
+
 const AskQuestion = () => {
+  const [title, setTitle] = React.useState("");
+  const [body, setBody] = React.useState("");
+  const [tags, setTags] = React.useState("");
+
+  const navigate = useNavigate();
+
+  const handleBodyChange = (event, editor) => {
+    setBody(editor.getData());
+  };
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+
+    addQuestion({ title, text: body, tags: tags.split(",") })
+      .then((response) => {
+        console.log(
+          "🚀 ~ file: AskQuestion.jsx ~ line 29 ~ .then ~ response",
+          response
+        );
+        navigate(`/questions/${response.data.question._id}`);
+      })
+      .catch((error) => {
+        console.log(
+          "🚀 ~ file: AskQuestion.jsx ~ line 32 ~ handleSubmit ~ error",
+          error
+        );
+      });
+  };
+
   return (
     <Container
       maxWidth="md"
@@ -22,15 +54,12 @@ const AskQuestion = () => {
       }}
     >
       <Grid
+        component="form"
         container
-        // spacing={2}
-        //   spacing={{ xs: 2, md: 3 }}
-        // pt={2}
-        // pb={6}
         direction="column"
         position="relative"
         justifyContent="center"
-        // alignItems="center"
+        onSubmit={handleSubmit}
       >
         <Grid item container justifyContent={"center"} direction="column">
           <Grid item display={"flex"} justifyContent="center">
@@ -44,25 +73,14 @@ const AskQuestion = () => {
             </Typography>
           </Grid>
         </Grid>
-        {/* <Grid
-          container
-          // boxShadow={4}
-          // padding="15px"
-          borderRadius="0.2rem"
-          direction="column"
-          marginBottom={2}
-        > */}
-        {/* <Grid item>
-            <Typography variant="subtitle1" gutterBottom>
-              Title
-            </Typography>
-          </Grid> */}
         <Grid item pb={2}>
           <TextField
             variant="outlined"
             label="Title"
             helperText="Ask a genuine question and imagine you are asking a question to another person"
             fullWidth
+            value={title}
+            onChange={(event) => setTitle(event.target.value)}
           />
         </Grid>
         <Grid item>
@@ -70,32 +88,23 @@ const AskQuestion = () => {
             Describe Your Question
           </Typography>
         </Grid>
-        <TextEditor />
-        {/* <Grid item>
-        </Grid> */}
-        {/* <Grid item>
-            <Typography variant="subtitle1" gutterBottom>
-              Tags
-            </Typography>
-          </Grid> */}
+        <TextEditor data={body} handleChange={handleBodyChange} />
         <Grid item pt={2} pb={2}>
           <TextField
             variant="outlined"
             label="Tags"
             helperText="Add up to 5 tag to describe what your question is about"
             fullWidth
+            value={tags}
+            onChange={(event) => setTags(event.target.value)}
           />
         </Grid>
         <Grid item>
-          {/* <Fab color="primary" variant="extended">
-            <SendIcon sx={{ mr: 1 }} /> Post your question
-          </Fab> */}
-          <Button variant="contained" fullWidth>
+          <Button type="submit" variant="contained" fullWidth>
             Post your question
           </Button>
         </Grid>
       </Grid>
-      {/* </Grid> */}
     </Container>
   );
 };

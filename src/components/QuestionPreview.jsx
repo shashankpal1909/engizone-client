@@ -14,6 +14,7 @@ import {
   Chip,
   Box,
   Paper,
+  Divider,
 } from "@mui/material";
 import { red } from "@mui/material/colors";
 import FavoriteIcon from "@mui/icons-material/Favorite";
@@ -21,15 +22,38 @@ import BookmarkIcon from "@mui/icons-material/Bookmark";
 import BookmarkAddedIcon from "@mui/icons-material/BookmarkAdded";
 import ShareIcon from "@mui/icons-material/Share";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
+import { Link } from "react-router-dom";
+import moment from "moment";
 
-const QuestionPreview = () => {
+import parse from "html-react-parser";
+
+import { getUserById } from "../api";
+
+const QuestionPreview = ({ data }) => {
   const [bookmark, setBookmark] = React.useState(true);
   const [favorite, setFavorite] = React.useState(true);
-  const tags = ["Tag1", "Tag2", "Tag3"];
 
-  // useEffect(() => {
-  //   handleBookmark(bookmark);
-  // }, []);
+  const [loading, setLoading] = React.useState(true);
+
+  const [author, setAuthor] = React.useState({});
+
+  React.useEffect(() => {
+    console.log(data);
+    getUserById(data.author)
+      .then((response) => {
+        console.log(
+          "🚀 ~ file: QuestionPreview.jsx ~ line 39 ~ .then ~ response",
+          response
+        );
+        setAuthor(response.data);
+      })
+      .catch((error) => {
+        console.log(
+          "🚀 ~ file: QuestionPreview.jsx ~ line 43 ~ React.useEffect ~ error",
+          error
+        );
+      });
+  }, []);
 
   return (
     <Grid item>
@@ -64,22 +88,22 @@ const QuestionPreview = () => {
             </>
             // </CardActions>
           }
-          title="Username"
-          subheader="Sep 14, 2016"
+          title={`${author?.firstName} ${author?.lastName}`}
+          subheader={moment(data.createdAt).fromNow()}
           // subheaderTypographyProps={{ variant: "caption" }}
         />
-        <CardActionArea>
+        <Divider />
+        <CardActionArea LinkComponent={Link} to={`/questions/${data?._id}`}>
           <CardContent>
             <Typography variant="body1" gutterBottom>
-              Question Title
+              {data?.title}
             </Typography>
-            <Typography variant="body2" color="text.primary">
-              Ex sit culpa dolor ut. Est reprehenderit duis minim elit. Velit
-              culpa qui reprehenderit occaecat ipsum eu eiusmod quis dolore
-              tempor elit qui quis laborum.
-            </Typography>
+            {parse(data?.text)}
+            {/* <Typography variant="body2" color="text.primary">
+            </Typography> */}
           </CardContent>
         </CardActionArea>
+        <Divider />
         <CardActions sx={{ p: "1rem" }}>
           <Grid
             spacing={1}
@@ -90,8 +114,7 @@ const QuestionPreview = () => {
             justifyContent={{ xs: "center", sm: "space-between" }}
           >
             <Grid item>
-              {/* <Grid container item spacing={1}> */}
-              {tags.map((tag, index) => (
+              {data?.tags.map((tag, index) => (
                 <Chip
                   color="primary"
                   key={index}
@@ -100,48 +123,31 @@ const QuestionPreview = () => {
                   sx={{ mr: 1 }}
                   variant="outlined"
                 />
-                // <Grid item>
-                // <Button
-                //   key={index}
-                //   variant="outlined"
-                //   size="small"
-                //   sx={{ mr: 1 }}
-                // >
-                //   {tag}
-                // </Button>
-                // </Grid>
               ))}
             </Grid>
             <Grid item>
-              {/* <Grid item> */}
               <Chip
                 label={`Answers: ${2}`}
                 variant="outlined"
                 color="success"
                 sx={{ ml: { sm: 0, md: 1 } }}
               />
-              {/* </Grid> */}
-              {/* <Grid item> */}
               <Chip
                 label={`Votes: ${3}`}
                 color="info"
                 variant="outlined"
                 sx={{ ml: 1 }}
               />
-              {/* </Grid> */}
-              {/* <Grid item> */}
               <Chip
                 label={`Views: ${4}`}
                 color="info"
                 variant="outlined"
                 sx={{ ml: 1 }}
               />
-              {/* </Grid> */}
             </Grid>
           </Grid>
         </CardActions>
       </Card>
-      {/* </Paper> */}
     </Grid>
   );
 };
