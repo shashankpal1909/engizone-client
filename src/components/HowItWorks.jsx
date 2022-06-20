@@ -1,7 +1,10 @@
 import React from "react";
-import LocationOnIcon from "@mui/icons-material/LocationOn";
-import PaymentsIcon from "@mui/icons-material/Payments";
-import LockIcon from "@mui/icons-material/Lock";
+// import LocationOnIcon from "@mui/icons-material/LocationOn";
+// import PaymentsIcon from "@mui/icons-material/Payments";
+// import LockIcon from "@mui/icons-material/Lock";
+import QuestionMarkIcon from "@mui/icons-material/QuestionMark";
+import QuestionAnswerIcon from "@mui/icons-material/QuestionAnswer";
+import PeopleIcon from "@mui/icons-material/People";
 import {
   Typography,
   Grid,
@@ -23,7 +26,7 @@ const DetailsCard = ({ title, description, icon }) => {
         alignItems: "center",
       }}
     >
-      <CardContent sx={{ maxWidth: "225px" }}>
+      <CardContent sx={{ maxWidth: "250px" }}>
         <Container
           sx={{
             display: "flex",
@@ -63,19 +66,17 @@ const HowItWorks = () => {
             How it works.
           </Typography>
           <Typography variant="body1" align="center" color={"GrayText"}>
-            This is how our product works
+            This is how our platform supports to find you answer.
           </Typography>
         </Grid>
         <Grid item justifyContent={"center"}>
           <Grid container spacing={2} justifyContent={"center"}>
             <Grid item>
               <DetailsCard
-                title={"Find Home"}
-                description={
-                  "Our properties are located at prime areas where by there won’t be problem with transportation "
-                }
+                title={"Ask Questions"}
+                description={"Ask questions on any topic, get instant answers."}
                 icon={
-                  <LocationOnIcon
+                  <QuestionMarkIcon
                     color={"primary"}
                     sx={{ width: "100px", height: "100px" }}
                   />
@@ -84,12 +85,12 @@ const HowItWorks = () => {
             </Grid>
             <Grid item>
               <DetailsCard
-                title={"Make Payments"}
+                title={"Get Answers"}
                 description={
-                  "Our estates comes with good network, portable water, 24hrs light and round the clock security."
+                  "Get relevent answers to your question in real-time."
                 }
                 icon={
-                  <PaymentsIcon
+                  <QuestionAnswerIcon
                     color={"secondary"}
                     sx={{ width: "100px", height: "100px" }}
                   />
@@ -98,12 +99,10 @@ const HowItWorks = () => {
             </Grid>
             <Grid item>
               <DetailsCard
-                title={"Make it Official"}
-                description={
-                  "We have been in business for over 32 years,for client outside the country you can trust  us to deliver well. "
-                }
+                title={"Join Community"}
+                description={"Connect with people to share your knowledge."}
                 icon={
-                  <LockIcon
+                  <PeopleIcon
                     color={"error"}
                     sx={{ width: "100px", height: "100px" }}
                   />
