@@ -1,5 +1,6 @@
 import React from "react";
 import SearchIcon from "@mui/icons-material/Search";
+import ClearIcon from "@mui/icons-material/Clear";
 import {
   Box,
   TextField,
@@ -17,22 +18,23 @@ const RoundedTextField = styled(TextField)({
   },
 });
 
-const SearchBar = ({ setSearchQuery }) => {
+const SearchBar = ({ searchQuery, setSearchQuery, searchQuestions }) => {
   return (
     <Box
       component="form"
       onSubmit={(event) => {
         event.preventDefault();
+        searchQuestions();
       }}
     >
       <RoundedTextField
+        autoFocus
         // id="search-bar"
         // className="text"
         // shape="rounded"
         fullWidth
-        onInput={(e) => {
-          setSearchQuery(e.target.value);
-        }}
+        value={searchQuery}
+        onChange={(event) => setSearchQuery(event.target.value)}
         // padding={0}
         // label="Search bar"
         variant="outlined"
@@ -43,9 +45,9 @@ const SearchBar = ({ setSearchQuery }) => {
           endAdornment: (
             <InputAdornment position="end">
               <IconButton
-              // type="submit"
-              // variant="outline-secondary"
-              // aria-label="search"
+                type="submit"
+                // variant="outline-secondary"
+                // aria-label="search"
               >
                 <SearchIcon />
               </IconButton>

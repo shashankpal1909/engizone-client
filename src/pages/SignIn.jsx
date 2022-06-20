@@ -36,15 +36,15 @@ const SignIn = () => {
   const navigate = useNavigate();
 
   React.useEffect(() => {
-    console.log("=>(SignIn.jsx:39) useEffect user", user);
+    // console.log("=>(SignIn.jsx:39) useEffect user", user);
     if (user) navigate("/");
   }, [user]);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
     await signIn({ email, password });
-    console.log("=>(SignIn.jsx:41) { email, password }", { email, password });
-    console.log("=>(SignIn.jsx:42) user", user);
+    // console.log("=>(SignIn.jsx:41) { email, password }", { email, password });
+    // console.log("=>(SignIn.jsx:42) user", user);
   };
 
   const handleMouseDownPassword = (event) => {

@@ -27,6 +27,7 @@ import {
 import "./App.css";
 
 import Context from "./context/user/context";
+import EditQuestion from "./pages/EditQuestion";
 
 const themeOptions = createTheme({
   palette: {
@@ -43,8 +44,8 @@ const themeOptions = createTheme({
     // fontFamily: "Montserrat",
     // fontFamily: "Raleway",
     // fontFamily: "IBM Plex Sans",
-    // fontFamily: "Didact Gothic",
-    fontFamily: "Poppins",
+    fontFamily: "Didact Gothic",
+    // fontFamily: "Poppins",
   },
 });
 
@@ -116,6 +117,7 @@ const App = () => {
             <Route path="/sign-up" element={<SignUp />} />
             <Route path="/questions" element={<Questions />} />
             <Route path={`/questions/:id`} element={<QuestionDetail />} />
+            <Route path={`/questions/:id/edit`} element={<EditQuestion />} />
             <Route path="/contact" element={<Contact />} />
             <Route path="/profile" element={<Profile />} />
             <Route path="/profile/edit" element={<EditProfile />} />
