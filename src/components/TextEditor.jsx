@@ -11,7 +11,7 @@ const TextEditor = ({ data, handleChange }) => {
           editor={Editor}
           data={data}
           onReady={(editor) => {
-            console.log("", editor);
+            // console.log("", editor);
           }}
           onChange={(event, editor) => {
             const data = editor.getData();

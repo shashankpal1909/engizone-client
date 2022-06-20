@@ -20,7 +20,7 @@ import UserContext from "../context/user/context";
 
 const NavBar = () => {
   const { user, signOut } = React.useContext(UserContext);
-  console.log("=>(NavBar.jsx:24) user", user);
+  // console.log("=>(NavBar.jsx:24) user", user);
 
   const pages = ["Home", "Questions", "Resources", "Contact Us"];
   const settings = ["Profile", "Account", "Dashboard", "Logout"];

@@ -19,7 +19,14 @@ export const addQuestion = (data) => API.post("/questions", data);
 
 export const getQuestions = (page) =>
   API.get(`/questions?skip=${(page - 1) * 10}&limit=10`);
+
+export const getQuestionsByQuery = (query, page) =>
+  API.get(`/questions/search?query=${query}&skip=${(page - 1) * 10}&limit=10`);
+
 export const getQuestionById = (id) => API.get(`/questions/${id}`);
+
+export const updateQuestionById = (id, data) =>
+  API.patch(`/questions/${id}`, data);
 
 export const addSolution = (data) => API.post("/solutions", data);
 export const voteSolution = (id, data) =>
@@ -27,3 +34,4 @@ export const voteSolution = (id, data) =>
 
 export const addComment = (data) => API.post("/comments", data);
 export const getCommentById = (id) => API.get(`/comments/${id}`);
+export const addReply = (id, data) => API.post(`/comments/${id}/reply`, data);

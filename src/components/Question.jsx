@@ -2,6 +2,8 @@ import React from "react";
 import moment from "moment";
 import parse from "html-react-parser";
 import { red } from "@mui/material/colors";
+import EditIcon from "@mui/icons-material/Edit";
+
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import BookmarkIcon from "@mui/icons-material/Bookmark";
 import BookmarkAddedIcon from "@mui/icons-material/BookmarkAdded";
@@ -19,13 +21,17 @@ import {
   Chip,
   Divider,
 } from "@mui/material";
+import { Link } from "react-router-dom";
+import UserContext from "../context/user/context";
 
 const Question = ({ data, author }) => {
   const [bookmark, setBookmark] = React.useState(true);
   const [favorite, setFavorite] = React.useState(true);
 
+  const { user } = React.useContext(UserContext);
+
   React.useEffect(() => {
-    console.log(data);
+    // console.log(data);
   }, [data]);
 
   return (
@@ -35,12 +41,14 @@ const Question = ({ data, author }) => {
           avatar={<Avatar sx={{ bgcolor: red[500] }} aria-label=""></Avatar>}
           action={
             <>
-              <IconButton
-                aria-label="add to favorites"
-                onClick={() => setFavorite((prev) => !prev)}
-              >
-                <FavoriteIcon sx={!favorite ? { color: red[500] } : {}} />
-              </IconButton>
+              {user?._id === data?.author && (
+                <IconButton
+                  LinkComponent={Link}
+                  to={`/questions/${data._id}/edit`}
+                >
+                  <EditIcon />
+                </IconButton>
+              )}
               <IconButton
                 aria-label="bookmark"
                 onClick={() => setBookmark((prev) => !prev)}

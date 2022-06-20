@@ -23,29 +23,38 @@ import {
 } from "@mui/material";
 
 import { getUserById } from "../api";
+import QuestionSkeleton from "./QuestionSkeleton";
 
 const QuestionPreview = ({ data }) => {
   const [bookmark, setBookmark] = React.useState(true);
   const [favorite, setFavorite] = React.useState(true);
   const [author, setAuthor] = React.useState({});
+  const [loading, setLoading] = React.useState(true);
 
   React.useEffect(() => {
-    console.log(data);
+    // console.log(data);
     getUserById(data.author)
       .then((response) => {
-        console.log(
-          "🚀 ~ file: QuestionPreview.jsx ~ line 39 ~ .then ~ response",
-          response
-        );
+        // console.log(
+        // "🚀 ~ file: QuestionPreview.jsx ~ line 39 ~ .then ~ response",
+        // response
+        // );
         setAuthor(response.data);
+        // setTimeout(() => {
+        setLoading(false);
+        // }, 1000);
       })
       .catch((error) => {
-        console.log(
-          "🚀 ~ file: QuestionPreview.jsx ~ line 43 ~ React.useEffect ~ error",
-          error
-        );
+        // console.log(
+        // "🚀 ~ file: QuestionPreview.jsx ~ line 43 ~ React.useEffect ~ error",
+        // error
+        // );
       });
   }, []);
+
+  if (loading) {
+    return <QuestionSkeleton />;
+  }
 
   return (
     <Grid item>
@@ -58,6 +67,7 @@ const QuestionPreview = ({ data }) => {
                 aria-label="add to favorites"
                 onClick={() => setFavorite((prev) => !prev)}
               >
+                {/* <EditIcon /> */}
                 <FavoriteIcon sx={!favorite ? { color: red[500] } : {}} />
               </IconButton>
               <IconButton

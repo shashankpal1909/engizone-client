@@ -26,18 +26,18 @@ const QuestionDetail = () => {
 
     addSolution({ questionId: question?._id, text: body })
       .then((response) => {
-        console.log(
-          "🚀 ~ file: AskQuestion.jsx ~ line 29 ~ .then ~ response",
-          response
-        );
+        // console.log(
+        // "🚀 ~ file: AskQuestion.jsx ~ line 29 ~ .then ~ response",
+        // response
+        // );
         setSolutions((prev) => prev.concat(response.data.solution));
         setShowAddAnswer(false);
       })
       .catch((error) => {
-        console.log(
-          "🚀 ~ file: AskQuestion.jsx ~ line 32 ~ handleSubmit ~ error",
-          error
-        );
+        // console.log(
+        // "🚀 ~ file: AskQuestion.jsx ~ line 32 ~ handleSubmit ~ error",
+        // error
+        // );
       });
   };
 
@@ -45,22 +45,22 @@ const QuestionDetail = () => {
     dispatch({ type: "SET_LOADING", payload: true });
     getQuestionById(id)
       .then((response) => {
-        console.log(
-          "🚀 ~ file: QuestionDetail.jsx ~ line 14 ~ getQuestionById ~ response",
-          response
-        );
+        // console.log(
+        // "🚀 ~ file: QuestionDetail.jsx ~ line 14 ~ getQuestionById ~ response",
+        // response
+        // );
         setQuestion(response.data.question);
         setSolutions(response.data.solutions);
-        console.log(
-          "🚀 ~ file: QuestionDetail.jsx ~ line 12 ~ QuestionDetail ~ data",
-          question
-        );
+        // console.log(
+        // "🚀 ~ file: QuestionDetail.jsx ~ line 12 ~ QuestionDetail ~ data",
+        // question
+        // );
         getUserById(response.data.question.author)
           .then((response) => {
-            console.log(
-              "🚀 ~ file: QuestionDetail.jsx ~ line 30 ~ .then ~ respon̥se",
-              response
-            );
+            // console.log(
+            //   "🚀 ~ file: QuestionDetail.jsx ~ line 30 ~ .then ~ respon̥se",
+            //   response
+            // );
             setAuthor(response.data);
             setLoading(false);
             dispatch({ type: "SET_LOADING", payload: false });
@@ -68,17 +68,17 @@ const QuestionDetail = () => {
             // }, 5000);
           })
           .catch((error) => {
-            console.log(
-              "🚀 ~ file: QuestionDetail.jsx ~ line 35 ~ .then ~ error",
-              error
-            );
+            // console.log(
+            // "🚀 ~ file: QuestionDetail.jsx ~ line 35 ~ .then ~ error",
+            // error
+            // );
           });
       })
       .catch((error) => {
-        console.log(
-          "🚀 ~ file: QuestionDetail.jsx ~ line 16 ~ getQuestionById ~ error",
-          error
-        );
+        // console.log(
+        // "🚀 ~ file: QuestionDetail.jsx ~ line 16 ~ getQuestionById ~ error",
+        // error
+        // );
       });
   }, [id]);
 

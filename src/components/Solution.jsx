@@ -31,6 +31,7 @@ import parse from "html-react-parser";
 import { Comment } from "../components";
 import { addComment, getCommentById, getUserById, voteSolution } from "../api";
 import UserContext from "../context/user/context";
+import SolutionSkeleton from "./SolutionSkeleton";
 
 const CommentSection = styled((props) => {
   const { expand, ...other } = props;
@@ -45,7 +46,7 @@ const CommentSection = styled((props) => {
 
 const RoundedTextField = styled(TextField)({
   "& .MuiOutlinedInput-root": {
-    padding: "0.1rem 0.5rem 0.1rem 0.1rem",
+    padding: "6px",
     "& fieldset": {
       borderRadius: "10rem",
     },
@@ -58,6 +59,7 @@ const Solution = ({ solution }) => {
   const [commentText, setCommentText] = React.useState("");
   const [currentSolution, setCurrentSolution] = React.useState(solution);
   const [showComments, setShowComments] = React.useState(false);
+  const [loading, setLoading] = React.useState(true);
 
   const { user } = React.useContext(UserContext);
 
@@ -65,27 +67,30 @@ const Solution = ({ solution }) => {
     // setSolution(data);
     getUserById(currentSolution.author)
       .then((response) => {
-        console.log(
-          "🚀 ~ file: QuestionPreview.jsx ~ line 39 ~ .then ~ response",
-          response
-        );
+        // console.log(
+        // "🚀 ~ file: QuestionPreview.jsx ~ line 39 ~ .then ~ response",
+        // response
+        // );
         setAuthor(response.data);
 
         currentSolution.comments.forEach(async (id) => {
           await getCommentById(id).then((response) => {
-            console.log(
-              "🚀 ~ file: Solution.jsx ~ line 72 ~ getCommentById ~ response",
-              response
-            );
+            // console.log(
+            // "🚀 ~ file: Solution.jsx ~ line 72 ~ getCommentById ~ response",
+            // response
+            // );
             setComments((prev) => [response.data].concat(prev));
           });
         });
+        setTimeout(() => {
+          setLoading(false);
+        }, 1000);
       })
       .catch((error) => {
-        console.log(
-          "🚀 ~ file: QuestionPreview.jsx ~ line 43 ~ React.useEffect ~ error",
-          error
-        );
+        // console.log(
+        // "🚀 ~ file: QuestionPreview.jsx ~ line 43 ~ React.useEffect ~ error",
+        // error
+        // );
       });
   }, []);
 
@@ -93,37 +98,41 @@ const Solution = ({ solution }) => {
     event.preventDefault();
     addComment({ solutionId: currentSolution._id, text: commentText })
       .then((response) => {
-        console.log(
-          "🚀 ~ file: Solution.jsx ~ line 89 ~ addComment ~ response",
-          response
-        );
+        // console.log(
+        // "🚀 ~ file: Solution.jsx ~ line 89 ~ addComment ~ response",
+        // response
+        // );
         setComments((prev) => [response.data.comment].concat(prev));
         setCommentText("");
       })
       .catch((error) => {
-        console.log(
-          "🚀 ~ file: Solution.jsx ~ line 97 ~ handleSubmit ~ error",
-          error
-        );
+        // console.log(
+        // "🚀 ~ file: Solution.jsx ~ line 97 ~ handleSubmit ~ error",
+        // error
+        // );
       });
   };
 
   const handleVote = async (type) => {
     voteSolution(currentSolution._id, { type })
       .then((response) => {
-        console.log(
-          "🚀 ~ file: Solution.jsx ~ line 107 ~ voteSolution ~ response",
-          response
-        );
+        // console.log(
+        // "🚀 ~ file: Solution.jsx ~ line 107 ~ voteSolution ~ response",
+        // response
+        // );
         setCurrentSolution(response.data);
       })
       .catch((error) => {
-        console.log(
-          "🚀 ~ file: Solution.jsx ~ line 110 ~ voteSolution ~ error",
-          error
-        );
+        // console.log(
+        // "🚀 ~ file: Solution.jsx ~ line 110 ~ voteSolution ~ error",
+        // error
+        // );
       });
   };
+
+  if (loading) {
+    return <SolutionSkeleton />;
+  }
 
   return (
     <Grid item>
@@ -189,12 +198,9 @@ const Solution = ({ solution }) => {
               <CardActions>
                 <Avatar sx={{ bgcolor: red[500] }} />
                 <RoundedTextField
-                  // multiline
                   size="small"
                   variant="outlined"
-                  // label="Comment"
                   placeholder="Your Thoughts"
-                  // sx={{ mr: 0.5 }}
                   fullWidth
                   value={commentText}
                   onChange={(event) => setCommentText(event.target.value)}
@@ -203,7 +209,7 @@ const Solution = ({ solution }) => {
                       <InputAdornment position="end">
                         <IconButton
                           onClick={() => setCommentText("")}
-                          size="small"
+                          size="medium"
                           sx={{ mr: "1px" }}
                           aria-label="toggle password visibility"
                           edge="end"
@@ -224,8 +230,8 @@ const Solution = ({ solution }) => {
                 />
               </CardActions>
             </Grid>
-            {comments.map((comment, index) => (
-              <Comment parent key={index} comment={comment} />
+            {comments.map((comment, _index) => (
+              <Comment parent key={comment?._id} comment={comment} />
             ))}
           </Grid>
         </Collapse>
