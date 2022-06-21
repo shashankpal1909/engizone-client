@@ -16,10 +16,11 @@ import {
 } from "@mui/material";
 import { red } from "@mui/material/colors";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
-import { addReply, getCommentById, getUserById } from "../api";
+import { addReply, deleteReplyById, getCommentById, getUserById } from "../api";
 import moment from "moment";
 import SendIcon from "@mui/icons-material/Send";
 import ClearIcon from "@mui/icons-material/Clear";
+import DeleteForever from "@mui/icons-material/DeleteForever";
 
 const RoundedTextField = styled(TextField)({
   "& .MuiOutlinedInput-root": {
@@ -30,7 +31,7 @@ const RoundedTextField = styled(TextField)({
   },
 });
 
-const Comment = ({ parent, comment }) => {
+const Comment = ({ parent, comment, handleDelete }) => {
   const [author, setAuthor] = React.useState({});
   const [loading, setLoading] = React.useState(true);
   const [replyVisible, setReplyVisible] = React.useState(false);
@@ -86,6 +87,23 @@ const Comment = ({ parent, comment }) => {
       });
   };
 
+  const handleDeleteReply = (id) => {
+    deleteReplyById(id)
+      .then((response) => {
+        console.log(
+          "🚀 ~ file: Comment.jsx ~ line 92 ~ deleteReplyById ~ response",
+          response
+        );
+        setReplies((prev) => prev.filter((reply) => reply._id !== id));
+      })
+      .catch((error) => {
+        console.log(
+          "🚀 ~ file: Comment.jsx ~ line 95 ~ deleteReplyById ~ error",
+          error
+        );
+      });
+  };
+
   return (
     <Grid item container>
       <Grid item width="56px">
@@ -120,7 +138,7 @@ const Comment = ({ parent, comment }) => {
                     display="flex"
                     // xs={12}
                     sx={{
-                      alignItems: "flex-end",
+                      alignItems: "center",
                       // justifyContent: "space-between",
                     }}
                   >
@@ -148,9 +166,21 @@ const Comment = ({ parent, comment }) => {
                   </Grid>
                   <Grid item>
                     {loading ? null : (
-                      <IconButton sx={{ padding: 0 }}>
-                        <MoreVertIcon fontSize="small" />
-                      </IconButton>
+                      <>
+                        <IconButton
+                          size="small"
+                          onClick={() => handleDelete(comment._id)}
+                          //  sx={{ padding: 0 }}
+                        >
+                          <DeleteForever fontSize="small" />
+                        </IconButton>
+                        <IconButton
+                          size="small"
+                          // sx={{ padding: 0 }}
+                        >
+                          <MoreVertIcon fontSize="small" />
+                        </IconButton>
+                      </>
                     )}
                   </Grid>
                 </Grid>
@@ -245,7 +275,11 @@ const Comment = ({ parent, comment }) => {
           // replies.length !== 0 &&
           <Grid item container>
             {replies.map((reply) => (
-              <Comment comment={reply} key={reply._id} />
+              <Comment
+                comment={reply}
+                handleDelete={handleDeleteReply}
+                key={reply._id}
+              />
             ))}
             {/* {parent && <Comment comment={comment} />} */}
           </Grid>

@@ -1,10 +1,22 @@
 import React from "react";
-import { Typography, Pagination, Grid, Container, Box } from "@mui/material";
+import {
+  Typography,
+  Pagination,
+  Grid,
+  Container,
+  Box,
+  Button,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogContentText,
+  DialogActions,
+} from "@mui/material";
 
 import { QuestionPreview, SearchBar, Loading } from "../components";
 import { getQuestions, getQuestionsByQuery } from "../api";
 import UserContext from "../context/user/context";
-import { useSearchParams } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 
 const Questions = () => {
   const [page, setPage] = React.useState(1);
@@ -15,23 +27,27 @@ const Questions = () => {
   };
   const { dispatch, loading } = React.useContext(UserContext);
 
-  let [searchParams, setSearchParams] = useSearchParams();
-
   const [questions, setQuestions] = React.useState([]);
   const [questionsCount, setQuestionsCount] = React.useState(0);
-  const [searchQuery, setSearchQuery] = React.useState("");
+  let [searchParams, setSearchParams] = useSearchParams();
+  let query =
+    searchParams.get("query") === null ? "" : searchParams.get("query");
+  const [searchQuery, setSearchQuery] = React.useState(query);
 
   React.useEffect(() => {
-    setSearchQuery(
-      searchParams.get("query") === null ? "" : searchParams.get("query")
+    // setSearchQuery(query);
+    console.log(query);
+    console.log(
+      "🚀 ~ file: Questions.jsx ~ line 31 ~ React.useEffect ~ searchQuery",
+      searchQuery
     );
     dispatch({ type: "SET_LOADING", payload: true });
     getQuestionsByQuery(searchQuery, page)
       .then((response) => {
-        // console.log(
-        // "🚀 ~ file: Questions.jsx ~ line 16 ~ .then ~ response",
-        // response
-        // );
+        console.log(
+          "🚀 ~ file: Questions.jsx ~ line 16 ~ .then ~ response",
+          response
+        );
         setQuestions(response.data.questions);
         setQuestionsCount(response.data.count);
         // getUserById(response.data.author)
@@ -50,7 +66,7 @@ const Questions = () => {
         //   });
         setTimeout(() => {
           dispatch({ type: "SET_LOADING", payload: false });
-        }, 10000);
+        }, 1000);
       })
       .catch((error) => {
         // console.log(
@@ -89,76 +105,85 @@ const Questions = () => {
   }
 
   return (
-    <Container maxWidth="md">
-      <Grid
-        item
-        container
-        spacing={2}
-        direction={"column"}
-        sx={{
-          pt: { xs: "2rem", lg: "4rem" },
-          pb: { xs: "2rem", lg: "4rem" },
-        }}
-      >
-        <Grid item>
-          <SearchBar
-            searchQuery={searchQuery}
-            setSearchQuery={setSearchQuery}
-            searchQuestions={searchQuestions}
-          />
-        </Grid>
-        {!loading && questions.length === 0 && (
-          <Box
-            sx={{
-              p: "2rem",
-              display: "flex",
-              flex: "auto",
-              flexDirection: "column",
-              justifyContent: "center",
-              alignItems: "center",
-            }}
-          >
-            <Typography variant="h5" color={"secondary"}>
-              No Question(s) Found!
-            </Typography>
-            <Typography color={"text.secondary"}>
-              Try Searching Something Else.
-            </Typography>
-          </Box>
-        )}
-        {
-          // loading
-          // ? Array(10)
-          //     .fill()
-          //     .map((item, index) => <QuestionSkeleton key={index} />)
-          // :
-          questions.map((question, index) => (
-            <QuestionPreview key={question._id} data={question} />
-          ))
-        }
-        <Grid item>
-          {/* <Typography>Page: {page}</Typography> */}
-          {questionsCount > 0 && (
-            <Pagination
+    <>
+      <Container maxWidth="md">
+        <Grid
+          item
+          container
+          spacing={2}
+          direction={"column"}
+          sx={{
+            pt: { xs: "2rem", lg: "4rem" },
+            pb: { xs: "2rem", lg: "4rem" },
+          }}
+        >
+          <Grid item>
+            <SearchBar
+              searchQuery={searchQuery}
+              setSearchQuery={setSearchQuery}
+              searchQuestions={searchQuestions}
+            />
+          </Grid>
+          {!loading && questions.length === 0 && (
+            <Box
               sx={{
+                p: "2rem",
                 display: "flex",
+                flex: "auto",
+                flexDirection: "column",
                 justifyContent: "center",
                 alignItems: "center",
               }}
-              count={Math.ceil(questionsCount / 10)}
-              page={page}
-              onChange={handleChange}
-              showFirstButton
-              showLastButton
-              size="small"
-              variant="outlined"
-              shape="circular"
-              color="primary"
-            />
+            >
+              <Typography variant="h5" color={"secondary"}>
+                No Question(s) Found!
+              </Typography>
+              <Typography color={"text.secondary"} paragraph>
+                Try Searching Something Else.
+              </Typography>
+              <Button
+                variant="contained"
+                LinkComponent={Link}
+                to="/ask-question"
+              >
+                Ask Your Question
+              </Button>
+            </Box>
           )}
+          {
+            // loading
+            // ? Array(10)
+            //     .fill()
+            //     .map((item, index) => <QuestionSkeleton key={index} />)
+            // :
+            questions.map((question, index) => (
+              <QuestionPreview key={question._id} data={question} />
+            ))
+          }
+          <Grid item>
+            {/* <Typography>Page: {page}</Typography> */}
+            {questionsCount > 0 && (
+              <Pagination
+                sx={{
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+                count={Math.ceil(questionsCount / 10)}
+                page={page}
+                onChange={handleChange}
+                showFirstButton
+                showLastButton
+                size="small"
+                variant="outlined"
+                shape="circular"
+                color="primary"
+              />
+            )}
+          </Grid>
         </Grid>
-      </Grid>
-    </Container>
+      </Container>
+    </>
   );
 };
 

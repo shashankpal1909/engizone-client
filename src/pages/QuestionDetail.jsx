@@ -3,7 +3,12 @@ import { Button, Container, Grid, Skeleton, Typography } from "@mui/material";
 import { AddSolution, Loading, Question, Solution } from "../components";
 import { useParams } from "react-router-dom";
 
-import { addSolution, getQuestionById, getUserById } from "../api";
+import {
+  addSolution,
+  deleteSolutionById,
+  getQuestionById,
+  getUserById,
+} from "../api";
 import UserContext from "../context/user/context";
 
 const QuestionDetail = () => {
@@ -19,6 +24,23 @@ const QuestionDetail = () => {
 
   const handleBodyChange = (event, editor) => {
     setBody(editor.getData());
+  };
+
+  const handleDeleteSolution = (id) => {
+    deleteSolutionById(id, { questionId: question._id })
+      .then((response) => {
+        console.log(
+          "🚀 ~ file: QuestionDetail.jsx ~ line 26 ~ deleteSolutionById ~ response",
+          response
+        );
+        setSolutions((prev) => prev.filter((solution) => solution._id !== id));
+      })
+      .catch((error) => {
+        console.log(
+          "🚀 ~ file: QuestionDetail.jsx ~ line 30 ~ deleteSolutionById ~ error",
+          error
+        );
+      });
   };
 
   const handleSubmit = (event) => {
@@ -127,7 +149,11 @@ const QuestionDetail = () => {
                 </Typography>
               </Grid>
               {solutions.map((solution, index) => (
-                <Solution solution={solution} key={index} />
+                <Solution
+                  solution={solution}
+                  key={index}
+                  handleDelete={handleDeleteSolution}
+                />
               ))}
             </Grid>
           </Grid>

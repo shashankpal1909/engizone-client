@@ -43,8 +43,8 @@ const themeOptions = createTheme({
   typography: {
     // fontFamily: "Montserrat",
     // fontFamily: "Raleway",
-    // fontFamily: "IBM Plex Sans",
-    fontFamily: "Didact Gothic",
+    fontFamily: "IBM Plex Sans",
+    // fontFamily: "Didact Gothic",
     // fontFamily: "Poppins",
   },
 });
