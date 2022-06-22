@@ -11,12 +11,13 @@ import {
   DialogContent,
   DialogContentText,
   DialogActions,
+  Link,
 } from "@mui/material";
 
 import { QuestionPreview, SearchBar, Loading } from "../components";
 import { getQuestions, getQuestionsByQuery } from "../api";
 import UserContext from "../context/user/context";
-import { Link, useSearchParams } from "react-router-dom";
+import { Link as RouterLink, useSearchParams } from "react-router-dom";
 
 const Questions = () => {
   const [page, setPage] = React.useState(1);
@@ -64,9 +65,9 @@ const Questions = () => {
         // //       error
         // //     );
         //   });
-        setTimeout(() => {
-          dispatch({ type: "SET_LOADING", payload: false });
-        }, 1000);
+        // setTimeout(() => {
+        dispatch({ type: "SET_LOADING", payload: false });
+        // }, 1000);
       })
       .catch((error) => {
         // console.log(
@@ -141,6 +142,9 @@ const Questions = () => {
               <Typography color={"text.secondary"} paragraph>
                 Try Searching Something Else.
               </Typography>
+              <Typography align="center" variant="button" paragraph>
+                OR
+              </Typography>
               <Button
                 variant="contained"
                 LinkComponent={Link}
@@ -149,6 +153,34 @@ const Questions = () => {
                 Ask Your Question
               </Button>
             </Box>
+          )}
+          {questionsCount > 0 && (
+            <Grid
+              container
+              item
+              spacing={1}
+              display={"flex"}
+              justifyContent={{ xs: "center", sm: "space-between" }}
+              alignItems={"center"}
+            >
+              <Grid item>
+                <Typography variant="body2">
+                  {`Found ${questionsCount} Question(s)!`}
+                </Typography>
+              </Grid>
+              <Grid item display={"flex"} alignItems={"center"}>
+                <Typography mr={1} variant="body2">
+                  {"Didn't find your question?"}
+                </Typography>
+                <Button
+                  variant="contained"
+                  LinkComponent={RouterLink}
+                  to="/ask-question"
+                >
+                  Ask Your Question
+                </Button>
+              </Grid>
+            </Grid>
           )}
           {
             // loading

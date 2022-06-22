@@ -32,20 +32,35 @@ import EditQuestion from "./pages/EditQuestion";
 const themeOptions = createTheme({
   palette: {
     mode: "light",
-    type: "light",
     primary: {
       main: "#3f51b5",
     },
     secondary: {
       main: "#f50057",
     },
+    warning: {
+      main: "#ff9800",
+    },
+    // background: {
+    //   default: "#303030",
+    //   paper: "#424242",
+    // },
+  },
+  shape: {
+    borderRadius: 4,
+  },
+  spacing: 8,
+  props: {
+    MuiAppBar: {
+      color: "default",
+    },
   },
   typography: {
     // fontFamily: "Montserrat",
     // fontFamily: "Raleway",
-    fontFamily: "IBM Plex Sans",
+    // fontFamily: "IBM Plex Sans",
     // fontFamily: "Didact Gothic",
-    // fontFamily: "Poppins",
+    fontFamily: "Poppins",
   },
 });
 

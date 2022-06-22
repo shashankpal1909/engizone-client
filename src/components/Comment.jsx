@@ -13,6 +13,7 @@ import {
   TextField,
   InputAdornment,
   styled,
+  Divider,
 } from "@mui/material";
 import { red } from "@mui/material/colors";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
@@ -21,6 +22,7 @@ import moment from "moment";
 import SendIcon from "@mui/icons-material/Send";
 import ClearIcon from "@mui/icons-material/Clear";
 import DeleteForever from "@mui/icons-material/DeleteForever";
+import UserContext from "../context/user/context";
 
 const RoundedTextField = styled(TextField)({
   "& .MuiOutlinedInput-root": {
@@ -37,6 +39,8 @@ const Comment = ({ parent, comment, handleDelete }) => {
   const [replyVisible, setReplyVisible] = React.useState(false);
   const [text, setText] = React.useState("");
   const [replies, setReplies] = React.useState([]);
+
+  const { user } = React.useContext(UserContext);
 
   React.useEffect(() => {
     // console.log(
@@ -56,9 +60,9 @@ const Comment = ({ parent, comment, handleDelete }) => {
             setReplies((prev) => prev.concat(response.data));
           });
         });
-        setTimeout(() => {
-          setLoading(false);
-        }, 1000);
+        // setTimeout(() => {
+        setLoading(false);
+        // }, 1000);
       })
       .catch((error) => {
         // console.log(
@@ -116,7 +120,7 @@ const Comment = ({ parent, comment, handleDelete }) => {
               height={40}
             />
           ) : (
-            <Avatar sx={{ bgcolor: red[500] }} aria-label="" />
+            <Avatar src={author.avatar} children={`${author.firstName[0]}`} />
           )}
         </CardActions>
       </Grid>
@@ -167,13 +171,15 @@ const Comment = ({ parent, comment, handleDelete }) => {
                   <Grid item>
                     {loading ? null : (
                       <>
-                        <IconButton
-                          size="small"
-                          onClick={() => handleDelete(comment._id)}
-                          //  sx={{ padding: 0 }}
-                        >
-                          <DeleteForever fontSize="small" />
-                        </IconButton>
+                        {user?._id === author._id && (
+                          <IconButton
+                            size="small"
+                            onClick={() => handleDelete(comment._id)}
+                            //  sx={{ padding: 0 }}
+                          >
+                            <DeleteForever fontSize="small" />
+                          </IconButton>
+                        )}
                         <IconButton
                           size="small"
                           // sx={{ padding: 0 }}

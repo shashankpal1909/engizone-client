@@ -45,6 +45,7 @@ const SearchBar = ({ searchQuery, setSearchQuery, searchQuestions }) => {
           endAdornment: (
             <InputAdornment position="end">
               <IconButton
+                color="primary"
                 type="submit"
                 // variant="outline-secondary"
                 // aria-label="search"

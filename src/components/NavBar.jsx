@@ -69,7 +69,7 @@ const NavBar = () => {
   };
 
   return (
-    <AppBar position="sticky" color="primary" width={100}>
+    <AppBar position="sticky" width={100}>
       <Toolbar sx={{ display: "flex", justifyContent: "space-between" }}>
         <Box sx={{ display: { xs: "flex", md: "none" } }}>
           <IconButton
@@ -139,47 +139,44 @@ const NavBar = () => {
             </Button>
           ))}
         </Box>
-        {user ? (
-          <Box sx={{ flexGrow: 0 }}>
-            <Tooltip title="User">
-              <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar
-                  sx={{ bgcolor: "crimson" }}
-                  children={`${user.firstName[0]}`}
-                />
-              </IconButton>
-            </Tooltip>
-            <Menu
-              sx={{ mt: "45px" }}
-              id="menu-appbar"
-              anchorEl={anchorElUser}
-              anchorOrigin={{
-                vertical: "top",
-                horizontal: "right",
-              }}
-              keepMounted
-              transformOrigin={{
-                vertical: "top",
-                horizontal: "right",
-              }}
-              open={Boolean(anchorElUser)}
-              onClose={handleCloseUserMenu}
-            >
-              {settings.map((setting) => (
-                <MenuItem
-                  key={setting}
-                  onClick={() => {
-                    handleSettingAction(setting);
-                    handleCloseUserMenu();
-                  }}
-                >
-                  <Typography textAlign="center">{setting}</Typography>
-                </MenuItem>
-              ))}
-            </Menu>
-          </Box>
-        ) : (
-          <Box sx={{ flexGrow: 0 }}>
+        <Box sx={{ flexGrow: 0 }}>
+          {user ? (
+            <>
+              <Tooltip title="User">
+                <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+                  <Avatar src={user.avatar} children={`${user.firstName[0]}`} />
+                </IconButton>
+              </Tooltip>
+              <Menu
+                sx={{ mt: "45px" }}
+                id="menu-appbar"
+                anchorEl={anchorElUser}
+                anchorOrigin={{
+                  vertical: "top",
+                  horizontal: "right",
+                }}
+                keepMounted
+                transformOrigin={{
+                  vertical: "top",
+                  horizontal: "right",
+                }}
+                open={Boolean(anchorElUser)}
+                onClose={handleCloseUserMenu}
+              >
+                {settings.map((setting) => (
+                  <MenuItem
+                    key={setting}
+                    onClick={() => {
+                      handleSettingAction(setting);
+                      handleCloseUserMenu();
+                    }}
+                  >
+                    <Typography textAlign="center">{setting}</Typography>
+                  </MenuItem>
+                ))}
+              </Menu>
+            </>
+          ) : (
             <IconButton
               sx={{ color: "white" }}
               component={RouterLink}
@@ -187,8 +184,55 @@ const NavBar = () => {
             >
               <LoginIcon />
             </IconButton>
-          </Box>
-        )}
+          )}
+        </Box>
+        {/*{user ? (*/}
+        {/*  <Box sx={{ flexGrow: 0 }}>*/}
+        {/*    <Tooltip title="User">*/}
+        {/*      <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>*/}
+        {/*        <Avatar src={user.avatar} children={`${user.firstName[0]}`} />*/}
+        {/*      </IconButton>*/}
+        {/*    </Tooltip>*/}
+        {/*    <Menu*/}
+        {/*      sx={{ mt: "45px" }}*/}
+        {/*      id="menu-appbar"*/}
+        {/*      anchorEl={anchorElUser}*/}
+        {/*      anchorOrigin={{*/}
+        {/*        vertical: "top",*/}
+        {/*        horizontal: "right",*/}
+        {/*      }}*/}
+        {/*      keepMounted*/}
+        {/*      transformOrigin={{*/}
+        {/*        vertical: "top",*/}
+        {/*        horizontal: "right",*/}
+        {/*      }}*/}
+        {/*      open={Boolean(anchorElUser)}*/}
+        {/*      onClose={handleCloseUserMenu}*/}
+        {/*    >*/}
+        {/*      {settings.map((setting) => (*/}
+        {/*        <MenuItem*/}
+        {/*          key={setting}*/}
+        {/*          onClick={() => {*/}
+        {/*            handleSettingAction(setting);*/}
+        {/*            handleCloseUserMenu();*/}
+        {/*          }}*/}
+        {/*        >*/}
+        {/*          <Typography textAlign="center">{setting}</Typography>*/}
+        {/*        </MenuItem>*/}
+        {/*      ))}*/}
+        {/*    </Menu>*/}
+        {/*  </Box>*/}
+        {/*) : (*/}
+        {/*  <Box sx={{ flexGrow: 0 }}>*/}
+        {/*    <IconButton*/}
+        {/*      sx={{ color: "white" }}*/}
+        {/*      component={RouterLink}*/}
+        {/*      to="/sign-up"*/}
+        {/*    >*/}
+        {/*      <LoginIcon />*/}
+        {/*    </IconButton>*/}
+        {/*  </Box>*/}
+        {/*)}*/}
       </Toolbar>
     </AppBar>
   );

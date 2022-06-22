@@ -37,9 +37,9 @@ const Header = () => {
           color={"text.secondary"}
           paragraph
         >
-          EngiZone is a platform where you can post your question and get best
-          answer instantly. We want to connect peple who wants to share their
-          knowledge in effective way to the people who need it.
+          EngiZone is a platform where you can post your questions and get the
+          best answers instantly. We want to connect people who want to share
+          their knowledge in an effective way to the people who need it.
         </Typography>
         <div>
           <Fab

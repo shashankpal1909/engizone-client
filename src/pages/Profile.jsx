@@ -24,6 +24,8 @@ import EditIcon from "@mui/icons-material/Edit";
 import LinkIcon from "@mui/icons-material/Link";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import Context from "../context/user/context";
+import { getAvatarById, getQuestionsByAuthorId } from "../api";
+
 const StatsCard = () => {
   return (
     <>
@@ -63,6 +65,26 @@ const ListComponent = () => {
 
 const Profile = () => {
   const { user } = React.useContext(Context);
+  const [questions, setQuestions] = React.useState([]);
+
+  React.useEffect(() => {
+    if (user) {
+      getQuestionsByAuthorId(user?._id)
+        .then((response) => {
+          console.log(
+            "🚀 ~ file: Profile.jsx ~ line 71 ~ getQuestionsByAuthorId ~ response",
+            response
+          );
+          setQuestions(response.data.questions);
+        })
+        .catch((error) => {
+          console.log(
+            "🚀 ~ file: Profile.jsx ~ line 74 ~ getQuestionsByAuthorId ~ error",
+            error
+          );
+        });
+    }
+  }, [user, user?._id]);
 
   return (
     <Container
@@ -76,6 +98,7 @@ const Profile = () => {
         <CardHeader
           avatar={
             <Avatar
+              src={user?.avatar}
               sx={{ width: { xs: 50, md: 100 }, height: { xs: 50, md: 100 } }}
             />
           }

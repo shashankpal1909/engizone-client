@@ -134,9 +134,9 @@ const Solution = ({ solution, handleDelete }) => {
             setComments((prev) => [response.data].concat(prev));
           });
         });
-        setTimeout(() => {
-          setLoading(false);
-        }, 1000);
+        // setTimeout(() => {
+        setLoading(false);
+        // }, 1000);
       })
       .catch((error) => {
         // console.log(
@@ -231,15 +231,17 @@ const Solution = ({ solution, handleDelete }) => {
       <Grid item>
         <Card variant="outlined">
           <CardHeader
-            avatar={<Avatar sx={{ bgcolor: red[500] }} aria-label="" />}
+            avatar={
+              <Avatar src={author.avatar} children={`${author.firstName[0]}`} />
+            }
             action={
               <>
-                {currentSolution.author === user._id && (
+                {currentSolution.author === user?._id && (
                   <IconButton onClick={handleClickOpenEditSolutionDialog}>
                     <EditIcon />
                   </IconButton>
                 )}
-                {currentSolution.author === user._id && (
+                {currentSolution.author === user?._id && (
                   <IconButton
                     onClick={handleClickOpen}
                     // onClick={() => handleDelete(solution._id)}
@@ -266,7 +268,11 @@ const Solution = ({ solution, handleDelete }) => {
           <CardActions disableSpacing>
             <Grid container justifyContent="space-between">
               <Grid item>
-                <IconButton aria-label="upVote" onClick={() => handleVote(1)}>
+                <IconButton
+                  // disabled={!user?.id}
+                  aria-label="upVote"
+                  onClick={() => handleVote(1)}
+                >
                   {currentSolution?.upVotes.find((id) => id === user?._id) ? (
                     <ThumbUpIcon color="primary" />
                   ) : (
@@ -275,6 +281,7 @@ const Solution = ({ solution, handleDelete }) => {
                 </IconButton>
                 {currentSolution?.upVotes.length}
                 <IconButton
+                  // disabled={!user?.id}
                   aria-label="downVote"
                   onClick={() => handleVote(-1)}
                 >
@@ -307,7 +314,14 @@ const Solution = ({ solution, handleDelete }) => {
             <Grid container direction="column" padding={1} spacing={1}>
               <Grid item>
                 <CardActions>
-                  <Avatar sx={{ bgcolor: red[500] }} />
+                  {user ? (
+                    <Avatar
+                      src={user?.avatar}
+                      children={`${user?.firstName[0]}`}
+                    />
+                  ) : (
+                    <Avatar sx={{ bgcolor: red[500] }} />
+                  )}
                   <RoundedTextField
                     size="small"
                     variant="outlined"

@@ -60,7 +60,9 @@ const QuestionPreview = ({ data }) => {
     <Grid item>
       <Card variant="outlined">
         <CardHeader
-          avatar={<Avatar sx={{ bgcolor: red[500] }} aria-label=""></Avatar>}
+          avatar={
+            <Avatar src={author.avatar} children={`${author.firstName[0]}`} />
+          }
           action={
             <>
               <IconButton
@@ -129,18 +131,18 @@ const QuestionPreview = ({ data }) => {
                 color="success"
                 sx={{ ml: { sm: 0, md: 1 } }}
               />
-              <Chip
-                label={`Votes: ${3}`}
-                color="info"
-                variant="outlined"
-                sx={{ ml: 1 }}
-              />
-              <Chip
-                label={`Views: ${4}`}
-                color="info"
-                variant="outlined"
-                sx={{ ml: 1 }}
-              />
+              {/*<Chip*/}
+              {/*  label={`Votes: ${3}`}*/}
+              {/*  color="info"*/}
+              {/*  variant="outlined"*/}
+              {/*  sx={{ ml: 1 }}*/}
+              {/*/>*/}
+              {/*<Chip*/}
+              {/*  label={`Views: ${4}`}*/}
+              {/*  color="info"*/}
+              {/*  variant="outlined"*/}
+              {/*  sx={{ ml: 1 }}*/}
+              {/*/>*/}
             </Grid>
           </Grid>
         </CardActions>

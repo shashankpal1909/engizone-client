@@ -76,7 +76,9 @@ const Question = ({ data, author }) => {
       <Grid item>
         <Card variant="outlined">
           <CardHeader
-            avatar={<Avatar sx={{ bgcolor: red[500] }} aria-label=""></Avatar>}
+            avatar={
+              <Avatar src={author.avatar} children={`${author.firstName[0]}`} />
+            }
             action={
               <>
                 {user?._id === data?.author && (
@@ -149,23 +151,23 @@ const Question = ({ data, author }) => {
               </Grid>
               <Grid item>
                 <Chip
-                  label={`Answers: ${2}`}
+                  label={`Answers: ${data?.solutions.length}`}
                   variant="outlined"
                   color="success"
                   sx={{ ml: { sm: 0, md: 1 } }}
                 />
-                <Chip
-                  label={`Votes: ${3}`}
-                  color="info"
-                  variant="outlined"
-                  sx={{ ml: 1 }}
-                />
-                <Chip
-                  label={`Views: ${4}`}
-                  color="info"
-                  variant="outlined"
-                  sx={{ ml: 1 }}
-                />
+                {/*<Chip*/}
+                {/*  label={`Votes: ${3}`}*/}
+                {/*  color="info"*/}
+                {/*  variant="outlined"*/}
+                {/*  sx={{ ml: 1 }}*/}
+                {/*/>*/}
+                {/*<Chip*/}
+                {/*  label={`Views: ${4}`}*/}
+                {/*  color="info"*/}
+                {/*  variant="outlined"*/}
+                {/*  sx={{ ml: 1 }}*/}
+                {/*/>*/}
               </Grid>
             </Grid>
           </CardActions>
