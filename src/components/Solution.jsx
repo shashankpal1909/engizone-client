@@ -276,7 +276,7 @@ const Solution = ({ solution, handleDelete }) => {
                   onClick={() => handleVote(1)}
                 >
                   {currentSolution?.upVotes.find((id) => id === user?._id) ? (
-                    <ThumbUpIcon color="success" />
+                    <ThumbUpIcon color="primary" />
                   ) : (
                     <ThumbUpOutlinedIcon />
                   )}
@@ -288,7 +288,7 @@ const Solution = ({ solution, handleDelete }) => {
                   onClick={() => handleVote(-1)}
                 >
                   {currentSolution?.downVotes.find((id) => id === user?._id) ? (
-                    <ThumbDownIcon color="error" />
+                    <ThumbDownIcon color="secondary" />
                   ) : (
                     <ThumbDownAltOutlinedIcon />
                   )}

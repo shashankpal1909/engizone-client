@@ -24,7 +24,7 @@ import EditIcon from "@mui/icons-material/Edit";
 import LinkIcon from "@mui/icons-material/Link";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import Context from "../context/user/context";
-import { getAvatarById, getQuestionsByAuthorId } from "../api";
+import { getQuestionsByAuthorId } from "../api";
 
 const StatsCard = () => {
   return (

@@ -1,5 +1,12 @@
 import React from "react";
-import { Button, Container, Grid, Skeleton, Typography } from "@mui/material";
+import {
+  Box,
+  Button,
+  Container,
+  Grid,
+  Skeleton,
+  Typography,
+} from "@mui/material";
 import { AddSolution, Loading, Question, Solution } from "../components";
 import { useParams } from "react-router-dom";
 
@@ -129,11 +136,11 @@ const QuestionDetail = () => {
               justifyContent="center"
               spacing={1}
             >
-              <Grid item>
+              {/* <Grid item>
                 <Typography variant="h4" xs={6} sx={{ wordBreak: "break-all" }}>
                   Question - {id}
                 </Typography>
-              </Grid>
+              </Grid> */}
               {<Question data={question} author={author} />}
             </Grid>
             <Grid
@@ -141,13 +148,30 @@ const QuestionDetail = () => {
               container
               direction="column"
               justifyContent="center"
-              spacing={1}
+              spacing={2}
             >
               <Grid item>
                 <Typography variant="h4" xs={6}>
                   Solutions ({question?.solutions.length} Answers)
                 </Typography>
               </Grid>
+              {!loading && solutions.length === 0 && (
+                <Grid
+                  item
+                  sx={{
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "center",
+                  }}
+                >
+                  <Typography variant="h5" color={"secondary"} pt={2}>
+                    No Solution(s) Available!
+                  </Typography>
+                  <Typography color={"text.secondary"} paragraph>
+                    Be the first one to answer.
+                  </Typography>
+                </Grid>
+              )}
               {solutions.map((solution, index) => (
                 <Solution
                   solution={solution}
