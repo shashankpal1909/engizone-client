@@ -24,6 +24,7 @@ import {
   Resources,
 } from "./pages";
 
+import "./ckeditor-styles.css";
 import "./App.css";
 
 import Context from "./context/user/context";
@@ -32,11 +33,18 @@ import EditQuestion from "./pages/EditQuestion";
 const themeOptions = createTheme({
   palette: {
     mode: "light",
+    // mode: "dark",
     primary: {
-      main: "#3f51b5",
+      main: "#0477d4",
+      // main: "#0A4979",
+      // main: "#512da8",
+      // main: "#3f51b5",
     },
     secondary: {
-      main: "#f50057",
+      main: "#ff5347",
+      // main: "#F95446",
+      // main: "#ff6e40",
+      // main: "#f50057",
     },
     warning: {
       main: "#ff9800",
@@ -52,7 +60,7 @@ const themeOptions = createTheme({
   spacing: 8,
   props: {
     MuiAppBar: {
-      color: "default",
+      color: "primary",
     },
   },
   typography: {

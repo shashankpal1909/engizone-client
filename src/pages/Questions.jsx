@@ -165,7 +165,7 @@ const Questions = () => {
             >
               <Grid item>
                 <Typography variant="body2">
-                  {`Found ${questionsCount} Question(s)!`}
+                  Found <b>{questionsCount}</b> Question(s)!
                 </Typography>
               </Grid>
               <Grid item display={"flex"} alignItems={"center"}>

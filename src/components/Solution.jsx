@@ -260,7 +260,9 @@ const Solution = ({ solution, handleDelete }) => {
           <Divider />
           {/* <CardMedia component="img" image={HeaderImage} /> */}
           <CardContent>
-            {parse(currentSolution?.text)}
+            <div className="ck-content" style={{ wordBreak: "break-all" }}>
+              {parse(currentSolution?.text)}
+            </div>
             {/* <Typography variant="body1" color="text.primary">
           </Typography> */}
           </CardContent>
@@ -274,7 +276,7 @@ const Solution = ({ solution, handleDelete }) => {
                   onClick={() => handleVote(1)}
                 >
                   {currentSolution?.upVotes.find((id) => id === user?._id) ? (
-                    <ThumbUpIcon color="primary" />
+                    <ThumbUpIcon color="success" />
                   ) : (
                     <ThumbUpOutlinedIcon />
                   )}
@@ -286,7 +288,7 @@ const Solution = ({ solution, handleDelete }) => {
                   onClick={() => handleVote(-1)}
                 >
                   {currentSolution?.downVotes.find((id) => id === user?._id) ? (
-                    <ThumbDownIcon color="primary" />
+                    <ThumbDownIcon color="error" />
                   ) : (
                     <ThumbDownAltOutlinedIcon />
                   )}

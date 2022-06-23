@@ -125,7 +125,9 @@ const Question = ({ data, author }) => {
             <Typography variant="body1" fontWeight={"bold"} gutterBottom>
               {data?.title}
             </Typography>
-            {parse(data?.text)}
+            <div className="ck-content" style={{ wordBreak: "break-all" }}>
+              {parse(data?.text)}
+            </div>
           </CardContent>
           <Divider />
           <CardActions sx={{ p: "1rem" }}>

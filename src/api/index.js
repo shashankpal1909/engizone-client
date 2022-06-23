@@ -27,12 +27,14 @@ export const getQuestions = (page) =>
   API.get(`/questions?skip=${(page - 1) * 10}&limit=10`);
 export const getQuestionsByQuery = (query, page) =>
   API.get(`/questions/search?query=${query}&skip=${(page - 1) * 10}&limit=10`);
-export const getQuestionsByAuthorId = (id) =>
-  API.get(`/questions/author/${id}`);
+export const getQuestionsByAuthorId = (id, limit) =>
+  API.get(`/questions/author/${id}?limit=${limit}`);
 export const getQuestionById = (id) => API.get(`/questions/${id}`);
 export const updateQuestionById = (id, data) =>
   API.patch(`/questions/${id}`, data);
 export const deleteQuestionById = (id) => API.delete(`/questions/${id}`);
+
+export const getAllTags = () => API.get("/questions/tags");
 
 export const addSolution = (data) => API.post("/solutions", data);
 export const updateSolutionById = (id, data) =>

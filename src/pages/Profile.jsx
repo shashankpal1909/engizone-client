@@ -17,7 +17,7 @@ import {
   ListItemText,
   Typography,
 } from "@mui/material";
-
+import moment from "moment";
 import { Link as RouterLink } from "react-router-dom";
 
 import EditIcon from "@mui/icons-material/Edit";
@@ -41,20 +41,20 @@ const StatsCard = () => {
   );
 };
 
-const ListComponent = () => {
+const ListComponent = ({ data }) => {
   return (
-    <List sx={{ width: "100%", bgcolor: "background.paper" }}>
-      {[1, 1, 1, 1].map((_, index) => (
-        <ListItem key={index} disablePadding>
-          <ListItemButton>
+    <List sx={{ bgcolor: "background.paper" }}>
+      {data.map((item) => (
+        <ListItem key={item._id} disablePadding>
+          <ListItemButton component={RouterLink} to={`/questions/${item._id}`}>
             <ListItemAvatar>
               <Avatar>
                 <LinkIcon />
               </Avatar>
             </ListItemAvatar>
             <ListItemText
-              primary="Lorem ipsum dolor sit amet nostrud no diam. Vero sanctus amet ea at diam aliquip et lorem vel duo eos nonumy. Eum lorem ad et magna kasd rebum kasd diam dolor elitr no et duis dignissim eum stet ut."
-              secondary="June 8, 2022"
+              primary={item.title}
+              secondary={moment(item.createdAt).fromNow()}
             />
           </ListItemButton>
         </ListItem>
@@ -69,7 +69,7 @@ const Profile = () => {
 
   React.useEffect(() => {
     if (user) {
-      getQuestionsByAuthorId(user?._id)
+      getQuestionsByAuthorId(user?._id, 5)
         .then((response) => {
           console.log(
             "🚀 ~ file: Profile.jsx ~ line 71 ~ getQuestionsByAuthorId ~ response",
@@ -116,7 +116,7 @@ const Profile = () => {
           title={
             user ? user?.firstName + " " + user?.lastName : "Name PlaceHolder"
           }
-          subheader="Joined Yesterday"
+          subheader={`Joined ${moment(user?.createdAt).fromNow()}`}
           titleTypographyProps={{ variant: "h6", color: "secondary" }}
         />
         <Divider />
@@ -147,8 +147,8 @@ const Profile = () => {
                 </Button>
               </Grid>
             </Grid>
-            <Grid item>
-              <ListComponent />
+            <Grid item flex={"auto"}>
+              <ListComponent data={questions} />
             </Grid>
             <Grid container item justifyContent={"space-between"}>
               <Grid item>
@@ -160,8 +160,8 @@ const Profile = () => {
                 </Button>
               </Grid>
             </Grid>
-            <Grid item>
-              <ListComponent />
+            <Grid item flex={"auto"}>
+              <ListComponent data={[]} />
             </Grid>
             <Grid container item justifyContent={"space-between"}>
               <Grid item>
@@ -173,8 +173,8 @@ const Profile = () => {
                 </Button>
               </Grid>
             </Grid>
-            <Grid item>
-              <ListComponent />
+            <Grid item flex={"auto"}>
+              <ListComponent data={[]} />
             </Grid>
           </Grid>
         </CardContent>

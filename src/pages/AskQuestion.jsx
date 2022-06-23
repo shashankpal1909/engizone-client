@@ -5,20 +5,40 @@ import {
   Typography,
   Container,
   Avatar,
+  Autocomplete,
+  Chip,
 } from "@mui/material";
 import React from "react";
 import TextEditor from "../components/TextEditor";
 import HelpIcon from "@mui/icons-material/Help";
 
-import { addQuestion } from "../api";
+import { addQuestion, getAllTags } from "../api";
 import { useNavigate } from "react-router-dom";
 
 const AskQuestion = () => {
   const [title, setTitle] = React.useState("");
   const [body, setBody] = React.useState("");
-  const [tags, setTags] = React.useState("");
+  const [tags, setTags] = React.useState([]);
+  const [availableTags, setAvailableTags] = React.useState([]);
 
   const navigate = useNavigate();
+
+  React.useEffect(() => {
+    getAllTags()
+      .then((response) => {
+        console.log(
+          "🚀 ~ file: AskQuestion.jsx ~ line 27 ~ getAllTags ~ response",
+          response
+        );
+        setAvailableTags(response.data.tags);
+      })
+      .catch((error) => {
+        console.log(
+          "🚀 ~ file: AskQuestion.jsx ~ line 30 ~ getAllTags ~ error",
+          error
+        );
+      });
+  }, []);
 
   const handleBodyChange = (event, editor) => {
     setBody(editor.getData());
@@ -27,7 +47,7 @@ const AskQuestion = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-    addQuestion({ title, text: body, tags: tags.split(",") })
+    addQuestion({ title, text: body, tags })
       .then((response) => {
         console.log(
           "🚀 ~ file: AskQuestion.jsx ~ line 29 ~ .then ~ response",
@@ -88,14 +108,45 @@ const AskQuestion = () => {
         </Grid>
         <TextEditor data={body} handleChange={handleBodyChange} />
         <Grid item pt={2} pb={2}>
-          <TextField
+          <Autocomplete
+            multiple
+            id="tags-filled"
+            options={availableTags}
+            // defaultValue={[top100Films[13].title]}
+            freeSolo
+            value={tags}
+            onChange={(event, newValue) => {
+              if (newValue.length <= 5) setTags(newValue);
+              console.log(newValue);
+            }}
+            renderTags={(value, getTagProps) =>
+              value.map((option, index) => (
+                <Chip
+                  variant="outlined"
+                  color="primary"
+                  label={option}
+                  {...getTagProps({ index })}
+                />
+              ))
+            }
+            renderInput={(params) => (
+              <TextField
+                {...params}
+                helperText="Add up to 5 tag(s) to describe what your question is about"
+                variant="outlined"
+                label="Tags"
+                placeholder="Choose or Add Tags"
+              />
+            )}
+          />
+          {/* <TextField
             variant="outlined"
             label="Tags"
             helperText="Add up to 5 tag to describe what your question is about"
             fullWidth
             value={tags}
             onChange={(event) => setTags(event.target.value)}
-          />
+          /> */}
         </Grid>
         <Grid item>
           <Button type="submit" variant="contained" fullWidth>

@@ -66,13 +66,6 @@ const QuestionPreview = ({ data }) => {
           action={
             <>
               <IconButton
-                aria-label="add to favorites"
-                onClick={() => setFavorite((prev) => !prev)}
-              >
-                {/* <EditIcon /> */}
-                <FavoriteIcon sx={!favorite ? { color: red[500] } : {}} />
-              </IconButton>
-              <IconButton
                 aria-label="bookmark"
                 onClick={() => setBookmark((prev) => !prev)}
               >
@@ -99,7 +92,9 @@ const QuestionPreview = ({ data }) => {
             <Typography variant="body1" fontWeight={"bold"} gutterBottom>
               {data?.title}
             </Typography>
-            {parse(data?.text)}
+            <div className="ck-content" style={{ wordBreak: "break-all" }}>
+              {parse(data?.text)}
+            </div>
           </CardContent>
         </CardActionArea>
         <Divider />

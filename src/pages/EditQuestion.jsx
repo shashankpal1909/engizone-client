@@ -5,12 +5,15 @@ import {
   Typography,
   Container,
   Avatar,
+  Chip,
+  Autocomplete,
 } from "@mui/material";
 import React from "react";
 import TextEditor from "../components/TextEditor";
 import HelpIcon from "@mui/icons-material/Help";
+import EditIcon from "@mui/icons-material/Edit";
 
-import { addQuestion, getQuestionById, updateQuestionById } from "../api";
+import { getAllTags, getQuestionById, updateQuestionById } from "../api";
 import { useNavigate, useParams } from "react-router-dom";
 
 const EditQuestion = () => {
@@ -18,7 +21,8 @@ const EditQuestion = () => {
 
   const [title, setTitle] = React.useState("");
   const [body, setBody] = React.useState("");
-  const [tags, setTags] = React.useState("");
+  const [tags, setTags] = React.useState([]);
+  const [availableTags, setAvailableTags] = React.useState([]);
 
   const navigate = useNavigate();
 
@@ -27,7 +31,7 @@ const EditQuestion = () => {
       .then((response) => {
         setTitle(response.data.question.title);
         setBody(response.data.question.text);
-        setTags(response.data.question.tags.join());
+        setTags(response.data.question.tags);
         // console.log(
         // "🚀 ~ file: EditQuestion.jsx ~ line 28 ~ getQuestionById ~ response",
         // response
@@ -39,6 +43,20 @@ const EditQuestion = () => {
         // error
         // );
       });
+    getAllTags()
+      .then((response) => {
+        console.log(
+          "🚀 ~ file: AskQuestion.jsx ~ line 27 ~ getAllTags ~ response",
+          response
+        );
+        setAvailableTags(response.data.tags);
+      })
+      .catch((error) => {
+        console.log(
+          "🚀 ~ file: AskQuestion.jsx ~ line 30 ~ getAllTags ~ error",
+          error
+        );
+      });
   }, []);
 
   const handleBodyChange = (event, editor) => {
@@ -48,7 +66,7 @@ const EditQuestion = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-    updateQuestionById(id, { title, text: body, tags: tags.split(",") })
+    updateQuestionById(id, { title, text: body, tags })
       .then((response) => {
         // console.log(
         // "🚀 ~ file: EditQuestion.jsx ~ line 53 ~ .then ~ response",
@@ -84,7 +102,7 @@ const EditQuestion = () => {
         <Grid item container justifyContent={"center"} direction="column">
           <Grid item display={"flex"} justifyContent="center">
             <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
-              <HelpIcon />
+              <EditIcon />
             </Avatar>
           </Grid>
           <Grid item>
@@ -110,14 +128,45 @@ const EditQuestion = () => {
         </Grid>
         <TextEditor data={body} handleChange={handleBodyChange} />
         <Grid item pt={2} pb={2}>
-          <TextField
+          <Autocomplete
+            multiple
+            id="tags-filled"
+            options={availableTags}
+            // defaultValue={[top100Films[13].title]}
+            freeSolo
+            value={tags}
+            onChange={(event, newValue) => {
+              if (newValue.length <= 5) setTags(newValue);
+              console.log(newValue);
+            }}
+            renderTags={(value, getTagProps) =>
+              value.map((option, index) => (
+                <Chip
+                  variant="outlined"
+                  color="primary"
+                  label={option}
+                  {...getTagProps({ index })}
+                />
+              ))
+            }
+            renderInput={(params) => (
+              <TextField
+                {...params}
+                helperText="Add up to 5 tag(s) to describe what your question is about"
+                variant="outlined"
+                label="Tags"
+                placeholder="Choose or Add Tags"
+              />
+            )}
+          />
+          {/* <TextField
             variant="outlined"
             label="Tags"
             helperText="Add up to 5 tag to describe what your question is about"
             fullWidth
             value={tags}
             onChange={(event) => setTags(event.target.value)}
-          />
+          /> */}
         </Grid>
         <Grid item>
           <Button type="submit" variant="contained" fullWidth>
