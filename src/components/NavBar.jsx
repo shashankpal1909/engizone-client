@@ -144,7 +144,10 @@ const NavBar = () => {
             <>
               <Tooltip title="User">
                 <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                  <Avatar src={user.avatar} children={`${user.firstName[0]}`} />
+                  <Avatar
+                    src={`data:image/gif;base64,${user?.avatar}`}
+                    children={`${user.firstName[0]}`}
+                  />
                 </IconButton>
               </Tooltip>
               <Menu

@@ -41,12 +41,12 @@ const EditProfile = () => {
       api
         .getUser()
         .then((response) => {
-          setFirstName(response.data.firstName);
-          setLastName(response.data.lastName);
-          setEmail(response.data.email);
-          setAge(response.data.age);
-          setPhoneNumber(response.data.phoneNumber);
-          dispatch({ type: "SET_DETAILS", payload: response.data });
+          setFirstName(response.data.user.firstName);
+          setLastName(response.data.user.lastName);
+          setEmail(response.data.user.email);
+          setAge(response.data.user.age);
+          setPhoneNumber(response.data.user.phoneNumber);
+          dispatch({ type: "SET_DETAILS", payload: response.data.user });
           dispatch({ type: "SET_LOADING", payload: false });
         })
         .catch((error) =>
@@ -71,6 +71,7 @@ const EditProfile = () => {
             "🚀 ~ file: EditProfile.jsx ~ line 69 ~ api.uploadAvatar ~ response",
             response
           );
+          dispatch({ type: "SET_DETAILS", payload: response.data.user });
         })
         .catch((error) => {
           console.log(
@@ -150,7 +151,7 @@ const EditProfile = () => {
                 {!previewFile ? (
                   user && (
                     <Avatar
-                      src={user?.avatar}
+                      src={`data:image/gif;base64,${user?.avatar}`}
                       sx={{ width: 200, height: 200 }}
                     />
                   )

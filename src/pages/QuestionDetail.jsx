@@ -79,29 +79,29 @@ const QuestionDetail = () => {
         // response
         // );
         setQuestion(response.data.question);
-        setSolutions(response.data.solutions);
+        setSolutions(response.data.question.solutions);
         // console.log(
         // "🚀 ~ file: QuestionDetail.jsx ~ line 12 ~ QuestionDetail ~ data",
         // question
         // );
-        getUserById(response.data.question.author)
-          .then((response) => {
-            // console.log(
-            //   "🚀 ~ file: QuestionDetail.jsx ~ line 30 ~ .then ~ respon̥se",
-            //   response
-            // );
-            setAuthor(response.data);
-            setLoading(false);
-            dispatch({ type: "SET_LOADING", payload: false });
-            // setTimeout(() => {
-            // }, 5000);
-          })
-          .catch((error) => {
-            // console.log(
-            // "🚀 ~ file: QuestionDetail.jsx ~ line 35 ~ .then ~ error",
-            // error
-            // );
-          });
+        // getUserById(response.data.question.author)
+        //   .then((response) => {
+        //     // console.log(
+        //     //   "🚀 ~ file: QuestionDetail.jsx ~ line 30 ~ .then ~ respon̥se",
+        //     //   response
+        //     // );
+        //     setAuthor(response.data);
+        setLoading(false);
+        dispatch({ type: "SET_LOADING", payload: false });
+        //     // setTimeout(() => {
+        //     // }, 5000);
+        //   })
+        //   .catch((error) => {
+        //     // console.log(
+        //     // "🚀 ~ file: QuestionDetail.jsx ~ line 35 ~ .then ~ error",
+        //     // error
+        //     // );
+        //   });
       })
       .catch((error) => {
         // console.log(
@@ -141,7 +141,7 @@ const QuestionDetail = () => {
                   Question - {id}
                 </Typography>
               </Grid> */}
-              {<Question data={question} author={author} />}
+              {<Question data={question} author={question.author} />}
             </Grid>
             <Grid
               item
@@ -151,11 +151,12 @@ const QuestionDetail = () => {
               spacing={2}
             >
               <Grid item>
-                <Typography variant="h4" xs={6}>
-                  Solutions ({question?.solutions.length} Answers)
+                <Typography variant="h5" xs={6}>
+                  {solutions?.length > 0 &&
+                    `${solutions?.length} Answer(s) Available`}
                 </Typography>
               </Grid>
-              {!loading && solutions.length === 0 && (
+              {!loading && solutions?.length === 0 && (
                 <Grid
                   item
                   sx={{
@@ -165,14 +166,14 @@ const QuestionDetail = () => {
                   }}
                 >
                   <Typography variant="h5" color={"secondary"} pt={2}>
-                    No Solution(s) Available!
+                    No Answer(s) Available!
                   </Typography>
                   <Typography color={"text.secondary"} paragraph>
                     Be the first one to answer.
                   </Typography>
                 </Grid>
               )}
-              {solutions.map((solution, index) => (
+              {solutions?.map((solution, index) => (
                 <Solution
                   solution={solution}
                   key={index}
@@ -202,7 +203,7 @@ const QuestionDetail = () => {
             variant="contained"
             onClick={() => setShowAddAnswer(true)}
           >
-            Add Your Solution
+            Add Your Answer
           </Button>
         </Container>
       )}

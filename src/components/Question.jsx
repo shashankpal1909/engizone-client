@@ -4,7 +4,8 @@ import parse from "html-react-parser";
 import { red } from "@mui/material/colors";
 import EditIcon from "@mui/icons-material/Edit";
 
-import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
+import DeleteIcon from "@mui/icons-material/Delete";
+// import DeleteIcon from "@mui/icons-material/DeleteForever";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import BookmarkIcon from "@mui/icons-material/Bookmark";
 import BookmarkAddedIcon from "@mui/icons-material/BookmarkAdded";
@@ -77,11 +78,14 @@ const Question = ({ data, author }) => {
         <Card variant="outlined">
           <CardHeader
             avatar={
-              <Avatar src={author.avatar} children={`${author.firstName[0]}`} />
+              <Avatar
+                src={`data:image/gif;base64,${author?.avatar}`}
+                children={`${author.firstName[0]}`}
+              />
             }
             action={
               <>
-                {user?._id === data?.author && (
+                {user?._id === data?.author?._id && (
                   <IconButton
                     LinkComponent={Link}
                     to={`/questions/${data._id}/edit`}
@@ -102,13 +106,13 @@ const Question = ({ data, author }) => {
                 <IconButton aria-label="share">
                   <ShareIcon />
                 </IconButton>
-                {user?._id === data?.author && (
+                {user?._id === data?.author?._id && (
                   <IconButton
                     aria-label="delete"
                     onClick={handleClickOpen}
                     // onClick={handleDeleteQuestion}
                   >
-                    <DeleteForeverIcon />
+                    <DeleteIcon />
                   </IconButton>
                 )}
                 <IconButton aria-label="settings">

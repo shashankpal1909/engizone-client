@@ -51,7 +51,8 @@ import UserContext from "../context/user/context";
 import SolutionSkeleton from "./SolutionSkeleton";
 import TextEditor from "./TextEditor";
 import Slide from "@mui/material/Slide";
-import DeleteForever from "@mui/icons-material/DeleteForever";
+import DeleteIcon from "@mui/icons-material/Delete";
+// import DeleteIcon from "@mui/icons-material/DeleteForever";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
@@ -79,12 +80,12 @@ const RoundedTextField = styled(TextField)({
 
 const Solution = ({ solution, handleDelete }) => {
   const [author, setAuthor] = React.useState({});
-  const [comments, setComments] = React.useState([]);
+  const [comments, setComments] = React.useState(solution.comments);
   const [commentText, setCommentText] = React.useState("");
   const [currentSolution, setCurrentSolution] = React.useState(solution);
   const [solutionText, setSolutionText] = React.useState(solution?.text);
   const [showComments, setShowComments] = React.useState(false);
-  const [loading, setLoading] = React.useState(true);
+  const [loading, setLoading] = React.useState(false);
   const [openEditSolutionDialog, setOpenEditSolutionDialog] =
     React.useState(false);
 
@@ -115,36 +116,36 @@ const Solution = ({ solution, handleDelete }) => {
   };
   const { user } = React.useContext(UserContext);
 
-  React.useEffect(() => {
-    // setSolution(data);
-    getUserById(currentSolution.author)
-      .then((response) => {
-        // console.log(
-        // "🚀 ~ file: QuestionPreview.jsx ~ line 39 ~ .then ~ response",
-        // response
-        // );
-        setAuthor(response.data);
+  // React.useEffect(() => {
+  //   // setSolution(data);
+  //   getUserById(currentSolution.author)
+  //     .then((response) => {
+  //       // console.log(
+  //       // "🚀 ~ file: QuestionPreview.jsx ~ line 39 ~ .then ~ response",
+  //       // response
+  //       // );
+  //       setAuthor(response.data);
 
-        currentSolution.comments.forEach(async (id) => {
-          await getCommentById(id).then((response) => {
-            // console.log(
-            // "🚀 ~ file: Solution.jsx ~ line 72 ~ getCommentById ~ response",
-            // response
-            // );
-            setComments((prev) => [response.data].concat(prev));
-          });
-        });
-        // setTimeout(() => {
-        setLoading(false);
-        // }, 1000);
-      })
-      .catch((error) => {
-        // console.log(
-        // "🚀 ~ file: QuestionPreview.jsx ~ line 43 ~ React.useEffect ~ error",
-        // error
-        // );
-      });
-  }, []);
+  //       currentSolution.comments.forEach(async (id) => {
+  //         await getCommentById(id).then((response) => {
+  //           // console.log(
+  //           // "🚀 ~ file: Solution.jsx ~ line 72 ~ getCommentById ~ response",
+  //           // response
+  //           // );
+  //           setComments((prev) => [response.data].concat(prev));
+  //         });
+  //       });
+  //       // setTimeout(() => {
+  //       setLoading(false);
+  //       // }, 1000);
+  //     })
+  //     .catch((error) => {
+  //       // console.log(
+  //       // "🚀 ~ file: QuestionPreview.jsx ~ line 43 ~ React.useEffect ~ error",
+  //       // error
+  //       // );
+  //     });
+  // }, []);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -172,13 +173,13 @@ const Solution = ({ solution, handleDelete }) => {
         // "🚀 ~ file: Solution.jsx ~ line 107 ~ voteSolution ~ response",
         // response
         // );
-        setCurrentSolution(response.data);
+        setCurrentSolution(response.data.solution);
       })
       .catch((error) => {
-        // console.log(
-        // "🚀 ~ file: Solution.jsx ~ line 110 ~ voteSolution ~ error",
-        // error
-        // );
+        console.log(
+          "🚀 ~ file: Solution.jsx ~ line 110 ~ voteSolution ~ error",
+          error
+        );
       });
   };
 
@@ -232,21 +233,24 @@ const Solution = ({ solution, handleDelete }) => {
         <Card variant="outlined">
           <CardHeader
             avatar={
-              <Avatar src={author.avatar} children={`${author.firstName[0]}`} />
+              <Avatar
+                src={`data:image/gif;base64,${currentSolution?.author?.avatar}`}
+                children={`${currentSolution?.author?.firstName[0]}`}
+              />
             }
             action={
               <>
-                {currentSolution.author === user?._id && (
+                {currentSolution.author._id === user?._id && (
                   <IconButton onClick={handleClickOpenEditSolutionDialog}>
                     <EditIcon />
                   </IconButton>
                 )}
-                {currentSolution.author === user?._id && (
+                {currentSolution.author._id === user?._id && (
                   <IconButton
                     onClick={handleClickOpen}
                     // onClick={() => handleDelete(solution._id)}
                   >
-                    <DeleteForever />
+                    <DeleteIcon />
                   </IconButton>
                 )}
                 <IconButton aria-label="settings">
@@ -254,7 +258,7 @@ const Solution = ({ solution, handleDelete }) => {
                 </IconButton>
               </>
             }
-            title={`${author?.firstName} ${author?.lastName}`}
+            title={`${currentSolution.author?.firstName} ${currentSolution.author?.lastName}`}
             subheader={moment(currentSolution?.createdAt).fromNow()}
           />
           <Divider />
@@ -296,7 +300,7 @@ const Solution = ({ solution, handleDelete }) => {
                 {currentSolution?.downVotes.length}
               </Grid>
               <Grid item>
-                {currentSolution?.comments.length} Comments
+                {comments.length} Comment(s)
                 <CommentSection
                   expand={showComments}
                   onClick={() => setShowComments((prev) => !prev)}
@@ -318,7 +322,7 @@ const Solution = ({ solution, handleDelete }) => {
                 <CardActions>
                   {user ? (
                     <Avatar
-                      src={user?.avatar}
+                      src={`data:image/gif;base64,${user?.avatar}`}
                       children={`${user?.firstName[0]}`}
                     />
                   ) : (
@@ -445,7 +449,10 @@ const Solution = ({ solution, handleDelete }) => {
             Cancel
           </Button>
           <Button
-            onClick={() => handleDelete(solution._id)}
+            onClick={() => {
+              handleDelete(solution._id);
+              handleClose();
+            }}
             autoFocus
             variant="outlined"
           >

@@ -98,7 +98,7 @@ const Profile = () => {
         <CardHeader
           avatar={
             <Avatar
-              src={user?.avatar}
+              src={`data:image/gif;base64,${user?.avatar}`}
               sx={{ width: { xs: 50, md: 100 }, height: { xs: 50, md: 100 } }}
             />
           }

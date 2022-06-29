@@ -17,11 +17,17 @@ import {
 } from "@mui/material";
 import { red } from "@mui/material/colors";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
-import { addReply, deleteReplyById, getCommentById, getUserById } from "../api";
+import {
+  addReply,
+  deleteCommentById,
+  getCommentById,
+  getUserById,
+} from "../api";
 import moment from "moment";
 import SendIcon from "@mui/icons-material/Send";
 import ClearIcon from "@mui/icons-material/Clear";
-import DeleteForever from "@mui/icons-material/DeleteForever";
+import DeleteIcon from "@mui/icons-material/Delete";
+// import DeleteIcon from "@mui/icons-material/DeleteForever";
 import UserContext from "../context/user/context";
 
 const RoundedTextField = styled(TextField)({
@@ -34,43 +40,43 @@ const RoundedTextField = styled(TextField)({
 });
 
 const Comment = ({ parent, comment, handleDelete }) => {
-  const [author, setAuthor] = React.useState({});
-  const [loading, setLoading] = React.useState(true);
+  // const [author, setAuthor] = React.useState({});
+  const [loading, setLoading] = React.useState(false);
   const [replyVisible, setReplyVisible] = React.useState(false);
   const [text, setText] = React.useState("");
-  const [replies, setReplies] = React.useState([]);
+  const [replies, setReplies] = React.useState(comment.replies);
 
   const { user } = React.useContext(UserContext);
 
-  React.useEffect(() => {
-    // console.log(
-    // "🚀 ~ file: Comment.jsx ~ line 34 ~ Comment ~ comment",
-    // comment
-    // );
+  // React.useEffect(() => {
+  //   // console.log(
+  //   // "🚀 ~ file: Comment.jsx ~ line 34 ~ Comment ~ comment",
+  //   // comment
+  //   // );
 
-    getUserById(comment.author)
-      .then((response) => {
-        // console.log(
-        // "🚀 ~ file: Comment.jsx ~ line 24 ~ .then ~ response",
-        // response
-        // );
-        setAuthor(response.data);
-        comment.replies.forEach(async (id) => {
-          await getCommentById(id).then((response) => {
-            setReplies((prev) => prev.concat(response.data));
-          });
-        });
-        // setTimeout(() => {
-        setLoading(false);
-        // }, 1000);
-      })
-      .catch((error) => {
-        // console.log(
-        // "🚀 ~ file: Comment.jsx ~ line 28 ~ React.useEffect ~ error",
-        // error
-        // );
-      });
-  }, []);
+  //   getUserById(comment.author)
+  //     .then((response) => {
+  //       // console.log(
+  //       // "🚀 ~ file: Comment.jsx ~ line 24 ~ .then ~ response",
+  //       // response
+  //       // );
+  //       setAuthor(response.data);
+  //       comment.replies.forEach(async (id) => {
+  //         await getCommentById(id).then((response) => {
+  //           setReplies((prev) => prev.concat(response.data));
+  //         });
+  //       });
+  //       // setTimeout(() => {
+  //       setLoading(false);
+  //       // }, 1000);
+  //     })
+  //     .catch((error) => {
+  //       // console.log(
+  //       // "🚀 ~ file: Comment.jsx ~ line 28 ~ React.useEffect ~ error",
+  //       // error
+  //       // );
+  //     });
+  // }, []);
 
   const handleSubmit = async () => {
     addReply(comment._id, { text })
@@ -84,15 +90,15 @@ const Comment = ({ parent, comment, handleDelete }) => {
         setReplyVisible(false);
       })
       .catch((error) => {
-        // console.log(
-        // "🚀 ~ file: Comment.jsx ~ line 66 ~ addReply ~ error",
-        // error
-        // );
+        console.log(
+          "🚀 ~ file: Comment.jsx ~ line 66 ~ addReply ~ error",
+          error
+        );
       });
   };
 
   const handleDeleteReply = (id) => {
-    deleteReplyById(id)
+    deleteCommentById(id)
       .then((response) => {
         console.log(
           "🚀 ~ file: Comment.jsx ~ line 92 ~ deleteReplyById ~ response",
@@ -120,7 +126,10 @@ const Comment = ({ parent, comment, handleDelete }) => {
               height={40}
             />
           ) : (
-            <Avatar src={author.avatar} children={`${author.firstName[0]}`} />
+            <Avatar
+              src={`data:image/gif;base64,${comment.author?.avatar}`}
+              children={`${comment.author.firstName[0]}`}
+            />
           )}
         </CardActions>
       </Grid>
@@ -156,7 +165,7 @@ const Comment = ({ parent, comment, handleDelete }) => {
                     ) : (
                       <React.Fragment>
                         <Typography fontWeight="bold" mr={1}>
-                          {`${author?.firstName} ${author?.lastName}`}
+                          {`${comment.author?.firstName} ${comment.author?.lastName}`}
                         </Typography>
                         <Typography
                           variant="caption"
@@ -171,13 +180,13 @@ const Comment = ({ parent, comment, handleDelete }) => {
                   <Grid item>
                     {loading ? null : (
                       <>
-                        {user?._id === author._id && (
+                        {user?._id === comment.author._id && (
                           <IconButton
                             size="small"
                             onClick={() => handleDelete(comment._id)}
                             //  sx={{ padding: 0 }}
                           >
-                            <DeleteForever fontSize="small" />
+                            <DeleteIcon fontSize="small" />
                           </IconButton>
                         )}
                         <IconButton
@@ -280,13 +289,14 @@ const Comment = ({ parent, comment, handleDelete }) => {
         {
           // replies.length !== 0 &&
           <Grid item container>
-            {replies.map((reply) => (
-              <Comment
-                comment={reply}
-                handleDelete={handleDeleteReply}
-                key={reply._id}
-              />
-            ))}
+            {parent &&
+              replies.map((reply) => (
+                <Comment
+                  comment={reply}
+                  handleDelete={handleDeleteReply}
+                  key={reply._id}
+                />
+              ))}
             {/* {parent && <Comment comment={comment} />} */}
           </Grid>
         }

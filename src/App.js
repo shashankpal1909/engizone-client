@@ -35,16 +35,16 @@ const themeOptions = createTheme({
     mode: "light",
     // mode: "dark",
     primary: {
-      main: "#0477d4",
+      // main: "#0477d4",
       // main: "#0A4979",
       // main: "#512da8",
-      // main: "#3f51b5",
+      main: "#3f51b5",
     },
     secondary: {
-      main: "#ff5347",
+      // main: "#ff5347",
       // main: "#F95446",
       // main: "#ff6e40",
-      // main: "#f50057",
+      main: "#f50057",
     },
     warning: {
       main: "#ff9800",
@@ -68,7 +68,9 @@ const themeOptions = createTheme({
     // fontFamily: "Raleway",
     // fontFamily: "IBM Plex Sans",
     // fontFamily: "Didact Gothic",
-    fontFamily: "Poppins",
+    // fontFamily: "Poppins",
+    fontFamily: "Source Sans Pro",
+    // fontFamily: "Rubik",
   },
 });
 

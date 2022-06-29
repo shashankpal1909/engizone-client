@@ -17,8 +17,8 @@ const State = ({ children }) => {
       dispatch({ type: "SET_LOADING", payload: true });
       api
         .getUser()
-        .then((res) => {
-          dispatch({ type: "SET_DETAILS", payload: res.data });
+        .then((response) => {
+          dispatch({ type: "SET_DETAILS", payload: response.data.user });
           dispatch({ type: "SET_LOADING", payload: false });
         })
         .catch((error) =>
@@ -38,7 +38,7 @@ const State = ({ children }) => {
         localStorage.setItem("userJWT", response.data.token);
         dispatch({
           type: "SIGN_IN",
-          payload: response.data.result,
+          payload: response.data.user,
         });
         dispatch({ type: "SET_LOADING", payload: false });
       })
@@ -58,7 +58,7 @@ const State = ({ children }) => {
         localStorage.setItem("userJWT", response.data.token);
         dispatch({
           type: "SIGN_UP",
-          payload: response.data.result,
+          payload: response.data.user,
         });
         dispatch({ type: "SET_LOADING", payload: false });
       })
