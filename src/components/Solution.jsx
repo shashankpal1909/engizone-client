@@ -303,6 +303,7 @@ const Solution = ({ solution, handleDelete }) => {
                 {comments.length} Comment(s)
                 <CommentSection
                   expand={showComments}
+                  // Fetch From API
                   onClick={() => setShowComments((prev) => !prev)}
                   aria-expanded={showComments}
                   aria-label="show more"
