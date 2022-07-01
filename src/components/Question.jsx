@@ -31,13 +31,14 @@ import {
 } from "@mui/material";
 import { Link, useNavigate } from "react-router-dom";
 import UserContext from "../context/user/context";
-import { deleteQuestionById, deleteSolutionById } from "../api";
+import { deleteQuestionById, deleteSolutionById, toggleBookmark } from "../api";
 
 const Question = ({ data, author }) => {
-  const [bookmark, setBookmark] = React.useState(true);
+  const { user } = React.useContext(UserContext);
+
+  const [bookmark, setBookmark] = React.useState(false);
   const [favorite, setFavorite] = React.useState(true);
 
-  const { user } = React.useContext(UserContext);
   const navigate = useNavigate();
 
   const handleDeleteQuestion = () => {
@@ -69,8 +70,21 @@ const Question = ({ data, author }) => {
   };
 
   React.useEffect(() => {
-    // console.log(data);
-  }, [data]);
+    setBookmark(data.bookmarks.includes(user?._id));
+  }, [data.bookmarks, user]);
+
+  const handleBookmarkToggle = () => {
+    toggleBookmark(data._id)
+      .then((response) => {
+        setBookmark((prev) => !prev);
+      })
+      .catch((error) => {
+        console.log(
+          "🚀 ~ file: Question.jsx ~ line 83 ~ toggleBookmark ~ error",
+          error
+        );
+      });
+  };
 
   return (
     <>
@@ -95,10 +109,10 @@ const Question = ({ data, author }) => {
                 )}
                 <IconButton
                   aria-label="bookmark"
-                  onClick={() => setBookmark((prev) => !prev)}
+                  onClick={handleBookmarkToggle}
                 >
-                  {!bookmark ? (
-                    <BookmarkAddedIcon sx={{ color: "green" }} />
+                  {bookmark ? (
+                    <BookmarkAddedIcon color="primary" />
                   ) : (
                     <BookmarkIcon />
                   )}

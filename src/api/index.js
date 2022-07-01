@@ -1,7 +1,10 @@
 import axios from "axios";
 
 const API = axios.create({
-  baseURL: process.env.REACT_APP_SERVER_BASE_URL || "http://localhost:8080",
+  baseURL:
+    process.env.REACT_APP_SERVER_BASE_URL ||
+    // "https://engizone-server-git-beta-shashankpal1909.vercel.app/",
+    "http://localhost:8080",
 });
 
 API.interceptors.request.use((req) => {
@@ -13,6 +16,7 @@ API.interceptors.request.use((req) => {
 
 export const signIn = (data) => API.post("/users/sign-in", data);
 export const signUp = (data) => API.post("/users/sign-up", data);
+export const signOut = () => API.post("/users/sign-out");
 export const getUser = () => API.get("/users/me");
 export const getUserById = (id) => API.get(`/users/${id}`);
 export const updateUserDetails = (data) => API.patch("/users/me", data);
@@ -31,7 +35,10 @@ export const getQuestionsByQuery = (query, page) =>
   API.get(`/questions?search=${query}&skip=${(page - 1) * 10}&limit=10`);
 export const getQuestionsByAuthorId = (id, limit) =>
   API.get(`/questions/author/${id}?limit=${limit}`);
+export const getBookmarkedQuestionsByUserId = (id, limit) =>
+  API.get(`/questions/bookmarks/${id}?limit=${limit}`);
 export const getQuestionById = (id) => API.get(`/questions/${id}`);
+export const toggleBookmark = (id) => API.post(`/questions/${id}/bookmark`);
 export const updateQuestionById = (id, data) =>
   API.patch(`/questions/${id}`, data);
 export const deleteQuestionById = (id) => API.delete(`/questions/${id}`);
@@ -49,3 +56,5 @@ export const addReply = (id, data) => API.post(`/comments/${id}/reply`, data);
 export const getCommentById = (id) => API.get(`/comments/${id}`);
 export const deleteCommentById = (id) => API.delete(`/comments/${id}`);
 // export const deleteReplyById = (id) => API.delete(`/comments/${id}/reply`);
+
+export const sendContactUsMessage = (data) => API.post(`/messages`, data);

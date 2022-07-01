@@ -1,21 +1,9 @@
 import React from "react";
-import {
-  Box,
-  Button,
-  Container,
-  Grid,
-  Skeleton,
-  Typography,
-} from "@mui/material";
+import { Button, Container, Grid, Typography } from "@mui/material";
 import { AddSolution, Loading, Question, Solution } from "../components";
 import { useParams } from "react-router-dom";
 
-import {
-  addSolution,
-  deleteSolutionById,
-  getQuestionById,
-  getUserById,
-} from "../api";
+import { addSolution, deleteSolutionById, getQuestionById } from "../api";
 import UserContext from "../context/user/context";
 
 const QuestionDetail = () => {
@@ -36,10 +24,6 @@ const QuestionDetail = () => {
   const handleDeleteSolution = (id) => {
     deleteSolutionById(id, { questionId: question._id })
       .then((response) => {
-        console.log(
-          "🚀 ~ file: QuestionDetail.jsx ~ line 26 ~ deleteSolutionById ~ response",
-          response
-        );
         setSolutions((prev) => prev.filter((solution) => solution._id !== id));
       })
       .catch((error) => {
@@ -55,18 +39,14 @@ const QuestionDetail = () => {
 
     addSolution({ questionId: question?._id, text: body })
       .then((response) => {
-        // console.log(
-        // "🚀 ~ file: AskQuestion.jsx ~ line 29 ~ .then ~ response",
-        // response
-        // );
         setSolutions((prev) => prev.concat(response.data.solution));
         setShowAddAnswer(false);
       })
       .catch((error) => {
-        // console.log(
-        // "🚀 ~ file: AskQuestion.jsx ~ line 32 ~ handleSubmit ~ error",
-        // error
-        // );
+        console.log(
+          "🚀 ~ file: AskQuestion.jsx ~ line 32 ~ handleSubmit ~ error",
+          error
+        );
       });
   };
 
@@ -74,40 +54,16 @@ const QuestionDetail = () => {
     dispatch({ type: "SET_LOADING", payload: true });
     getQuestionById(id)
       .then((response) => {
-        // console.log(
-        // "🚀 ~ file: QuestionDetail.jsx ~ line 14 ~ getQuestionById ~ response",
-        // response
-        // );
         setQuestion(response.data.question);
         setSolutions(response.data.question.solutions);
-        // console.log(
-        // "🚀 ~ file: QuestionDetail.jsx ~ line 12 ~ QuestionDetail ~ data",
-        // question
-        // );
-        // getUserById(response.data.question.author)
-        //   .then((response) => {
-        //     // console.log(
-        //     //   "🚀 ~ file: QuestionDetail.jsx ~ line 30 ~ .then ~ respon̥se",
-        //     //   response
-        //     // );
-        //     setAuthor(response.data);
         setLoading(false);
         dispatch({ type: "SET_LOADING", payload: false });
-        //     // setTimeout(() => {
-        //     // }, 5000);
-        //   })
-        //   .catch((error) => {
-        //     // console.log(
-        //     // "🚀 ~ file: QuestionDetail.jsx ~ line 35 ~ .then ~ error",
-        //     // error
-        //     // );
-        //   });
       })
       .catch((error) => {
-        // console.log(
-        // "🚀 ~ file: QuestionDetail.jsx ~ line 16 ~ getQuestionById ~ error",
-        // error
-        // );
+        console.log(
+          "🚀 ~ file: QuestionDetail.jsx ~ line 16 ~ getQuestionById ~ error",
+          error
+        );
       });
   }, [id]);
 

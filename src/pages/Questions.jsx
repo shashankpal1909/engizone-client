@@ -79,6 +79,10 @@ const Questions = () => {
 
   const searchQuestions = async () => {
     setSearchParams({ query: searchQuery });
+    if (searchQuery === "") {
+      searchParams.delete("query");
+      setSearchParams(searchParams);
+    }
     dispatch({ type: "SET_LOADING", payload: true });
     getQuestionsByQuery(searchQuery, page)
       .then((response) => {

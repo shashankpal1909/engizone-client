@@ -10,7 +10,7 @@ import Zoom from "@mui/material/Zoom";
 import LinearProgress from "@mui/material/LinearProgress";
 
 // import Questions from "./pages/Questions";
-import { NavBar, Footer } from "./components";
+import { NavBar, Footer, SnackBar } from "./components";
 import {
   Home,
   Questions,
@@ -46,9 +46,6 @@ const themeOptions = createTheme({
       // main: "#ff6e40",
       main: "#f50057",
     },
-    warning: {
-      main: "#ff9800",
-    },
     // background: {
     //   default: "#303030",
     //   paper: "#424242",
@@ -69,8 +66,9 @@ const themeOptions = createTheme({
     // fontFamily: "IBM Plex Sans",
     // fontFamily: "Didact Gothic",
     // fontFamily: "Poppins",
-    fontFamily: "Source Sans Pro",
+    // fontFamily: "Source Sans Pro",
     // fontFamily: "Rubik",
+    fontFamily: "Spline Sans",
   },
 });
 
@@ -118,7 +116,8 @@ const LinearIndeterminate = () => {
 };
 
 const App = () => {
-  const { loading } = React.useContext(Context);
+  const { loading, isSnackBarVisible, snackBarData } =
+    React.useContext(Context);
 
   return (
     <ThemeProvider theme={themeOptions}>
@@ -144,10 +143,11 @@ const App = () => {
             <Route path={`/questions/:id`} element={<QuestionDetail />} />
             <Route path={`/questions/:id/edit`} element={<EditQuestion />} />
             <Route path="/contact" element={<Contact />} />
-            <Route path="/profile" element={<Profile />} />
-            <Route path="/profile/edit" element={<EditProfile />} />
+            <Route path="/profile/:id" element={<Profile />} />
+            <Route path="/profile/:id/edit" element={<EditProfile />} />
             <Route path="/ask-question" element={<AskQuestion />} />
             <Route path="/resources" element={<Resources />} />
+            <Route path="*" element={<h1>404</h1>} />
           </Routes>
           <Footer />
           <ScrollTop>
@@ -155,6 +155,7 @@ const App = () => {
               <KeyboardArrowUpIcon />
             </Fab>
           </ScrollTop>
+          <SnackBar open={isSnackBarVisible} {...snackBarData} />
         </Box>
       </Router>
     </ThemeProvider>

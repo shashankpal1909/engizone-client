@@ -9,6 +9,10 @@ const UserReducer = (state, action) => {
       return { ...state, user: undefined };
     case "SET_LOADING":
       return { ...state, loading: action.payload };
+    case "SET_SNACK_BAR_VISIBLE":
+      return { ...state, isSnackBarVisible: action.payload };
+    case "SET_SNACK_BAR_DATA":
+      return { ...state, snackBarData: action.payload };
     default:
       return state;
   }

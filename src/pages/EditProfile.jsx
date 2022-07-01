@@ -13,16 +13,20 @@ import React from "react";
 
 import EditIcon from "@mui/icons-material/Edit";
 import Context from "../context/user/context";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import * as api from "../api";
+import { Loading } from "../components";
+
+import jwt_decode from "jwt-decode";
 
 const Input = styled("input")({
   display: "none",
 });
 
 const EditProfile = () => {
-  const { user, dispatch } = React.useContext(Context);
+  const { loading, dispatch } = React.useContext(Context);
 
+  const [currentUser, setCurrentUser] = React.useState({});
   const [firstName, setFirstName] = React.useState("");
   const [lastName, setLastName] = React.useState("");
   const [age, setAge] = React.useState("");
@@ -33,28 +37,43 @@ const EditProfile = () => {
   const [previewFile, setPreviewFile] = React.useState(undefined);
 
   const navigate = useNavigate();
+  const { id } = useParams();
 
   React.useEffect(() => {
     const userJWT = localStorage.getItem("userJWT");
     if (userJWT) {
-      dispatch({ type: "SET_LOADING", payload: true });
-      api
-        .getUser()
-        .then((response) => {
-          setFirstName(response.data.user.firstName);
-          setLastName(response.data.user.lastName);
-          setEmail(response.data.user.email);
-          setAge(response.data.user.age);
-          setPhoneNumber(response.data.user.phoneNumber);
-          dispatch({ type: "SET_DETAILS", payload: response.data.user });
-          dispatch({ type: "SET_LOADING", payload: false });
-        })
-        .catch((error) =>
-          console.log(
-            "🚀 ~ file: UserState.js ~ line 22 ~ React.useEffect ~ error",
-            error
-          )
+      try {
+        const decoded = jwt_decode(userJWT);
+        console.log(
+          "🚀 ~ file: EditProfile.jsx ~ line 48 ~ React.useEffect ~ decoded",
+          decoded
         );
+        if (decoded._id !== id) navigate("/");
+        else {
+          dispatch({ type: "SET_LOADING", payload: true });
+          api
+            .getUser(id)
+            .then((response) => {
+              setCurrentUser(response.data.user);
+              setFirstName(response.data.user.firstName);
+              setLastName(response.data.user.lastName);
+              setEmail(response.data.user.email);
+              setAge(response.data.user.age);
+              setPhoneNumber(response.data.user.phoneNumber);
+              dispatch({ type: "SET_LOADING", payload: false });
+            })
+            .catch((error) => {
+              console.log(
+                "🚀 ~ file: EditProfile.jsx ~ line 63 ~ api.getUserById ~ error",
+                error
+              );
+            });
+        }
+      } catch (error) {
+        navigate("/");
+      }
+    } else {
+      navigate("/");
     }
   }, []);
 
@@ -89,7 +108,7 @@ const EditProfile = () => {
         );
         dispatch({ type: "SET_DETAILS", payload: response.data });
         dispatch({ type: "SET_LOADING", payload: false });
-        navigate("/profile");
+        navigate(`/profile/${id}`);
       })
       .catch((error) => {
         console.log(
@@ -98,6 +117,8 @@ const EditProfile = () => {
         );
       });
   };
+
+  if (loading) return <Loading />;
 
   return (
     <Container component="main" maxWidth="sm">
@@ -149,9 +170,9 @@ const EditProfile = () => {
                   type="file"
                 />
                 {!previewFile ? (
-                  user && (
+                  currentUser && (
                     <Avatar
-                      src={`data:image/gif;base64,${user?.avatar}`}
+                      src={`data:image/gif;base64,${currentUser?.avatar}`}
                       sx={{ width: 200, height: 200 }}
                     />
                   )
@@ -212,6 +233,7 @@ const EditProfile = () => {
               <TextField
                 required
                 fullWidth
+                disabled={phoneNumber !== ""}
                 value={phoneNumber}
                 onChange={(event) => setPhoneNumber(event.target.value)}
                 name="mobile-number"

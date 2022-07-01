@@ -57,7 +57,7 @@ const NavBar = () => {
   const handleSettingAction = (setting) => {
     switch (setting) {
       case "Profile":
-        navigate("/profile");
+        navigate(`/profile/${user?._id}`);
         break;
       case "Logout":
         signOut();

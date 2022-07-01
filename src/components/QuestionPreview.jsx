@@ -22,35 +22,34 @@ import {
   Divider,
 } from "@mui/material";
 
-import { getUserById } from "../api";
+import { getUserById, toggleBookmark } from "../api";
 import QuestionSkeleton from "./QuestionSkeleton";
+import UserContext from "../context/user/context";
 
 const QuestionPreview = ({ data }) => {
+  const { user } = React.useContext(UserContext);
+
   const [bookmark, setBookmark] = React.useState(true);
   const [favorite, setFavorite] = React.useState(true);
   const [author, setAuthor] = React.useState({});
   const [loading, setLoading] = React.useState(false);
 
-  // React.useEffect(() => {
-  //   // console.log(data);
-  //   getUserById(data.author)
-  //     .then((response) => {
-  //       // console.log(
-  //       // "🚀 ~ file: QuestionPreview.jsx ~ line 39 ~ .then ~ response",
-  //       // response
-  //       // );
-  //       setAuthor(response.data);
-  //       // setTimeout(() => {
-  //       setLoading(false);
-  //       // }, 1000);
-  //     })
-  //     .catch((error) => {
-  //       // console.log(
-  //       // "🚀 ~ file: QuestionPreview.jsx ~ line 43 ~ React.useEffect ~ error",
-  //       // error
-  //       // );
-  //     });
-  // }, []);
+  React.useEffect(() => {
+    setBookmark(data.bookmarks.includes(user?._id));
+  }, [data.bookmarks, user]);
+
+  const handleBookmarkToggle = () => {
+    toggleBookmark(data._id)
+      .then((response) => {
+        setBookmark((prev) => !prev);
+      })
+      .catch((error) => {
+        console.log(
+          "🚀 ~ file: Question.jsx ~ line 83 ~ toggleBookmark ~ error",
+          error
+        );
+      });
+  };
 
   if (loading) {
     return <QuestionSkeleton />;
@@ -68,12 +67,9 @@ const QuestionPreview = ({ data }) => {
           }
           action={
             <>
-              <IconButton
-                aria-label="bookmark"
-                onClick={() => setBookmark((prev) => !prev)}
-              >
-                {!bookmark ? (
-                  <BookmarkAddedIcon sx={{ color: "green" }} />
+              <IconButton aria-label="bookmark" onClick={handleBookmarkToggle}>
+                {bookmark ? (
+                  <BookmarkAddedIcon color="primary" />
                 ) : (
                   <BookmarkIcon />
                 )}
