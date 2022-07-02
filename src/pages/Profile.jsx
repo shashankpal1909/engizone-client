@@ -18,13 +18,19 @@ import {
   Typography,
 } from "@mui/material";
 import moment from "moment";
-import { Link as RouterLink } from "react-router-dom";
+import { Link as RouterLink, useParams } from "react-router-dom";
 
 import EditIcon from "@mui/icons-material/Edit";
 import LinkIcon from "@mui/icons-material/Link";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import Context from "../context/user/context";
-import { getQuestionsByAuthorId } from "../api";
+import {
+  getBookmarkedQuestionsByUserId,
+  getQuestionsByAuthorId,
+  getUserById,
+} from "../api";
+import UserContext from "../context/user/context";
+import { Loading } from "../components";
 
 const StatsCard = () => {
   return (
@@ -64,27 +70,36 @@ const ListComponent = ({ data }) => {
 };
 
 const Profile = () => {
-  const { user } = React.useContext(Context);
+  const { id } = useParams();
+  const [currentUser, setCurrentUser] = React.useState({});
   const [questions, setQuestions] = React.useState([]);
+  const [bookmarkedQuestions, setBookmarkedQuestions] = React.useState([]);
+  const { user, loading, dispatch } = React.useContext(UserContext);
 
   React.useEffect(() => {
-    if (user) {
-      getQuestionsByAuthorId(user?._id, 5)
-        .then((response) => {
-          console.log(
-            "🚀 ~ file: Profile.jsx ~ line 71 ~ getQuestionsByAuthorId ~ response",
-            response
-          );
-          setQuestions(response.data.questions);
-        })
-        .catch((error) => {
-          console.log(
-            "🚀 ~ file: Profile.jsx ~ line 74 ~ getQuestionsByAuthorId ~ error",
-            error
-          );
-        });
-    }
-  }, [user, user?._id]);
+    dispatch({ type: "SET_LOADING", payload: true });
+    getUserById(id)
+      .then((response) => {
+        setCurrentUser(response.data.user);
+        return getQuestionsByAuthorId(id, 5);
+      })
+      .then((response) => {
+        setQuestions(response.data.questions);
+        return getBookmarkedQuestionsByUserId(id, 5);
+      })
+      .then((response) => {
+        setBookmarkedQuestions(response.data.questions);
+        dispatch({ type: "SET_LOADING", payload: false });
+      })
+      .catch((error) => {
+        console.log(
+          "🚀 ~ file: Profile.jsx ~ line 75 ~ getUserById ~ error",
+          error
+        );
+      });
+  }, []);
+
+  if (loading) return <Loading />;
 
   return (
     <Container
@@ -98,25 +113,29 @@ const Profile = () => {
         <CardHeader
           avatar={
             <Avatar
-              src={user?.avatar}
+              src={`data:image/gif;base64,${currentUser?.avatar}`}
               sx={{ width: { xs: 50, md: 100 }, height: { xs: 50, md: 100 } }}
             />
           }
           action={
-            <CardActions>
-              <IconButton
-                LinkComponent={RouterLink}
-                to="/profile/edit"
-                aria-label="edit profile"
-              >
-                <EditIcon />
-              </IconButton>
-            </CardActions>
+            user?._id === id && (
+              <CardActions>
+                <IconButton
+                  LinkComponent={RouterLink}
+                  to={`/profile/${id}/edit`}
+                  aria-label="edit profile"
+                >
+                  <EditIcon />
+                </IconButton>
+              </CardActions>
+            )
           }
           title={
-            user ? user?.firstName + " " + user?.lastName : "Name PlaceHolder"
+            currentUser
+              ? currentUser?.firstName + " " + currentUser?.lastName
+              : "Name PlaceHolder"
           }
-          subheader={`Joined ${moment(user?.createdAt).fromNow()}`}
+          subheader={`Joined ${moment(currentUser?.createdAt).fromNow()}`}
           titleTypographyProps={{ variant: "h6", color: "secondary" }}
         />
         <Divider />
@@ -139,7 +158,7 @@ const Profile = () => {
             </Grid>
             <Grid container item justifyContent={"space-between"}>
               <Grid item>
-                <Typography variant="h5">Questions</Typography>
+                <Typography variant="h5">Asked Question(s)</Typography>
               </Grid>
               <Grid item>
                 <Button variant="outlined" endIcon={<ArrowForwardIosIcon />}>
@@ -152,7 +171,7 @@ const Profile = () => {
             </Grid>
             <Grid container item justifyContent={"space-between"}>
               <Grid item>
-                <Typography variant="h5">Answers</Typography>
+                <Typography variant="h5">Bookmarked Question(s)</Typography>
               </Grid>
               <Grid item>
                 <Button variant="outlined" endIcon={<ArrowForwardIosIcon />}>
@@ -161,20 +180,7 @@ const Profile = () => {
               </Grid>
             </Grid>
             <Grid item flex={"auto"}>
-              <ListComponent data={[]} />
-            </Grid>
-            <Grid container item justifyContent={"space-between"}>
-              <Grid item>
-                <Typography variant="h5">Bookmarks</Typography>
-              </Grid>
-              <Grid item>
-                <Button variant="outlined" endIcon={<ArrowForwardIosIcon />}>
-                  See All
-                </Button>
-              </Grid>
-            </Grid>
-            <Grid item flex={"auto"}>
-              <ListComponent data={[]} />
+              <ListComponent data={bookmarkedQuestions} />
             </Grid>
           </Grid>
         </CardContent>

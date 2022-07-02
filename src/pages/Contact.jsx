@@ -12,8 +12,68 @@ import {
 } from "@mui/material";
 import SendIcon from "@mui/icons-material/Send";
 import ContactSupportIcon from "@mui/icons-material/ContactSupport";
+import { SnackBar } from "../components";
+import { sendContactUsMessage } from "../api";
+import UserContext from "../context/user/context";
 
 const Contact = () => {
+  const { dispatch } = React.useContext(UserContext);
+
+  const [name, setName] = React.useState("");
+  const [email, setEmail] = React.useState("");
+  const [message, setMessage] = React.useState("");
+
+  const handleClose = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+    dispatch({
+      type: "SET_SNACK_BAR_VISIBLE",
+      payload: false,
+    });
+  };
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    dispatch({ type: "SET_LOADING", payload: true });
+    sendContactUsMessage({ name, email, message })
+      .then(() => {
+        dispatch({
+          type: "SET_SNACK_BAR_DATA",
+          payload: {
+            message: "Message Sent! We will reach you shortly!",
+            severity: "success",
+            duration: 5000,
+            handleClose: handleClose,
+          },
+        });
+        dispatch({
+          type: "SET_SNACK_BAR_VISIBLE",
+          payload: true,
+        });
+        setName("");
+        setEmail("");
+        setMessage("");
+        dispatch({ type: "SET_LOADING", payload: false });
+      })
+      .catch((error) => {
+        dispatch({
+          type: "SET_SNACK_BAR_DATA",
+          payload: {
+            message: `Error: ${error.message}`,
+            severity: "error",
+            duration: 5000,
+            handleClose: handleClose,
+          },
+        });
+        dispatch({
+          type: "SET_SNACK_BAR_VISIBLE",
+          payload: true,
+        });
+        dispatch({ type: "SET_LOADING", payload: false });
+      });
+  };
+
   return (
     <Container
       maxWidth={"sm"}
@@ -39,12 +99,7 @@ const Contact = () => {
             </Typography>
           </Grid>
         </Grid>
-        <Box
-          component="form"
-          onSubmit={(event) => {
-            event.preventDefault();
-          }}
-        >
+        <Box component="form" onSubmit={handleSubmit}>
           <Grid container spacing={2}>
             <Grid item xs={12}>
               <TextField
@@ -54,6 +109,8 @@ const Contact = () => {
                 fullWidth
                 id="name"
                 label="Full Name"
+                value={name}
+                onChange={(event) => setName(event.target.value)}
               />
             </Grid>
             <Grid item xs={12}>
@@ -64,6 +121,8 @@ const Contact = () => {
                 label="Email Address"
                 name="email"
                 autoComplete="email"
+                value={email}
+                onChange={(event) => setEmail(event.target.value)}
               />
             </Grid>
             <Grid item xs={12}>
@@ -74,6 +133,8 @@ const Contact = () => {
                 label="Your Message"
                 multiline
                 rows={8}
+                value={message}
+                onChange={(event) => setMessage(event.target.value)}
               />
             </Grid>
             <Grid

@@ -4,7 +4,8 @@ import parse from "html-react-parser";
 import { red } from "@mui/material/colors";
 import EditIcon from "@mui/icons-material/Edit";
 
-import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
+import DeleteIcon from "@mui/icons-material/Delete";
+// import DeleteIcon from "@mui/icons-material/DeleteForever";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import BookmarkIcon from "@mui/icons-material/Bookmark";
 import BookmarkAddedIcon from "@mui/icons-material/BookmarkAdded";
@@ -30,13 +31,14 @@ import {
 } from "@mui/material";
 import { Link, useNavigate } from "react-router-dom";
 import UserContext from "../context/user/context";
-import { deleteQuestionById, deleteSolutionById } from "../api";
+import { deleteQuestionById, deleteSolutionById, toggleBookmark } from "../api";
 
 const Question = ({ data, author }) => {
-  const [bookmark, setBookmark] = React.useState(true);
+  const { user } = React.useContext(UserContext);
+
+  const [bookmark, setBookmark] = React.useState(false);
   const [favorite, setFavorite] = React.useState(true);
 
-  const { user } = React.useContext(UserContext);
   const navigate = useNavigate();
 
   const handleDeleteQuestion = () => {
@@ -68,8 +70,21 @@ const Question = ({ data, author }) => {
   };
 
   React.useEffect(() => {
-    // console.log(data);
-  }, [data]);
+    setBookmark(data.bookmarks.includes(user?._id));
+  }, [data.bookmarks, user]);
+
+  const handleBookmarkToggle = () => {
+    toggleBookmark(data._id)
+      .then((response) => {
+        setBookmark((prev) => !prev);
+      })
+      .catch((error) => {
+        console.log(
+          "🚀 ~ file: Question.jsx ~ line 83 ~ toggleBookmark ~ error",
+          error
+        );
+      });
+  };
 
   return (
     <>
@@ -77,11 +92,14 @@ const Question = ({ data, author }) => {
         <Card variant="outlined">
           <CardHeader
             avatar={
-              <Avatar src={author.avatar} children={`${author.firstName[0]}`} />
+              <Avatar
+                src={`data:image/gif;base64,${author?.avatar}`}
+                children={`${author.firstName[0]}`}
+              />
             }
             action={
               <>
-                {user?._id === data?.author && (
+                {user?._id === data?.author?._id && (
                   <IconButton
                     LinkComponent={Link}
                     to={`/questions/${data._id}/edit`}
@@ -91,10 +109,10 @@ const Question = ({ data, author }) => {
                 )}
                 <IconButton
                   aria-label="bookmark"
-                  onClick={() => setBookmark((prev) => !prev)}
+                  onClick={handleBookmarkToggle}
                 >
-                  {!bookmark ? (
-                    <BookmarkAddedIcon sx={{ color: "green" }} />
+                  {bookmark ? (
+                    <BookmarkAddedIcon color="primary" />
                   ) : (
                     <BookmarkIcon />
                   )}
@@ -102,13 +120,13 @@ const Question = ({ data, author }) => {
                 <IconButton aria-label="share">
                   <ShareIcon />
                 </IconButton>
-                {user?._id === data?.author && (
+                {user?._id === data?.author?._id && (
                   <IconButton
                     aria-label="delete"
                     onClick={handleClickOpen}
                     // onClick={handleDeleteQuestion}
                   >
-                    <DeleteForeverIcon />
+                    <DeleteIcon />
                   </IconButton>
                 )}
                 <IconButton aria-label="settings">

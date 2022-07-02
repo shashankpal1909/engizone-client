@@ -22,35 +22,34 @@ import {
   Divider,
 } from "@mui/material";
 
-import { getUserById } from "../api";
+import { getUserById, toggleBookmark } from "../api";
 import QuestionSkeleton from "./QuestionSkeleton";
+import UserContext from "../context/user/context";
 
 const QuestionPreview = ({ data }) => {
+  const { user } = React.useContext(UserContext);
+
   const [bookmark, setBookmark] = React.useState(true);
   const [favorite, setFavorite] = React.useState(true);
   const [author, setAuthor] = React.useState({});
-  const [loading, setLoading] = React.useState(true);
+  const [loading, setLoading] = React.useState(false);
 
   React.useEffect(() => {
-    // console.log(data);
-    getUserById(data.author)
+    setBookmark(data.bookmarks.includes(user?._id));
+  }, [data.bookmarks, user]);
+
+  const handleBookmarkToggle = () => {
+    toggleBookmark(data._id)
       .then((response) => {
-        // console.log(
-        // "🚀 ~ file: QuestionPreview.jsx ~ line 39 ~ .then ~ response",
-        // response
-        // );
-        setAuthor(response.data);
-        // setTimeout(() => {
-        setLoading(false);
-        // }, 1000);
+        setBookmark((prev) => !prev);
       })
       .catch((error) => {
-        // console.log(
-        // "🚀 ~ file: QuestionPreview.jsx ~ line 43 ~ React.useEffect ~ error",
-        // error
-        // );
+        console.log(
+          "🚀 ~ file: Question.jsx ~ line 83 ~ toggleBookmark ~ error",
+          error
+        );
       });
-  }, []);
+  };
 
   if (loading) {
     return <QuestionSkeleton />;
@@ -61,16 +60,16 @@ const QuestionPreview = ({ data }) => {
       <Card variant="outlined">
         <CardHeader
           avatar={
-            <Avatar src={author.avatar} children={`${author.firstName[0]}`} />
+            <Avatar
+              src={`data:image/gif;base64,${data.author?.avatar}`}
+              children={`${data.author.firstName[0]}`}
+            />
           }
           action={
             <>
-              <IconButton
-                aria-label="bookmark"
-                onClick={() => setBookmark((prev) => !prev)}
-              >
-                {!bookmark ? (
-                  <BookmarkAddedIcon sx={{ color: "green" }} />
+              <IconButton aria-label="bookmark" onClick={handleBookmarkToggle}>
+                {bookmark ? (
+                  <BookmarkAddedIcon color="primary" />
                 ) : (
                   <BookmarkIcon />
                 )}
@@ -83,7 +82,7 @@ const QuestionPreview = ({ data }) => {
               </IconButton>
             </>
           }
-          title={`${author?.firstName} ${author?.lastName}`}
+          title={`${data.author?.firstName} ${data.author?.lastName}`}
           subheader={moment(data.createdAt).fromNow()}
         />
         <Divider />
@@ -121,7 +120,7 @@ const QuestionPreview = ({ data }) => {
             </Grid>
             <Grid item>
               <Chip
-                label={`Answers: ${data?.solutions.length}`}
+                label={`Answers: ${data?.solutionCount}`}
                 variant="outlined"
                 color="success"
                 sx={{ ml: { sm: 0, md: 1 } }}

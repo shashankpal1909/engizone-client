@@ -57,7 +57,7 @@ const NavBar = () => {
   const handleSettingAction = (setting) => {
     switch (setting) {
       case "Profile":
-        navigate("/profile");
+        navigate(`/profile/${user?._id}`);
         break;
       case "Logout":
         signOut();
@@ -144,7 +144,10 @@ const NavBar = () => {
             <>
               <Tooltip title="User">
                 <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                  <Avatar src={user.avatar} children={`${user.firstName[0]}`} />
+                  <Avatar
+                    src={`data:image/gif;base64,${user?.avatar}`}
+                    children={`${user.firstName[0]}`}
+                  />
                 </IconButton>
               </Tooltip>
               <Menu

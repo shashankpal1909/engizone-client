@@ -9,7 +9,17 @@ const userJWT = localStorage.getItem("userJWT");
 
 const State = ({ children }) => {
   // const [user, setUser] = React.useState(undefined);
-  let initialState = { user: undefined, loading: false };
+  let initialState = {
+    user: undefined,
+    loading: false,
+    isSnackBarVisible: false,
+    snackBarData: {
+      message: "",
+      severity: "success",
+      duration: 5000,
+      handleClose: () => {},
+    },
+  };
   const [state, dispatch] = React.useReducer(Reducer, initialState);
 
   React.useEffect(() => {
@@ -17,16 +27,17 @@ const State = ({ children }) => {
       dispatch({ type: "SET_LOADING", payload: true });
       api
         .getUser()
-        .then((res) => {
-          dispatch({ type: "SET_DETAILS", payload: res.data });
+        .then((response) => {
+          dispatch({ type: "SET_DETAILS", payload: response.data.user });
           dispatch({ type: "SET_LOADING", payload: false });
         })
-        .catch((error) =>
+        .catch((error) => {
           console.log(
             "🚀 ~ file: UserState.js ~ line 22 ~ React.useEffect ~ error",
             error
-          )
-        );
+          );
+          dispatch({ type: "SIGN_OUT" });
+        });
     }
   }, []);
 
@@ -38,7 +49,7 @@ const State = ({ children }) => {
         localStorage.setItem("userJWT", response.data.token);
         dispatch({
           type: "SIGN_IN",
-          payload: response.data.result,
+          payload: response.data.user,
         });
         dispatch({ type: "SET_LOADING", payload: false });
       })
@@ -58,7 +69,7 @@ const State = ({ children }) => {
         localStorage.setItem("userJWT", response.data.token);
         dispatch({
           type: "SIGN_UP",
-          payload: response.data.result,
+          payload: response.data.user,
         });
         dispatch({ type: "SET_LOADING", payload: false });
       })
@@ -71,7 +82,19 @@ const State = ({ children }) => {
   };
 
   const signOut = () => {
-    dispatch({ type: "SIGN_OUT" });
+    dispatch({ type: "SET_LOADING", payload: true });
+    api
+      .signOut()
+      .then((response) => {
+        dispatch({ type: "SIGN_OUT" });
+        dispatch({ type: "SET_LOADING", payload: false });
+      })
+      .catch((error) => {
+        console.log(
+          "🚀 ~ file: state.js ~ line 78 ~ api.signOut ~ error",
+          error
+        );
+      });
   };
 
   return (

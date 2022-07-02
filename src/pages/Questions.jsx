@@ -79,6 +79,10 @@ const Questions = () => {
 
   const searchQuestions = async () => {
     setSearchParams({ query: searchQuery });
+    if (searchQuery === "") {
+      searchParams.delete("query");
+      setSearchParams(searchParams);
+    }
     dispatch({ type: "SET_LOADING", payload: true });
     getQuestionsByQuery(searchQuery, page)
       .then((response) => {
@@ -125,35 +129,37 @@ const Questions = () => {
               searchQuestions={searchQuestions}
             />
           </Grid>
-          {!loading && questions.length === 0 && (
-            <Box
-              sx={{
-                p: "2rem",
-                display: "flex",
-                flex: "auto",
-                flexDirection: "column",
-                justifyContent: "center",
-                alignItems: "center",
-              }}
-            >
-              <Typography variant="h5" color={"secondary"}>
-                No Question(s) Found!
-              </Typography>
-              <Typography color={"text.secondary"} paragraph>
-                Try Searching Something Else.
-              </Typography>
-              <Typography align="center" variant="button" paragraph>
-                OR
-              </Typography>
-              <Button
-                variant="contained"
-                LinkComponent={Link}
-                to="/ask-question"
-              >
-                Ask Your Question
-              </Button>
-            </Box>
-          )}
+          {!loading
+            ? questions.length === 0 && (
+                <Box
+                  sx={{
+                    p: "2rem",
+                    display: "flex",
+                    flex: "auto",
+                    flexDirection: "column",
+                    justifyContent: "center",
+                    alignItems: "center",
+                  }}
+                >
+                  <Typography variant="h5" color={"secondary"}>
+                    No Question(s) Found!
+                  </Typography>
+                  <Typography color={"text.secondary"} paragraph>
+                    Try Searching Something Else.
+                  </Typography>
+                  <Typography align="center" variant="button" paragraph>
+                    OR
+                  </Typography>
+                  <Button
+                    variant="contained"
+                    LinkComponent={RouterLink}
+                    to="/ask-question"
+                  >
+                    Ask Your Question
+                  </Button>
+                </Box>
+              )
+            : null}
           {questionsCount > 0 && (
             <Grid
               container
@@ -164,7 +170,7 @@ const Questions = () => {
               alignItems={"center"}
             >
               <Grid item>
-                <Typography variant="body2">
+                <Typography variant="subtitle1">
                   Found <b>{questionsCount}</b> Question(s)!
                 </Typography>
               </Grid>
